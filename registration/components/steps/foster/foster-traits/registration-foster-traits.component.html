@@ -1,0 +1,41 @@
+<registration-page-container (next)="handleNextClick()">
+    <div class="header">
+        {{ 'foster-traits.traits.header' | translate }}
+    </div>
+    <div class="multi-select traits">
+        @for (item of traitsOptions; track item.value) {
+            <button
+                class="btn-checkbox"
+                [class.selected]="item.selected"
+                [disabled]="!item.selected && selectedTraits.length === 3"
+                (click)="item.selected = !item.selected; showTraitsError = false"
+                [trackLabel]="{ category: 'registration', type: 'select', description: 'traits-' + item.value }"
+            >
+                {{ 'profile.traits.' + item.value | translate }}
+            </button>
+        }
+    </div>
+    @if (showTraitsError) {
+        <div class="error">
+            {{ 'foster-traits.error' | translate }}
+        </div>
+    }
+
+    <div class="separator"></div>
+
+    <div class="header skills-header">
+        {{ 'foster-traits.skills.header' | translate }}
+    </div>
+    <div class="multi-select">
+        @for (item of skillsOptions; track item.value) {
+            <button
+                class="btn-checkbox"
+                [class.selected]="item.selected"
+                (click)="item.selected = !item.selected"
+                [trackLabel]="{ category: 'registration', type: 'select', description: 'skills-' + item.value }"
+            >
+                {{ 'profile.skills.' + item.value | translate }}
+            </button>
+        }
+    </div>
+</registration-page-container>

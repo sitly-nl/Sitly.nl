@@ -1,0 +1,26 @@
+@import (reference) "includes";
+
+.header {
+    .regular-heading();
+    font-size: 1.8rem;
+}
+
+.skills-header {
+    .desktop({
+        margin-top: 28px;
+    });
+}
+
+.separator {
+    height: 1px;
+    flex-shrink: 0;
+    background-color: white;
+
+    .mobile({
+        margin: 8px -@registration-mobile-side-padding;
+    });
+
+    .desktop({
+        margin: 28px 0;
+    });
+}

@@ -1,0 +1,15 @@
+<registration-page-container (next)="handleNextClick()">
+    @for (option of countrySettings.hourlyRateOptions; track option.label) {
+        <single-select-button
+            title="{{ option.label }}"
+            [selected]="authUser.fosterProperties.averageHourlyRate === option.value"
+            (click)="save(option.value)"
+            [trackLabel]="{ category: 'registration', type: 'select', description: 'hourly-rate-' + option.value }"
+        ></single-select-button>
+    }
+    @if (showToast) {
+        <toast-message>
+            <div [innerHTML]="'main.averageHourlyRate.format' | translate: { rate: averageHourlyRate }"></div>
+        </toast-message>
+    }
+</registration-page-container>

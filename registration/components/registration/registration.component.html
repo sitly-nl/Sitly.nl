@@ -1,0 +1,20 @@
+<div class="registration-container">
+    <registration-progress (backClick)="onBackClick(outlet.component)"></registration-progress>
+
+    <div class="question-container" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+
+    @if (!isDesktop()) {
+        <div class="bottom-container" [class.shown]="registrationService.nextShown" [class.hidden]="!registrationService.nextShown">
+            <system-button
+                (click)="onNextClick(outlet.component)"
+                [loading]="registrationService.loading"
+                [disabled]="!registrationService.nextShown"
+                [trackLabel]="{ category: 'registration', type: 'button', description: 'next' }"
+            >
+                {{ registrationService.nextBtnLabel | translate }}
+            </system-button>
+        </div>
+    }
+</div>

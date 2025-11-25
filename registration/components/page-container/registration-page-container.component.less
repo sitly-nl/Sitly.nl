@@ -1,0 +1,60 @@
+@import (reference) "includes";
+
+.main-content-container {
+    .page-container();
+
+    .title-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .flex-gap(@spacing-l);
+
+        .reg-title {
+            .bold-heading();
+            flex: 1;
+
+            .mobile({
+                font-size: 2.8rem;
+            });
+
+            .desktop({
+                font-size: 3.6rem;
+            });
+        }
+
+        .mobile({
+            margin-bottom: @spacing-xl;
+        });
+
+        .desktop({
+            margin-bottom: 32px;
+        });
+    }
+
+    .reg-subtitle {
+        .body-text();
+        margin-top: @spacing-xs;
+        text-transform: none;
+        font-size: 1.4rem;
+    }
+
+    .mobile({
+        flex: 1;
+    });
+
+    &.additional-bottom-padding {
+        padding-bottom: @bottom-button-container-height + @auth-mobile-bottom-padding;
+    }
+
+    &.no-bottom-padding {
+        padding-bottom: 0;
+    }
+}
+
+.next-btn-container {
+    position: sticky;
+    bottom: 0;
+    padding: 28px 0 40px; // top padding = (40px - 12px), 12px default margin-bottom of other children
+    background-color: @neutral-100;
+    z-index: @z-index-high-regular;
+}

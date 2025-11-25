@@ -1,0 +1,10 @@
+<registration-page-container (next)="handleNextClick()">
+    @for (option of options; track option) {
+        <single-select-button
+            title="main.yearsExperience.{{ option }}"
+            [selected]="authUser.fosterProperties.yearsOfExperience === option"
+            (click)="saveOption(option)"
+            [trackLabel]="{ category: 'registration', type: 'select', description: 'year-of-experience-' + option }"
+        ></single-select-button>
+    }
+</registration-page-container>

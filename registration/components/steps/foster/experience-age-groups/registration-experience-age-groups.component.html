@@ -1,0 +1,17 @@
+<registration-page-container (next)="handleNextClick()">
+    <div class="multi-select">
+        @for (option of options; track option.value) {
+            <button
+                class="btn-checkbox"
+                [class.selected]="option.selected"
+                (click)="option.selected = !option.selected; showError = false"
+                [trackLabel]="{ category: 'registration', type: 'select', description: 'experience-years-' + option.value }"
+            >
+                {{ 'main.ageGroupExperience.' + option.value | translate }}
+            </button>
+        }
+    </div>
+    @if (showError) {
+        <div class="error">{{ 'main.error.makeSelection' | translate }}</div>
+    }
+</registration-page-container>

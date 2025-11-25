@@ -1,0 +1,46 @@
+@import (reference) "includes";
+
+.multi-select {
+    margin-bottom: 0;
+}
+
+.separator {
+    height: 1px;
+    flex-shrink: 0;
+    background-color: white;
+
+    .mobile({
+        margin: 20px -@registration-mobile-side-padding;
+    });
+    .desktop({
+        margin: 40px 0;
+    });
+}
+
+.title {
+    .regular-heading();
+    font-size: 1.8rem;
+}
+
+.row {
+    display: flex;
+
+    .text-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .subtitle {
+            .body-text();
+            color: @neutral-700;
+        }
+    }
+
+    slide-toggle {
+        margin-left: 16px;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+}

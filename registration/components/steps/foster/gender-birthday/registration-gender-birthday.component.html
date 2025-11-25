@@ -1,0 +1,37 @@
+<registration-page-container (next)="handleNextClick()">
+    <mat-button-toggle-group [(ngModel)]="gender">
+        <mat-button-toggle value="{{ Gender.female }}" [trackLabel]="{ category: 'registration', type: 'select', description: 'female' }">
+            {{ 'main.female' | translate }}
+        </mat-button-toggle>
+        <mat-button-toggle value="{{ Gender.male }}" [trackLabel]="{ category: 'registration', type: 'select', description: 'male' }">
+            {{ 'main.male' | translate }}
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-form-field>
+        <mat-label>{{ 'children.expecting.birth.subtitle' | translate }}</mat-label>
+        <input
+            matInput
+            dateInput
+            type="tel"
+            [formControl]="birthdateControl"
+            [matDatepicker]="picker"
+            [min]="minDate"
+            [max]="maxDate"
+            [trackLabel]="{ category: 'registration', type: 'input', description: 'date-of-birth' }"
+            (click)="picker.open()"
+            readonly
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    @if (birthdateControl.errors?.required) {
+        <div class="error">{{ 'gender-birthday.error.noBirthdateSelected' | translate }}</div>
+    }
+    @if (birthdateControl.errors && !birthdateControl.errors.required) {
+        <div class="error">{{ 'gender-birthday.error.age' | translate: { minAge: minAge, maxAge: maxAge } | ucfirst }}</div>
+    }
+
+    @if (showToast) {
+        <toast-message toast>{{ 'gender-birthday.toast.title' | translate: { age: minAge } }}</toast-message>
+    }
+</registration-page-container>

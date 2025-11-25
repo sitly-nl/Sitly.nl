@@ -1,0 +1,35 @@
+<div
+    class="main-content-container"
+    [class.additional-bottom-padding]="!isDesktop() && registrationService.nextShown"
+    [class.no-bottom-padding]="noBottomPadding"
+>
+    <div>
+        <div class="title-container">
+            <div class="reg-title">
+                {{ title ?? registrationService.currentStep.type + '.title' | translate: { name: authUser.firstName } }}
+            </div>
+            <ng-content select="[titleAction]"></ng-content>
+        </div>
+        @if (subtitle !== 'none') {
+            <div class="reg-subtitle">
+                {{ (subtitle === 'default' ? registrationService.currentStep.type + '.subtitle' : subtitle.custom) | translate }}
+            </div>
+        }
+    </div>
+
+    <ng-content></ng-content>
+
+    <ng-content select="[toast]"></ng-content>
+
+    @if (isDesktop() && registrationService.nextShown) {
+        <div class="next-btn-container">
+            <system-button
+                (click)="next.emit()"
+                [loading]="registrationService.loading"
+                [trackLabel]="{ category: 'registration', type: 'button', description: 'next' }"
+            >
+                {{ registrationService.nextBtnLabel | translate }}
+            </system-button>
+        </div>
+    }
+</div>

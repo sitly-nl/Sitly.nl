@@ -1,0 +1,19 @@
+<div class="progress-container">
+    <div class="progress-header">
+        <div class="side-item">
+            <button
+                class="btn-back"
+                (click)="backClick.emit()"
+                [trackLabel]="{ category: 'registration', type: 'button', description: 'back' }"
+            >
+                <img src="assets/images/arrow-left.svg" alt="back" />
+                {{ 'main.back' | translate }}
+            </button>
+        </div>
+        <img src="assets/images/logo.svg" alt="logo" />
+        <span class="side-item">{{ registrationService.progress }}%</span>
+    </div>
+    <div class="progress-bar">
+        <div class="progress-indicator" [style.width.%]="registrationService.progress"></div>
+    </div>
+</div>

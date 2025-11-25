@@ -1,0 +1,16 @@
+<registration-page-container (next)="handleNextClick()">
+    <single-select-button
+        title="foster-role.cta.babysitter.title"
+        subtitle="{{ 'foster-role.cta.babysitter.subtitle' | translate }}"
+        [selected]="authUser.isBabysitter"
+        (click)="selectBabysitter()"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'role-babysitter' }"
+    ></single-select-button>
+    <single-select-button
+        title="foster-role.cta.childminder.title"
+        subtitle="{{ 'foster-role.cta.childminder.subtitle' | translate }}"
+        [selected]="authUser.isChildminder"
+        (click)="selectChildminder()"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'role-childminder' }"
+    ></single-select-button>
+</registration-page-container>

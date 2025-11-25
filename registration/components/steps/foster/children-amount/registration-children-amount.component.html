@@ -1,0 +1,10 @@
+<registration-page-container (next)="handleNextClick()">
+    @for (count of [1, 2, 3, 4, 5]; track count) {
+        <single-select-button
+            title="{{ 'children-amount.' + count | translate }}"
+            [selected]="authUser.searchPreferences.maxChildren === count"
+            (click)="save(count)"
+            [trackLabel]="{ category: 'registration', type: 'select', description: 'children-amount-' + count }"
+        ></single-select-button>
+    }
+</registration-page-container>

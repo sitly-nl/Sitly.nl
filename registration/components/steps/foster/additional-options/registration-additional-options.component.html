@@ -1,0 +1,76 @@
+<registration-page-container (next)="handleNextClick()">
+    @if (authUser.isBabysitter) {
+        <div class="title">{{ 'additional-options.chores.title' | translate }}</div>
+        <div class="multi-select">
+            @for (item of chores; track item.value) {
+                <button
+                    class="btn-checkbox"
+                    [class.selected]="item.selected"
+                    (click)="item.selected = !item.selected"
+                    [trackLabel]="{ category: 'registration', type: 'select', description: 'chores-' + item.value }"
+                >
+                    {{ 'settings.parentChores.' + item.value | translate }}
+                </button>
+            }
+        </div>
+        <div class="separator"></div>
+    }
+
+    @if (authUser.isChildminder) {
+        <div class="row">
+            <div class="text-container">
+                <div class="title">{{ 'additional-options.educated.title' | translate }}</div>
+                <div class="subtitle">{{ 'additional-options.educated.subtitle' | translate }}</div>
+            </div>
+            <slide-toggle
+                [checked]="!!authUser.fosterProperties.isEducated"
+                (checkedChange)="authUser.fosterProperties.isEducated = $event"
+                [trackLabel]="{ category: 'registration', type: 'toggle', description: 'is-educated' }"
+            ></slide-toggle>
+        </div>
+    }
+    <div class="row">
+        <div class="text-container">
+            <div class="title">{{ 'additional-options.smoker.title' | translate }}</div>
+            <div class="subtitle">{{ 'additional-options.smoker.subtitle' | translate }}</div>
+        </div>
+        <slide-toggle
+            [checked]="!!authUser.fosterProperties.isSmoker"
+            (checkedChange)="authUser.fosterProperties.isSmoker = $event"
+            [trackLabel]="{ category: 'registration', type: 'toggle', description: 'is-smoker' }"
+        ></slide-toggle>
+    </div>
+    <div class="row">
+        <div class="text-container">
+            <div class="title">{{ 'additional-options.hasCar.title' | translate }}</div>
+            <div class="subtitle">{{ 'additional-options.hasCar.subtitle' | translate }}</div>
+        </div>
+        <slide-toggle
+            [checked]="!!authUser.fosterProperties.hasCar"
+            (checkedChange)="authUser.fosterProperties.hasCar = $event"
+            [trackLabel]="{ category: 'registration', type: 'toggle', description: 'has-car' }"
+        ></slide-toggle>
+    </div>
+    <div class="row">
+        <div class="text-container">
+            <div class="title">{{ 'additional-options.firstAidCertificate.title' | translate }}</div>
+            <div class="subtitle">{{ 'additional-options.firstAidCertificate.subtitle' | translate }}</div>
+        </div>
+        <slide-toggle
+            [checked]="!!authUser.fosterProperties.hasFirstAidCertificate"
+            (checkedChange)="authUser.fosterProperties.hasFirstAidCertificate = $event"
+            [trackLabel]="{ category: 'registration', type: 'toggle', description: 'has-first-aid-certificate' }"
+        ></slide-toggle>
+    </div>
+    <div class="row">
+        <div class="text-container">
+            <div class="title">{{ 'additional-options.certificateOfGoodBehavior.title' | translate }}</div>
+            <div class="subtitle">{{ 'additional-options.certificateOfGoodBehavior.subtitle' | translate }}</div>
+        </div>
+        <slide-toggle
+            [checked]="!!authUser.fosterProperties.hasCertificateOfGoodBehavior"
+            (checkedChange)="authUser.fosterProperties.hasCertificateOfGoodBehavior = $event"
+            [trackLabel]="{ category: 'registration', type: 'toggle', description: 'has-certificate-of-good-behavior' }"
+        ></slide-toggle>
+    </div>
+</registration-page-container>

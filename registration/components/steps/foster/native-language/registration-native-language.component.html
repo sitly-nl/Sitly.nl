@@ -1,0 +1,33 @@
+<registration-page-container (next)="handleNextClick()" [noBottomPadding]="isDesktop()">
+    @for (language of languages; track language.code) {
+        <single-select-button
+            title="{{ language.localName }}"
+            [selected]="language.code === selectedLanguage?.code"
+            (click)="save(language)"
+            [trackLabel]="{ category: 'registration', type: 'select', description: 'language-native-' + language.code }"
+        ></single-select-button>
+    }
+
+    @if (selectedLanguage && isOtherLanguageSelected) {
+        <single-select-button
+            title="{{ selectedLanguage.localName }}"
+            [selected]="true"
+            (click)="save(selectedLanguage)"
+            [trackLabel]="{ category: 'registration', type: 'select', description: 'language-native-' + selectedLanguage.code }"
+        ></single-select-button>
+    }
+
+    <input
+        type="button"
+        [matAutocomplete]="langAutocomplete"
+        value="{{ 'main.languages.other' | translate }}"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'language-native-other' }"
+    />
+    <mat-autocomplete #langAutocomplete="matAutocomplete">
+        @for (option of otherLanguageOptions; track option.code) {
+            <mat-option [value]="option.code" (click)="selectOther(option.code)">
+                {{ option.localName }}
+            </mat-option>
+        }
+    </mat-autocomplete>
+</registration-page-container>
