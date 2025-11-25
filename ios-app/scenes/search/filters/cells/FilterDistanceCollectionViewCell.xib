@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterDistanceCollectionViewCell" id="gTV-IL-0wX" customClass="FilterDistanceCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nwz-0o-Mo8">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9G3-5B-283">
+                                <rect key="frame" x="16" y="16" width="468" height="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="9Ic-c5-Rv6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2er-rg-Ujp" customClass="SelectorView" customModule="sitly" customModuleProvider="target">
+                                <rect key="frame" x="16" y="45" width="468" height="35"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="hNA-uL-Wi4"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5X7-eJ-neh">
+                                <rect key="frame" x="0.0" y="109" width="500" height="1"/>
+                                <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="b3H-Ud-K1w"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2er-rg-Ujp" firstAttribute="leading" secondItem="Nwz-0o-Mo8" secondAttribute="leading" constant="16" id="0V1-dO-laf"/>
+                            <constraint firstAttribute="trailing" secondItem="2er-rg-Ujp" secondAttribute="trailing" constant="16" id="5hN-Be-h4l"/>
+                            <constraint firstItem="2er-rg-Ujp" firstAttribute="top" secondItem="9G3-5B-283" secondAttribute="bottom" constant="13" id="BjD-cz-Cvl"/>
+                            <constraint firstItem="9G3-5B-283" firstAttribute="leading" secondItem="Nwz-0o-Mo8" secondAttribute="leading" constant="16" id="H3C-LR-2dX"/>
+                            <constraint firstAttribute="trailing" secondItem="9G3-5B-283" secondAttribute="trailing" constant="16" id="Ktg-7i-Jpe"/>
+                            <constraint firstAttribute="trailing" secondItem="5X7-eJ-neh" secondAttribute="trailing" id="Pq0-Hq-Mtl"/>
+                            <constraint firstAttribute="bottom" secondItem="5X7-eJ-neh" secondAttribute="bottom" id="fcG-c7-gSY"/>
+                            <constraint firstItem="9G3-5B-283" firstAttribute="top" secondItem="Nwz-0o-Mo8" secondAttribute="top" constant="16" id="gBP-PF-00e"/>
+                            <constraint firstItem="5X7-eJ-neh" firstAttribute="top" secondItem="2er-rg-Ujp" secondAttribute="bottom" constant="29" id="wJi-8P-XpN"/>
+                            <constraint firstItem="5X7-eJ-neh" firstAttribute="leading" secondItem="Nwz-0o-Mo8" secondAttribute="leading" id="yRu-9K-HzA"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Nwz-0o-Mo8" secondAttribute="trailing" id="Pt0-R5-fKf"/>
+                <constraint firstItem="Nwz-0o-Mo8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="hHI-BJ-VuT"/>
+                <constraint firstItem="Nwz-0o-Mo8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="vf8-IU-UoK"/>
+                <constraint firstAttribute="bottom" secondItem="Nwz-0o-Mo8" secondAttribute="bottom" id="wsc-v4-bag"/>
+            </constraints>
+            <connections>
+                <outlet property="distanceSelectorView" destination="2er-rg-Ujp" id="O76-4A-LVG"/>
+                <outlet property="titleLabel" destination="9G3-5B-283" id="JCK-bd-YCc"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="154"/>
+        </collectionViewCell>
+    </objects>
+</document>

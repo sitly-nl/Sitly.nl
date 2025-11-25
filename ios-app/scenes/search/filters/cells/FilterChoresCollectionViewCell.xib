@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterChoresCollectionViewCell" id="gTV-IL-0wX" customClass="FilterChoresCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="290"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="290"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UjZ-bg-8lm">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="290"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pXE-pf-pgc">
+                                <rect key="frame" x="16" y="16" width="468" height="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="Rxj-6y-BQS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dxO-Ph-c6F">
+                                <rect key="frame" x="16" y="46" width="468" height="207"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="lNy-6c-o6N" customClass="CheckboxTitleView" customModule="sitly" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="468" height="35"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="qHm-g4-iQS" customClass="CheckboxTitleView" customModule="sitly" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="43" width="468" height="35"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="468" placeholderIntrinsicHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="fOn-7p-jAM" customClass="CheckboxTitleView" customModule="sitly" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="86" width="468" height="35"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="PQs-Ce-pY4" customClass="CheckboxTitleView" customModule="sitly" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="129" width="468" height="35"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="msR-Ul-wIE" customClass="CheckboxTitleView" customModule="sitly" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="172" width="468" height="35"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pXE-pf-pgc" firstAttribute="top" secondItem="UjZ-bg-8lm" secondAttribute="top" constant="16" id="8NM-Wy-UTH"/>
+                            <constraint firstItem="dxO-Ph-c6F" firstAttribute="leading" secondItem="UjZ-bg-8lm" secondAttribute="leading" constant="16" id="MtT-hs-Clq"/>
+                            <constraint firstAttribute="trailing" secondItem="dxO-Ph-c6F" secondAttribute="trailing" constant="16" id="RKD-Af-rad"/>
+                            <constraint firstItem="pXE-pf-pgc" firstAttribute="leading" secondItem="UjZ-bg-8lm" secondAttribute="leading" constant="16" id="XXc-g8-W8V"/>
+                            <constraint firstAttribute="trailing" secondItem="pXE-pf-pgc" secondAttribute="trailing" constant="16" id="Yyg-ka-83d"/>
+                            <constraint firstItem="dxO-Ph-c6F" firstAttribute="top" secondItem="pXE-pf-pgc" secondAttribute="bottom" constant="14" id="iIm-lS-fl9"/>
+                            <constraint firstAttribute="bottom" secondItem="dxO-Ph-c6F" secondAttribute="bottom" constant="37" id="vRp-j8-CRc"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="UjZ-bg-8lm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="04s-fb-FhF"/>
+                <constraint firstItem="UjZ-bg-8lm" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="BbT-SI-TaF"/>
+                <constraint firstAttribute="bottom" secondItem="UjZ-bg-8lm" secondAttribute="bottom" priority="999" id="mJh-SC-g0m"/>
+                <constraint firstAttribute="trailing" secondItem="UjZ-bg-8lm" secondAttribute="trailing" priority="999" id="s8J-aN-EOa"/>
+            </constraints>
+            <connections>
+                <outlet property="cookCheckbox" destination="fOn-7p-jAM" id="xkf-b5-B1o"/>
+                <outlet property="driveCheckbox" destination="PQs-Ce-pY4" id="Yfn-lW-g6c"/>
+                <outlet property="groceriesCheckbox" destination="qHm-g4-iQS" id="i5Q-ae-dnF"/>
+                <outlet property="homeworkCheckbox" destination="lNy-6c-o6N" id="uL2-a7-vh9"/>
+                <outlet property="householdChoresCheckbox" destination="msR-Ul-wIE" id="Al2-Ys-H4I"/>
+                <outlet property="titleLabel" destination="pXE-pf-pgc" id="61A-oK-4dC"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="154"/>
+        </collectionViewCell>
+    </objects>
+</document>

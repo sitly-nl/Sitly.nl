@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterRoleCollectionViewCell" id="gTV-IL-0wX" customClass="FilterRoleCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v95-6B-Z1I">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Peu-du-Eit">
+                                <rect key="frame" x="16" y="16" width="468" height="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="1IO-rt-u4H"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pw5-Km-Rol" customClass="SegmentedControl" customModule="sitly" customModuleProvider="target">
+                                <rect key="frame" x="16" y="45" width="468" height="35"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="00b-9t-B2Y"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxI-vZ-npk">
+                                <rect key="frame" x="0.0" y="109" width="500" height="1"/>
+                                <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="dmH-o1-WCW"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yxI-vZ-npk" firstAttribute="leading" secondItem="v95-6B-Z1I" secondAttribute="leading" id="3Gd-W3-ceC"/>
+                            <constraint firstItem="Peu-du-Eit" firstAttribute="top" secondItem="v95-6B-Z1I" secondAttribute="top" constant="16" id="JEp-gv-VSi"/>
+                            <constraint firstItem="pw5-Km-Rol" firstAttribute="leading" secondItem="v95-6B-Z1I" secondAttribute="leading" constant="16" id="MFQ-NX-hun"/>
+                            <constraint firstItem="yxI-vZ-npk" firstAttribute="top" secondItem="pw5-Km-Rol" secondAttribute="bottom" constant="29" id="Sfc-3h-Rvw"/>
+                            <constraint firstAttribute="trailing" secondItem="pw5-Km-Rol" secondAttribute="trailing" constant="16" id="VOU-Xk-v7q"/>
+                            <constraint firstAttribute="trailing" secondItem="yxI-vZ-npk" secondAttribute="trailing" id="VYM-tf-yPI"/>
+                            <constraint firstItem="Peu-du-Eit" firstAttribute="leading" secondItem="v95-6B-Z1I" secondAttribute="leading" constant="16" id="elu-eH-lHn"/>
+                            <constraint firstItem="pw5-Km-Rol" firstAttribute="top" secondItem="Peu-du-Eit" secondAttribute="bottom" constant="13" id="gF9-RG-adG"/>
+                            <constraint firstAttribute="bottom" secondItem="yxI-vZ-npk" secondAttribute="bottom" id="l8d-9o-njK"/>
+                            <constraint firstAttribute="trailing" secondItem="Peu-du-Eit" secondAttribute="trailing" constant="16" id="ngK-t0-c1U"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="v95-6B-Z1I" secondAttribute="bottom" id="3YV-WR-Nns"/>
+                <constraint firstItem="v95-6B-Z1I" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="B8w-TH-Ojp"/>
+                <constraint firstItem="v95-6B-Z1I" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Qgk-G3-ouz"/>
+                <constraint firstAttribute="trailing" secondItem="v95-6B-Z1I" secondAttribute="trailing" id="dJ9-SF-cvk"/>
+            </constraints>
+            <connections>
+                <outlet property="segmentedControl" destination="pw5-Km-Rol" id="1x2-mv-gdh"/>
+                <outlet property="titleLabel" destination="Peu-du-Eit" id="Qnj-XS-GeB"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="154"/>
+        </collectionViewCell>
+    </objects>
+</document>

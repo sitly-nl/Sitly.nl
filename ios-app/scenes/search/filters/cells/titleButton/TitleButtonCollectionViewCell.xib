@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TitleButtonCollectionViewCell" id="gTV-IL-0wX" customClass="TitleButtonCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oL3-EY-iZJ">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ro-Xs-FbK" customClass="TitleToggleButton" customModule="sitly" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0ro-Xs-FbK" firstAttribute="top" secondItem="oL3-EY-iZJ" secondAttribute="top" id="975-zu-05t"/>
+                            <constraint firstAttribute="trailing" secondItem="0ro-Xs-FbK" secondAttribute="trailing" id="BxQ-PD-Bd4"/>
+                            <constraint firstItem="0ro-Xs-FbK" firstAttribute="leading" secondItem="oL3-EY-iZJ" secondAttribute="leading" id="UUO-zF-dmj"/>
+                            <constraint firstAttribute="bottom" secondItem="0ro-Xs-FbK" secondAttribute="bottom" id="epa-Gm-mPD"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="oL3-EY-iZJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="SNs-iW-vwU"/>
+                <constraint firstAttribute="bottom" secondItem="oL3-EY-iZJ" secondAttribute="bottom" id="Yw2-hm-cJN"/>
+                <constraint firstItem="oL3-EY-iZJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pcJ-IK-LN9"/>
+                <constraint firstAttribute="trailing" secondItem="oL3-EY-iZJ" secondAttribute="trailing" priority="999" id="vd2-lj-TJ9"/>
+            </constraints>
+            <connections>
+                <outlet property="titleButton" destination="0ro-Xs-FbK" id="Il2-HX-KEf"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="154"/>
+        </collectionViewCell>
+    </objects>
+</document>

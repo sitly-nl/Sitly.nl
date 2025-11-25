@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Semibold.ttf">
+            <string>OpenSans-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterHeaderCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="gTV-IL-0wX" customClass="FilterHeaderCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lDU-oA-vMK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4xi-Lt-vuM">
+                                <rect key="frame" x="165.5" y="23.5" width="44.5" height="23.5"/>
+                                <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z88-du-cDJ">
+                                <rect key="frame" x="0.0" y="69" width="375" height="1"/>
+                                <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="B8s-sz-3f9"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4xi-Lt-vuM" firstAttribute="centerY" secondItem="lDU-oA-vMK" secondAttribute="centerY" id="2ww-RH-zT5"/>
+                            <constraint firstAttribute="trailing" secondItem="z88-du-cDJ" secondAttribute="trailing" id="IUj-cC-y79"/>
+                            <constraint firstAttribute="height" constant="70" id="KgA-Da-d2U"/>
+                            <constraint firstItem="z88-du-cDJ" firstAttribute="leading" secondItem="lDU-oA-vMK" secondAttribute="leading" id="TU3-jL-gLt"/>
+                            <constraint firstAttribute="bottom" secondItem="z88-du-cDJ" secondAttribute="bottom" id="rfR-Jd-aH6"/>
+                            <constraint firstItem="4xi-Lt-vuM" firstAttribute="centerX" secondItem="lDU-oA-vMK" secondAttribute="centerX" id="tSd-pY-ODz"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="lDU-oA-vMK" secondAttribute="bottom" id="ATb-rO-8tw"/>
+                <constraint firstItem="lDU-oA-vMK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="IFV-Zj-uFy"/>
+                <constraint firstAttribute="trailing" secondItem="lDU-oA-vMK" secondAttribute="trailing" id="Q4D-OU-66l"/>
+                <constraint firstItem="lDU-oA-vMK" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="abl-Et-gMF"/>
+            </constraints>
+            <connections>
+                <outlet property="titleLabel" destination="4xi-Lt-vuM" id="6Vi-c7-psJ"/>
+            </connections>
+            <point key="canvasLocation" x="140" y="154"/>
+        </collectionViewCell>
+    </objects>
+</document>

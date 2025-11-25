@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterAvailabilityCollectionViewCell" id="gTV-IL-0wX" customClass="FilterAvailabilityCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="386" height="569"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="386" height="569"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HR7-vm-BeH">
+                        <rect key="frame" x="0.0" y="0.0" width="386" height="569"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HGg-k7-Bbe" customClass="AvailabilityView" customModule="sitly" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="386" height="569"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="HGg-k7-Bbe" secondAttribute="bottom" id="Hmf-XF-ZYG"/>
+                            <constraint firstItem="HGg-k7-Bbe" firstAttribute="leading" secondItem="HR7-vm-BeH" secondAttribute="leading" id="mkq-zD-Jhi"/>
+                            <constraint firstAttribute="trailing" secondItem="HGg-k7-Bbe" secondAttribute="trailing" id="vKv-n4-Qpu"/>
+                            <constraint firstItem="HGg-k7-Bbe" firstAttribute="top" secondItem="HR7-vm-BeH" secondAttribute="top" id="xju-wh-Wxg"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="HR7-vm-BeH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="H1O-Ro-iIF"/>
+                <constraint firstItem="HR7-vm-BeH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="RDw-F0-99G"/>
+                <constraint firstAttribute="bottom" secondItem="HR7-vm-BeH" secondAttribute="bottom" id="UNb-31-21O"/>
+                <constraint firstAttribute="trailing" secondItem="HR7-vm-BeH" secondAttribute="trailing" id="UiI-Nb-XZ8"/>
+            </constraints>
+            <size key="customSize" width="386" height="249"/>
+            <connections>
+                <outlet property="availabilityView" destination="HGg-k7-Bbe" id="d5z-bC-K7r"/>
+            </connections>
+            <point key="canvasLocation" x="-22" y="-61.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

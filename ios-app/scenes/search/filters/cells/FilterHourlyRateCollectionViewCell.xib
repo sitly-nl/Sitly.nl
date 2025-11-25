@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterHourlyRateCollectionViewCell" id="gTV-IL-0wX" customClass="FilterHourlyRateCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="165"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="165"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IuT-3k-1Jf">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="165"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kw0-nI-E0A">
+                                <rect key="frame" x="16" y="24" width="468" height="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="iCI-CI-dnO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kOv-VD-dQX">
+                                <rect key="frame" x="16" y="52" width="468" height="97"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="urb-gB-nVS">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <connections>
+                                    <outlet property="dataSource" destination="gTV-IL-0wX" id="QTK-rZ-gA9"/>
+                                    <outlet property="delegate" destination="gTV-IL-0wX" id="dTS-Pi-j8n"/>
+                                </connections>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NqA-cy-0wY">
+                                <rect key="frame" x="0.0" y="164" width="500" height="1"/>
+                                <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="PKB-l8-Y9Y"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="NqA-cy-0wY" secondAttribute="bottom" id="4WM-hf-N6g"/>
+                            <constraint firstItem="kOv-VD-dQX" firstAttribute="leading" secondItem="IuT-3k-1Jf" secondAttribute="leading" constant="16" id="LOT-FL-Gue"/>
+                            <constraint firstItem="NqA-cy-0wY" firstAttribute="leading" secondItem="IuT-3k-1Jf" secondAttribute="leading" id="MvH-rc-tmx"/>
+                            <constraint firstItem="kOv-VD-dQX" firstAttribute="top" secondItem="Kw0-nI-E0A" secondAttribute="bottom" constant="12" id="Rpo-9t-ReF"/>
+                            <constraint firstAttribute="trailing" secondItem="Kw0-nI-E0A" secondAttribute="trailing" constant="16" id="T2s-ke-S0O"/>
+                            <constraint firstAttribute="bottom" secondItem="kOv-VD-dQX" secondAttribute="bottom" constant="16" id="Vhy-Q1-3n0"/>
+                            <constraint firstItem="Kw0-nI-E0A" firstAttribute="top" secondItem="IuT-3k-1Jf" secondAttribute="top" constant="24" id="XEt-h6-bLT"/>
+                            <constraint firstAttribute="trailing" secondItem="kOv-VD-dQX" secondAttribute="trailing" constant="16" id="ah2-GE-Tmz"/>
+                            <constraint firstItem="Kw0-nI-E0A" firstAttribute="leading" secondItem="IuT-3k-1Jf" secondAttribute="leading" constant="16" id="ll7-cS-orA"/>
+                            <constraint firstAttribute="trailing" secondItem="NqA-cy-0wY" secondAttribute="trailing" id="loV-BZ-ufS"/>
+                            <constraint firstAttribute="height" constant="165" id="n72-wa-5tJ"/>
+                            <constraint firstAttribute="height" constant="165" id="nx2-2D-fx2"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="n72-wa-5tJ"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="IuT-3k-1Jf" secondAttribute="trailing" id="7cG-pj-uGH"/>
+                <constraint firstItem="IuT-3k-1Jf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ENv-Tk-Txf"/>
+                <constraint firstItem="IuT-3k-1Jf" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="bov-uf-ZgJ"/>
+                <constraint firstAttribute="bottom" secondItem="IuT-3k-1Jf" secondAttribute="bottom" priority="999" id="vrT-xB-Z7d"/>
+            </constraints>
+            <connections>
+                <outlet property="ratesCollectionView" destination="kOv-VD-dQX" id="CHf-Li-ecH"/>
+                <outlet property="titleLabel" destination="Kw0-nI-E0A" id="bGg-6p-2GZ"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="54.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterLocationCollectionViewCell" id="gTV-IL-0wX" customClass="FilterLocationCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lrX-p3-e4R">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9B-LO-tDt">
+                                <rect key="frame" x="16" y="16" width="468" height="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="4ue-zc-mGy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IHD-Bf-5J3" customClass="TitleToggleButton" customModule="sitly" customModuleProvider="target">
+                                <rect key="frame" x="16" y="46" width="230" height="35"/>
+                                <color key="backgroundColor" red="0.41568627450000001" green="0.73725490199999999" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="N8d-Hs-S2y"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KzA-cs-SUu" customClass="TitleToggleButton" customModule="sitly" customModuleProvider="target">
+                                <rect key="frame" x="254" y="46" width="230" height="35"/>
+                                <color key="backgroundColor" red="0.41568627450000001" green="0.73725490199999999" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xOO-gs-ePv">
+                                <rect key="frame" x="0.0" y="109" width="500" height="1"/>
+                                <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="aU6-tH-vmr"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IHD-Bf-5J3" firstAttribute="leading" secondItem="lrX-p3-e4R" secondAttribute="leading" constant="16" id="3B2-fz-3u5"/>
+                            <constraint firstItem="KzA-cs-SUu" firstAttribute="top" secondItem="IHD-Bf-5J3" secondAttribute="top" id="4CC-a1-uPq"/>
+                            <constraint firstAttribute="trailing" secondItem="xOO-gs-ePv" secondAttribute="trailing" id="8Hi-XB-bu7"/>
+                            <constraint firstAttribute="bottom" secondItem="xOO-gs-ePv" secondAttribute="bottom" id="BcD-fR-kHf"/>
+                            <constraint firstItem="k9B-LO-tDt" firstAttribute="top" secondItem="lrX-p3-e4R" secondAttribute="top" constant="16" id="ICc-Zk-dZE"/>
+                            <constraint firstAttribute="trailing" secondItem="KzA-cs-SUu" secondAttribute="trailing" constant="16" id="MW6-jo-s64"/>
+                            <constraint firstItem="KzA-cs-SUu" firstAttribute="width" secondItem="IHD-Bf-5J3" secondAttribute="width" id="QFK-QX-sFx"/>
+                            <constraint firstAttribute="trailing" secondItem="k9B-LO-tDt" secondAttribute="trailing" constant="16" id="Qqp-HL-Tzf"/>
+                            <constraint firstItem="KzA-cs-SUu" firstAttribute="height" secondItem="IHD-Bf-5J3" secondAttribute="height" id="TfR-I1-rfk"/>
+                            <constraint firstItem="KzA-cs-SUu" firstAttribute="leading" secondItem="IHD-Bf-5J3" secondAttribute="trailing" constant="8" id="Zgy-Qf-yue"/>
+                            <constraint firstItem="k9B-LO-tDt" firstAttribute="leading" secondItem="lrX-p3-e4R" secondAttribute="leading" constant="16" id="b0T-Hl-qdI"/>
+                            <constraint firstItem="IHD-Bf-5J3" firstAttribute="top" secondItem="k9B-LO-tDt" secondAttribute="bottom" constant="14" id="hRi-1K-V2E"/>
+                            <constraint firstItem="xOO-gs-ePv" firstAttribute="leading" secondItem="lrX-p3-e4R" secondAttribute="leading" id="s87-aw-UXB"/>
+                            <constraint firstItem="xOO-gs-ePv" firstAttribute="top" secondItem="IHD-Bf-5J3" secondAttribute="bottom" constant="28" id="xj7-B8-9i1"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="lrX-p3-e4R" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="8UK-Q2-wuA"/>
+                <constraint firstItem="lrX-p3-e4R" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="IYo-PB-lcB"/>
+                <constraint firstAttribute="trailing" secondItem="lrX-p3-e4R" secondAttribute="trailing" id="c3b-7O-8yB"/>
+                <constraint firstAttribute="bottom" secondItem="lrX-p3-e4R" secondAttribute="bottom" id="w8S-Hx-ZOd"/>
+            </constraints>
+            <connections>
+                <outlet property="atHomeButton" destination="IHD-Bf-5J3" id="dkn-0L-hCL"/>
+                <outlet property="locationButton" destination="KzA-cs-SUu" id="u4L-6Q-jcP"/>
+                <outlet property="titleLabel" destination="k9B-LO-tDt" id="56k-8g-l41"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="154"/>
+        </collectionViewCell>
+    </objects>
+</document>

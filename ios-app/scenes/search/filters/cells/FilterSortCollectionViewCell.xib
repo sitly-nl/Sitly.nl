@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterSortCollectionViewCell" id="gTV-IL-0wX" customClass="FilterSortCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="370" height="111"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="370" height="111"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQw-d0-Ad5">
+                        <rect key="frame" x="0.0" y="0.0" width="370" height="111"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xV8-Wb-DFO">
+                                <rect key="frame" x="16" y="16" width="338" height="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="ndp-ml-aCF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nfb-cV-xaH" customClass="SelectorView" customModule="sitly" customModuleProvider="target">
+                                <rect key="frame" x="16" y="42" width="338" height="35"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="QAX-X4-K2U"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0M-9h-3yJ">
+                                <rect key="frame" x="0.0" y="110" width="370" height="1"/>
+                                <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="dJw-C8-DcZ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="N0M-9h-3yJ" secondAttribute="bottom" id="0SP-Cr-Dh4"/>
+                            <constraint firstItem="N0M-9h-3yJ" firstAttribute="leading" secondItem="MQw-d0-Ad5" secondAttribute="leading" id="Bsz-Y7-Ads"/>
+                            <constraint firstAttribute="trailing" secondItem="N0M-9h-3yJ" secondAttribute="trailing" id="Fio-d3-mmI"/>
+                            <constraint firstItem="xV8-Wb-DFO" firstAttribute="leading" secondItem="MQw-d0-Ad5" secondAttribute="leading" constant="16" id="Zdx-Cm-3Fa"/>
+                            <constraint firstItem="nfb-cV-xaH" firstAttribute="leading" secondItem="xV8-Wb-DFO" secondAttribute="leading" id="afe-hE-6Dz"/>
+                            <constraint firstItem="nfb-cV-xaH" firstAttribute="trailing" secondItem="xV8-Wb-DFO" secondAttribute="trailing" id="mRl-st-mKT"/>
+                            <constraint firstItem="N0M-9h-3yJ" firstAttribute="top" secondItem="nfb-cV-xaH" secondAttribute="bottom" constant="33" id="obi-YZ-0B5"/>
+                            <constraint firstAttribute="trailing" secondItem="xV8-Wb-DFO" secondAttribute="trailing" constant="16" id="rN0-SY-vsi"/>
+                            <constraint firstItem="nfb-cV-xaH" firstAttribute="top" secondItem="xV8-Wb-DFO" secondAttribute="bottom" constant="10" id="rw5-1B-tKM"/>
+                            <constraint firstItem="xV8-Wb-DFO" firstAttribute="top" secondItem="MQw-d0-Ad5" secondAttribute="top" constant="16" id="zTj-cN-IV3"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="MQw-d0-Ad5" secondAttribute="trailing" id="1Ha-R5-JIW"/>
+                <constraint firstItem="MQw-d0-Ad5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="4TC-sd-n9L"/>
+                <constraint firstItem="MQw-d0-Ad5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="MF6-0K-S6C"/>
+                <constraint firstAttribute="bottom" secondItem="MQw-d0-Ad5" secondAttribute="bottom" id="XRF-ZY-gGv"/>
+            </constraints>
+            <size key="customSize" width="370" height="113"/>
+            <connections>
+                <outlet property="selectorView" destination="nfb-cV-xaH" id="O6l-fX-5zH"/>
+                <outlet property="titleLabel" destination="xV8-Wb-DFO" id="eSw-2M-xng"/>
+            </connections>
+            <point key="canvasLocation" x="136" y="152.47376311844079"/>
+        </collectionViewCell>
+    </objects>
+</document>

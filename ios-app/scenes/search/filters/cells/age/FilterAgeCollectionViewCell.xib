@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterAgeCollectionViewCell" id="gTV-IL-0wX" customClass="FilterAgeCollectionViewCell" customModule="sitly" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FNf-VE-lLh">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="110"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gY5-R4-Qtk">
+                                <rect key="frame" x="16" y="16" width="468" height="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="eyd-Up-iaA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YoP-eW-nU1" customClass="RangeSlider" customModule="sitly" customModuleProvider="target">
+                                <rect key="frame" x="16" y="40" width="468" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="7ZS-se-Cwv"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLh-RM-4p5">
+                                <rect key="frame" x="0.0" y="109" width="500" height="1"/>
+                                <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="veg-9V-sOg"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="aLh-RM-4p5" secondAttribute="trailing" id="0nE-pS-t5w"/>
+                            <constraint firstItem="aLh-RM-4p5" firstAttribute="leading" secondItem="FNf-VE-lLh" secondAttribute="leading" id="5hc-Zn-ozS"/>
+                            <constraint firstItem="YoP-eW-nU1" firstAttribute="leading" secondItem="gY5-R4-Qtk" secondAttribute="leading" id="5ol-iE-rYY"/>
+                            <constraint firstItem="YoP-eW-nU1" firstAttribute="top" secondItem="gY5-R4-Qtk" secondAttribute="bottom" constant="8" id="7Tx-Ue-XTz"/>
+                            <constraint firstItem="gY5-R4-Qtk" firstAttribute="leading" secondItem="FNf-VE-lLh" secondAttribute="leading" constant="16" id="8nG-G1-6JT"/>
+                            <constraint firstItem="YoP-eW-nU1" firstAttribute="trailing" secondItem="gY5-R4-Qtk" secondAttribute="trailing" id="M5v-9k-cki"/>
+                            <constraint firstAttribute="trailing" secondItem="gY5-R4-Qtk" secondAttribute="trailing" constant="16" id="Sod-lC-l69"/>
+                            <constraint firstItem="aLh-RM-4p5" firstAttribute="top" secondItem="YoP-eW-nU1" secondAttribute="bottom" constant="29" id="WAm-B2-akt"/>
+                            <constraint firstAttribute="bottom" secondItem="aLh-RM-4p5" secondAttribute="bottom" id="ZOv-J0-x6y"/>
+                            <constraint firstItem="gY5-R4-Qtk" firstAttribute="top" secondItem="FNf-VE-lLh" secondAttribute="top" constant="16" id="oFr-6Z-XfV"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="FNf-VE-lLh" secondAttribute="bottom" priority="999" id="SYm-3Y-yhI"/>
+                <constraint firstItem="FNf-VE-lLh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="csd-MY-oMZ"/>
+                <constraint firstItem="FNf-VE-lLh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="hzS-Sn-uZh"/>
+                <constraint firstAttribute="trailing" secondItem="FNf-VE-lLh" secondAttribute="trailing" id="iDw-mV-mOW"/>
+            </constraints>
+            <connections>
+                <outlet property="slider" destination="YoP-eW-nU1" id="obK-1M-B1X"/>
+                <outlet property="titleLabel" destination="gY5-R4-Qtk" id="SGS-lb-SRI"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="154"/>
+        </collectionViewCell>
+    </objects>
+</document>
