@@ -1,0 +1,17 @@
+<div class="greeting-container">
+    <div class="greeting">
+        <div>{{ title | translate: { name: titleArgs?.name } }}</div>
+        <img />
+    </div>
+    <div
+        class="message"
+        innerText="{{
+            subtitle
+                | translate
+                    : {
+                          name: subtitleArgs?.name,
+                          gender: (subtitleArgs?.gender === 'male' ? 'gender.his' : 'gender.her') | translate,
+                      }
+        }}"
+    ></div>
+</div>

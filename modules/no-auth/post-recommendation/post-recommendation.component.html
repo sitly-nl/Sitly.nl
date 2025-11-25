@@ -1,0 +1,63 @@
+<no-auth-template [showBackBtn]="step === 'review'" (back)="step = 'rate'">
+    @if (recommendationData) {
+        <div class="content">
+            <div class="step-container">
+                <!-- rate step -->
+                @if (step === 'rate') {
+                    <post-recommendation-rate-user [data]="recommendationData" (rate)="onRateGiven($event)">
+                    </post-recommendation-rate-user>
+                }
+
+                <!-- review step -->
+                @if (step === 'review' && userId && token) {
+                    <post-recommendation-review-user
+                        [data]="recommendationData"
+                        [rating]="rating"
+                        [userId]="userId"
+                        [token]="token"
+                        (review)="onReviewGiven()"
+                    >
+                    </post-recommendation-review-user>
+                }
+
+                <!-- thanks step -->
+                @if (step === 'thanks') {
+                    <post-recommendation-thanks [data]="recommendationData"> </post-recommendation-thanks>
+                }
+            </div>
+
+            <div class="bottom-bar" footer>
+                <div class="copyright">
+                    <span>©</span>
+                    &nbsp;
+                    <span>{{ currentYear }}</span>
+                    &nbsp;
+                    <span>Sitly</span>
+                </div>
+
+                @if (!isDesktop()) {
+                    <div class="separator"></div>
+
+                    <div class="apps-container">
+                        @if (isAndroid) {
+                            <a class="google-play" target="_blank" href="{{ googlePlayUrl }}"> </a>
+                        }
+                        @if (isIos) {
+                            <a class="app-store" target="_blank" href="{{ appStoreUrl }}"> </a>
+                        }
+                    </div>
+
+                    <div class="separator"></div>
+                }
+
+                @if (countrySettings) {
+                    <div class="social-media">
+                        <a class="facebook" target="_blank" [href]="countrySettings.socialPages.facebook"></a>
+                        <a class="instagram" target="_blank" [href]="countrySettings.socialPages.instagram"></a>
+                        <a class="tiktok" target="_blank" [href]="countrySettings.socialPages.tiktok"></a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</no-auth-template>

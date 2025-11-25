@@ -1,0 +1,34 @@
+<div class="modal-component-container">
+    <div class="modal-content-container">
+        <div class="toolbar" [class.reverse]="screen === RecommendationScreen.info && isDesktop()">
+            @if (!isDesktop()) {
+                <button class="btn-back" (click)="back()">
+                    <img image2x="back-mobile" />
+                </button>
+            }
+            @if (screen !== RecommendationScreen.info) {
+                <button class="btn-info" (click)="showInfo()"></button>
+            }
+            @if (isDesktop()) {
+                <button class="btn-close" (click)="close()">
+                    <img image2x="recommendations/close" />
+                </button>
+            }
+        </div>
+
+        <div class="content-container" #contentContainer>
+            @if (screen === RecommendationScreen.name) {
+                <recommendation-user-name></recommendation-user-name>
+            }
+            @if (screen === RecommendationScreen.message) {
+                <recommendation-message (success)="onSuccess($event)"></recommendation-message>
+            }
+            @if (screen === RecommendationScreen.info) {
+                <recommendation-info (ok)="back()"></recommendation-info>
+            }
+            @if (screen === RecommendationScreen.email) {
+                <recommendation-email (ok)="back()"></recommendation-email>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="premium-overlay">
+    <div class="premium-overlay-container">
+        <router-outlet></router-outlet>
+        @if (state === 'pending') {
+            <loader></loader>
+        }
+    </div>
+</div>

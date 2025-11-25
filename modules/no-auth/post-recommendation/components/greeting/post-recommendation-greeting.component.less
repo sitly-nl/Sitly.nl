@@ -1,0 +1,65 @@
+@import (reference) "includes";
+
+.greeting-container {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .greeting {
+        div {
+            .bold-heading();
+            display: inline-block;
+        }
+
+        img {
+            .img-content("post-recommendation/illustration-yellow");
+            vertical-align: baseline;
+        }
+    }
+
+    .message {
+        .regular-heading();
+    }
+
+    .mobile({
+        .greeting {
+            font-size: 2.8rem;
+            padding-left: 58px;
+            margin-bottom: @spacing-l;
+
+            img {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 14px;
+            }
+        }
+
+        .message {
+            font-size: 1.8rem;
+            min-height: 5.4rem;
+        }
+    });
+
+    .desktop({
+        .greeting {
+            font-size: 4.8rem;
+            margin-bottom: @spacing-2xl;
+            padding-left: 85px;
+
+            img {
+                width: 77px;
+                height: 77px;
+                margin-bottom: @spacing-l;
+                margin-left: @spacing-s;
+            }
+        }
+
+        .message {
+            font-size: 2.4rem;
+            min-height: 7.2rem;
+            max-width: 630px;
+        }
+    });
+}

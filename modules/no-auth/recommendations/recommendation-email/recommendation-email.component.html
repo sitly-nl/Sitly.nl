@@ -1,0 +1,34 @@
+<div class="content-container">
+    <div class="screen-body">
+        <div class="message-container">
+            <div class="label">{{ 'recommendations.emailMessage' | translate }}</div>
+            <div class="message">
+                <div>{{ message }}</div>
+                <div>{{ recommendationLink }}</div>
+            </div>
+        </div>
+
+        <div class="email-address-container">
+            <div class="label">{{ 'recommendations.emailSendTo' | translate }}</div>
+            <input
+                type="text"
+                #emailAddress="ngModel"
+                required
+                email="true"
+                name="emailAddress"
+                [(ngModel)]="email"
+                placeholder="{{ 'recommendations.emailOf' | translate: { firstName: name } }}"
+            />
+            <div class="note-container">
+                <div class="note-icon"></div>
+                <span class="note">{{ 'recommendations.emailExplanation' | translate: { name: name } }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen-buttons">
+        <button class="btn btn-default" (click)="sendEmail()" [disabled]="emailAddress.invalid || loading">
+            {{ 'recommendations.send' | translate }}
+        </button>
+    </div>
+</div>

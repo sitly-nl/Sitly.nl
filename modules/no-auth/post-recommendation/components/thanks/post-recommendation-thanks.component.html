@@ -1,0 +1,45 @@
+<div class="thanks-container">
+    <post-recommendation-greeting
+        [title]="'thank.thankYou'"
+        [subtitle]="'thank.sitterReceivedYourReview'"
+        [subtitleArgs]="{ name: data.fosterName, gender: data.fosterGender }"
+    >
+    </post-recommendation-greeting>
+
+    <div class="background-top"></div>
+
+    <div class="bottom-container">
+        <div class="text-container">
+            <div class="header" innerText="{{ 'thank.findExperiencedBabysitterNearby' | translate }}"></div>
+
+            <ul>
+                @if (sittersNumber) {
+                    <li>{{ 'thank.viewAvailableBabysitters' | translate: { amount: (sittersNumber | number) } }}</li>
+                }
+                <li>{{ 'thank.filterAndMessage' | translate }}</li>
+                <li>{{ 'thank.meetUpToArrangeChildcare' | translate: {} }}</li>
+            </ul>
+
+            <div class="button-container">
+                <button (click)="onSignup()">{{ 'thank.cta.signUpForFree' | translate }}</button>
+                <div class="rating-container">
+                    <div class="stars-container">
+                        @for (i of [1, 2, 3, 4]; track i) {
+                            <div class="star-filled"></div>
+                        }
+                        <div class="star-half-filled"></div>
+                        <div>9.1 / 10</div>
+                    </div>
+                    <div class="reviews-container">{{ 'thank.ekomiReviews' | translate: { amount: 2786 } }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="illustration-container">
+            <img class="illustration" src="assets/images/post-recommendation/thank-illustration.png" />
+            <img class="blue-rays" />
+            <img class="yellow-rays" />
+            <img class="hearts" />
+        </div>
+    </div>
+</div>

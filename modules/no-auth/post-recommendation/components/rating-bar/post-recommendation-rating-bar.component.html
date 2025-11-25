@@ -1,0 +1,14 @@
+<div class="rating-bar">
+    @for (i of [1, 2, 3, 4, 5]; track i) {
+        <button
+            class="btn-star"
+            [class.yellow]="color === 'yellow'"
+            [class.dark]="color === 'dark'"
+            [class.filled]="rating >= i"
+            [class.clickable]="clickable"
+            (click)="starClicked(i)"
+            (mouseenter)="onStarHover(i)"
+            (mouseleave)="onStarHover(0)"
+        ></button>
+    }
+</div>

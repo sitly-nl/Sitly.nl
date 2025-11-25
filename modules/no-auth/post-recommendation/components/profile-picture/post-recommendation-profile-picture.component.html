@@ -1,0 +1,9 @@
+<div class="user-card">
+    @if (avatarUrl) {
+        <img class="user-avatar" [src]="avatarUrl.replace('[size]', '500')" />
+    }
+    @if (!avatarUrl) {
+        <img class="user-avatar" [src]="'assets/images/placeholders/sitter-' + gender + '.svg'" />
+    }
+    <div class="overlay"></div>
+</div>

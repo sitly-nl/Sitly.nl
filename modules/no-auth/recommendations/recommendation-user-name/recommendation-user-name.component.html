@@ -1,0 +1,30 @@
+<div class="container">
+    <img image2x="recommendations/illustration" />
+
+    <div class="text-container">
+        <div class="title">
+            {{ 'recommendations.askAnyParentForReview' | translate }}
+        </div>
+        <div class="subtitle">
+            {{ 'recommendations.moreReviewsPlaceProfileHigher' | translate }}
+        </div>
+    </div>
+
+    <input
+        #name
+        type="text"
+        class="form-control text-input"
+        [class.populated]="name.value.length > 0"
+        [class.error]="hasError"
+        placeholder="{{ 'recommendations.firstNameOfParent' | translate }}"
+        (keyup)="onNameChange()"
+    />
+
+    <button class="btn-default btn-continue" (click)="next()">
+        {{ 'premium.continue' | translate }}
+    </button>
+
+    <div class="note">
+        {{ 'recommendations.takesParentOneMinute' | translate }}
+    </div>
+</div>

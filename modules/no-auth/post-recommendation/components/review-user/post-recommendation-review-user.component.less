@@ -1,0 +1,129 @@
+@import (reference) "includes";
+
+.review-container {
+    position: relative;
+    min-height: 100%;
+    overflow: auto;
+
+    .background-layer {
+        position: absolute;
+        inset: 0;
+        padding-top: 180px;
+        display: flex;
+        flex-direction: column;
+        z-index: -1;
+
+        &::before {
+            content: "";
+            order: 1;
+            height: 27px;
+            width: 100%;
+            .background("post-recommendation/background-blue-top");
+            background-size: cover;
+        }
+
+        &::after {
+            content: "";
+            flex: 1;
+            order: 2;
+            background-color: @secondary-500;
+        }
+    }
+
+    .content-container {
+        display: flex;
+        flex-direction: column;
+
+        .picture-container {
+            padding: 40px 24px;
+        }
+    }
+
+    .mobile({
+        padding-bottom: 40px;
+
+        .content-container {
+            width: 100%;
+        }
+    });
+
+    .desktop({
+        padding: 48px 80px 80px;
+        background-color: @secondary-500;
+
+        .content-container {
+            width: 500px;
+            margin: auto;
+            align-items: center;
+        }
+    });
+
+    .header {
+        margin-top: 40px;
+        .bold-heading();
+        text-align: center;
+
+        .mobile({
+            font-size: 2.4rem;
+        });
+
+        .desktop({
+            font-size: 3.6rem;
+        });
+    }
+
+    system-button {
+        display: block;
+
+        .mobile({
+            margin: 0 @spacing-2xl;
+        });
+
+        .desktop({
+            width: 100%;
+        });
+    }
+
+    textarea {
+        position: relative;
+        background-color: white;
+        height: 140px;
+        display: block;
+        .body-text();
+        font-size: 1.6rem;
+
+        &:focus,
+        &:active {
+            outline: none;
+        }
+
+        .mobile({
+            margin: @spacing-xl @spacing-2xl @spacing-m;
+        });
+
+        .desktop({
+            margin: @spacing-xl 0;
+            width: 100%;
+        });
+
+        &.error {
+            border-color: @error-500;
+        }
+    }
+
+    .error-message {
+        color: @error-500;
+        font-size: 1.6rem;
+
+        .mobile({
+            margin: 0 @spacing-2xl @spacing-m;
+        });
+
+        .desktop({
+            margin: 0 0 @spacing-xl;
+            width: 100%;
+            text-align: left;
+            transform: translateY(-8px);
+        });
+    }
+}

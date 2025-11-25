@@ -1,0 +1,38 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+
+.modal-content-container {
+    margin-top: 0;
+}
+
+.toolbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.btn-info {
+            .background("_old/info", "png");
+        }
+
+        .btn-back {
+            img {
+                width: 12px;
+                object-fit: contain;
+                height: auto;
+                margin: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,73 @@
+@import (reference) "includes";
+@import "~app/modules/recommendations/recommendations.common.less";
+
+.content-container {
+    padding: 60px 55px;
+}
+
+.label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: @neutral-900;
+}
+
+.message {
+    font-weight: 300;
+    line-height: 1.7;
+    color: @neutral-900;
+}
+
+.email-address-container {
+    margin-top: 16px;
+}
+
+.note-container {
+    margin-top: 9px;
+}
+
+.note {
+    font-style: italic;
+    .font-size(1.2);
+    color: @neutral-900;
+    vertical-align: middle;
+}
+
+.note-icon {
+    display: inline-block;
+    width: 14px;
+    height: 17px;
+    margin-right: 8px;
+    .background("_old/lock_icon", "png");
+    vertical-align: middle;
+}
+
+input[type="text"] {
+    outline: none;
+    appearance: none;
+    border: solid 1px @neutral-900;
+    border-radius: 16px;
+    color: @neutral-900;
+    font-weight: bold;
+    padding: 9px 13px;
+    width: 100%;
+
+    &::placeholder {
+        color: @neutral-500;
+        font-weight: 300;
+    }
+}
+
+.screen-buttons {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+.btn-default {
+    padding: 8px 38px;
+    color: #fff;
+    width: fit-content;
+    .font-size(1.6);
+    line-height: 1;
+}

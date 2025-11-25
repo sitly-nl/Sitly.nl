@@ -1,0 +1,43 @@
+@import (reference) "includes";
+
+.rating-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn-star {
+        &:not(.clickable) {
+            cursor: default;
+        }
+
+        .mobile({
+            width: 48px;
+            height: 48px;
+            background-position: center;
+            background-size: 44px 42px;
+        });
+
+        .desktop({
+            width: 64px;
+            height: 64px;
+            background-position: center;
+            background-size: 58px 56px;
+        });
+
+        &.yellow {
+            .background("post-recommendation/star-yellow-unfilled");
+
+            &.filled {
+                .background("post-recommendation/star-yellow-filled");
+            }
+        }
+
+        &.dark {
+            .background("post-recommendation/star-dark-unfilled");
+
+            &.filled {
+                .background("post-recommendation/star-dark-filled");
+            }
+        }
+    }
+}

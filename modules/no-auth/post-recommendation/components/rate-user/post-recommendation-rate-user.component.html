@@ -1,0 +1,32 @@
+<div class="rate-container">
+    <post-recommendation-greeting
+        [title]="'rate.hi'"
+        [titleArgs]="{ name: data.parentFirstName }"
+        [subtitle]="'rate.sitterBabysatForYou'"
+        [subtitleArgs]="{ name: data.fosterName, gender: data.fosterGender }"
+    >
+    </post-recommendation-greeting>
+
+    <div class="rating-container">
+        <post-recommendation-profile-picture [avatarUrl]="data.fosterAvatar" [gender]="data.fosterGender">
+        </post-recommendation-profile-picture>
+
+        <div class="header">{{ 'rate.howDidSitterDo' | translate: { name: data.fosterName } }}</div>
+        <div class="message">{{ 'rate.tapStarsToGiveRating' | translate }}</div>
+
+        <post-recommendation-rating-bar [hoverable]="true" (rate)="rate.emit($event)"></post-recommendation-rating-bar>
+    </div>
+
+    <div class="sitly-container">
+        <div class="text-container">
+            <div class="header">{{ 'rate.whatIsSitly' | translate }}</div>
+            <div class="message">{{ 'rate.sitlyDescription' | translate }}</div>
+        </div>
+        @if (isDesktop()) {
+            <div class="img-placeholder"></div>
+            <div class="img-container">
+                <img src="assets/images/post-recommendation/sitly-illustration.png" />
+            </div>
+        }
+    </div>
+</div>

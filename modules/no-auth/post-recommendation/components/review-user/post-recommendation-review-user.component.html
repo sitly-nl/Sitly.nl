@@ -1,0 +1,29 @@
+<div class="review-container">
+    @if (!isDesktop()) {
+        <div class="background-layer"></div>
+    }
+
+    <div class="content-container">
+        <div class="picture-container">
+            <post-recommendation-profile-picture [avatarUrl]="data.fosterAvatar" [gender]="data.fosterGender">
+            </post-recommendation-profile-picture>
+        </div>
+
+        <post-recommendation-rating-bar color="yellow" [rating]="rating" [clickable]="false"></post-recommendation-rating-bar>
+
+        <div class="header">
+            {{ 'review.writeHowSitterDid' | translate: { name: data.fosterName } }}
+        </div>
+
+        <textarea #text [disabled]="loading" [class.error]="hasError" (keyup)="onKeyup(text.value)"></textarea>
+        @if (hasError) {
+            <div class="error-message">
+                {{ 'review.textLengthError' | translate }}
+            </div>
+        }
+
+        <system-button [loading]="loading" (click)="postReview(text.value)">
+            {{ 'review.cta.addReview' | translate }}
+        </system-button>
+    </div>
+</div>

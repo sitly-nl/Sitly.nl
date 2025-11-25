@@ -1,0 +1,62 @@
+@if (authorized) {
+    <div class="instagram-container" id="instagram-container">
+        <div class="instagram-toolbar">
+            <div class="side-item">
+                @if (selectedMedia) {
+                    <button class="btn-back" (click)="selectedMedia = undefined">
+                        <img src="assets/images/arrow-left.svg" alt="back" />
+                        {{ 'main.back' | translate }}
+                    </button>
+                }
+            </div>
+            <img class="logo" />
+            <div class="side-item align-right">
+                <button class="btn-close" (click)="close()">
+                    <img />
+                </button>
+            </div>
+        </div>
+
+        <div class="media-container">
+            @if (mediaLoading) {
+                <div class="album-loader"></div>
+            }
+
+            @if (!mediaLoading && !selectedMedia) {
+                <div
+                    class="media-scroll-container"
+                    id="media-container"
+                    [class.desktop]="isDesktop()"
+                    infinite-scroll
+                    [infiniteScrollDistance]="4"
+                    [infiniteScrollThrottle]="100"
+                    [immediateCheck]="true"
+                    [scrollWindow]="false"
+                    (scrolled)="checkIfNeedLoadMore()"
+                >
+                    @for (mediaItem of media; track mediaItem.id) {
+                        <div class="media-item" (click)="onMediaClicked(mediaItem)">
+                            <div>
+                                <img [src]="mediaItem.url" class="picture" />
+                                @if (mediaItem.isAlbum) {
+                                    <div class="album-overlay"></div>
+                                    <img class="icon-album" />
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (!mediaLoading && selectedMedia) {
+                <div class="media-scroll-container">
+                    @for (mediaItem of selectedMediaChildren; track mediaItem.id) {
+                        <div class="media-item" (click)="onMediaClicked(mediaItem)">
+                            <img [src]="mediaItem.url" class="picture" />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,89 @@
+@import (reference) "includes";
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .step-container {
+        flex-grow: 1;
+    }
+}
+
+.bottom-bar {
+    background-color: white;
+    border-top: 1px solid @neutral-300;
+    display: flex;
+    align-items: center;
+    z-index: @z-index-high-minimum;
+
+    .copyright {
+        display: flex;
+        font-size: 1.6rem;
+    }
+
+    .social-media {
+        display: flex;
+        .flex-gap(@spacing-2xl);
+
+        a {
+            height: 24px;
+            width: 24px;
+
+            &.facebook {
+                .background("post-recommendation/facebook");
+            }
+
+            &.instagram {
+                .background("post-recommendation/instagram");
+            }
+
+            &.snapchat {
+                .background("post-recommendation/snapchat");
+            }
+
+            &.tiktok {
+                .background("post-recommendation/tiktok");
+            }
+        }
+    }
+
+    .mobile({
+        padding: 40px 24px 56px;
+        flex-direction: column-reverse;
+
+        .separator {
+            height: 1px;
+            width: 100%;
+            background-color: @neutral-100;
+            margin: 30px 0;
+        }
+
+        .apps-container {
+            display: flex;
+            .flex-gap(@spacing-l);
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+
+            a {
+                flex: 1;
+                height: 52px;
+                max-width: 50%;
+
+                &.google-play {
+                    .background("post-recommendation/google-play", "png");
+                }
+
+                &.app-store {
+                    .background("post-recommendation/app-store", "png");
+                }
+            }
+        }
+    });
+
+    .desktop({
+        padding: 40px 80px;
+        justify-content: space-between;
+    });
+}

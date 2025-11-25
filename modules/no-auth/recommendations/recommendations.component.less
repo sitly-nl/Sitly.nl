@@ -1,0 +1,53 @@
+@import "~app/modules/recommendations/recommendations.common.less";
+
+.mobile({
+    .modal-content-container {
+        background-color: #f6f8f8;
+    }
+});
+
+.desktop({
+    .toolbar {
+        &.reverse {
+            flex-direction: row-reverse;
+        }
+    }
+
+    .modal-content-container {
+        display: block;
+        width: 400px;
+        height: auto;
+        position: relative;
+        background-color: #fff;
+        border-radius: 24px;
+    }
+
+    .content-container {
+        padding: 0;
+        height: 100%;
+    }
+
+    .btn-question {
+        position: absolute;
+        top: 17px;
+        right: 25px;
+        width: 33px;
+        height: 33px;
+        border-radius: 16px;
+        border: solid 1px @neutral-900;
+        color: @neutral-900;
+        text-align: center;
+        .font-size(1.8);
+        font-weight: bold;
+        padding-top: 4px;
+        text-decoration: none;
+    }
+
+    .btn-close {
+        transform: translateX(8px) translateY(-8px);
+
+        img {
+            margin: 0;
+        }
+    }
+});

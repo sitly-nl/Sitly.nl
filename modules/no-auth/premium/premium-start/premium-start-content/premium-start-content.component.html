@@ -1,0 +1,70 @@
+<overlay-template [data]="overlayData()">
+    <div class="content-wrapper" [class.flex-space-between]="featureService.showPremiumOverlayNewDesign">
+        @if (featureService.showPremiumOverlayNewDesign) {
+            <premium-text />
+        } @else {
+            <premium-swiper [slideBorder]="false"></premium-swiper>
+        }
+
+        <div class="subscriptions-container">
+            @for (subscription of subscriptions(); track subscription.id) {
+                <div class="subscription-container">
+                    @if (subscription.coupon) {
+                        <div class="discount-badge">
+                            {{ 'coupons.discount.badge' | translate: { percentage: subscription.coupon.discountPercentage } }}
+                        </div>
+                    }
+                    <single-select-button
+                        (click)="selectSubscription(subscription)"
+                        [boldHeading]="subscription.duration"
+                        title="{{
+                            (subscription.duration === 1 ? 'premium.1monthAccess' : 'premium.manyMonthsAccess') | translate | ucfirst
+                        }}"
+                        [subtitle]="
+                            !subscription.coupon
+                                ? (subscription.pricePerUnit * subscription.duration | number: '1.0-2') +
+                                  (subscription.duration > 1
+                                      ? ' (' +
+                                        ('premium.perMonth' | translate: { amount: subscription.pricePerUnit | number: '1.0-2' }) +
+                                        ')'
+                                      : '')
+                                : ''
+                        "
+                    >
+                        @if (subscription.coupon) {
+                            <div subtitle class="discount-subtitle">
+                                <span class="new-price">
+                                    {{
+                                        (subscription.pricePerUnit *
+                                            subscription.duration *
+                                            (100 - subscription.coupon.discountPercentage)) /
+                                            100 | number: '1.0-2'
+                                    }}
+                                    @if (subscription.duration > 1) {
+                                        <span>
+                                            {{
+                                                'coupons.discount.perMonth'
+                                                    | translate
+                                                        : {
+                                                              price:
+                                                                  (subscription.pricePerUnit *
+                                                                      (100 - subscription.coupon.discountPercentage)) /
+                                                                      100 | number: '1.0-2',
+                                                          }
+                                            }}
+                                        </span>
+                                    }
+                                </span>
+                                <span class="old-price">{{ subscription.pricePerUnit * subscription.duration | number: '1.0-2' }}</span>
+                            </div>
+                        }
+                    </single-select-button>
+                </div>
+            }
+
+            @if (isAndroidApp) {
+                <premium-terms></premium-terms>
+            }
+        </div>
+    </div>
+</overlay-template>

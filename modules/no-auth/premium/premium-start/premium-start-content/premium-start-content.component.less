@@ -1,0 +1,81 @@
+@import "includes";
+
+.content-wrapper {
+    .desktop({
+        padding: 0 @spacing-4xl;
+    });
+
+    &.flex-space-between {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .mobile({
+            height: 100%;
+            justify-content: space-between;
+        });
+
+        .subscriptions-container {
+            .mobile({
+                width: 100%;
+            });
+        }
+    }
+}
+
+.subscriptions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .flex-gap(@spacing-m, "column");
+
+    .mobile({
+        padding: 0 40px;
+    });
+
+    .desktop({
+        width: 480px;
+    });
+}
+
+.subscription-container {
+    width: 100%;
+    position: relative;
+
+    premium-terms {
+        display: block;
+        margin-top: 12px;
+    }
+
+    @badge-height: 18px;
+
+    .discount-badge {
+        position: absolute;
+        z-index: @z-index-high-minimum;
+        height: @badge-height;
+        top: -0.5 * @badge-height;
+        left: 20px;
+        padding: 0 4px;
+        border-radius: 4px;
+        background-color: @primary-500;
+        color: white;
+        line-height: @badge-height;
+        font-weight: 700;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+
+    .discount-subtitle {
+        font-size: 1.4rem;
+
+        .new-price {
+            color: @primary-500;
+        }
+
+        .old-price {
+            color: @neutral-700;
+            font-weight: normal;
+            text-decoration: line-through;
+        }
+    }
+}

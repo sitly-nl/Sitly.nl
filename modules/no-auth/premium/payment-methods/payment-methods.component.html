@@ -1,0 +1,114 @@
+<div class="payment-methods-container">
+    <toolbar
+        [leftItems]="showErrorOfType === 'recurringPayment' ? [] : [ToolbarItem.back]"
+        [rightItems]="showErrorOfType === 'recurringPayment' ? [ToolbarItem.close] : []"
+        (itemSelected)="onToolbarItemSelected($event)"
+    ></toolbar>
+
+    <div class="payment-methods-content">
+        <div class="premium-content">
+            @if (subscription) {
+                <div class="premium-header">
+                    @if (showErrorOfType) {
+                        <div class="header-error">
+                            <div class="title" [class.restore-recurring]="showErrorOfType !== 'initialPayment'">
+                                {{
+                                    'premium.paymentMethods.' +
+                                        (showErrorOfType === 'initialPayment' ? 'paymentFailure' : 'restoringRecurringPayment') +
+                                        '.title' | translate
+                                }}
+                            </div>
+                            <div class="subtitle">
+                                {{
+                                    'premium.paymentMethods.' +
+                                        (showErrorOfType === 'initialPayment' ? 'paymentFailure' : 'restoringRecurringPayment') +
+                                        '.subTitle' | translate
+                                }}
+                            </div>
+                        </div>
+                    }
+
+                    @if (!showErrorOfType) {
+                        <div class="header-title">
+                            <rating-bar
+                                [rating]="rating / 2"
+                                [text]="rating | number: '0.1-1'"
+                                [starSize]="isDesktop() ? 14 : 12"
+                                textColor="#333"
+                                [starsHaveBorder]="true"
+                                [trackLabel]="{ category: 'premium', type: 'miss', description: 'payment-methods-stars' }"
+                            >
+                            </rating-bar>
+                            <div class="title-text">
+                                @if (authUser.isParent) {
+                                    {{ 'premium.paymentMethods.fullAccess.parents' | translate }}
+                                }
+                                @if (!authUser.isParent) {
+                                    {{ 'premium.paymentMethods.fullAccess.babysitters' | translate }}
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+            <div #hook id="dropin"></div>
+
+            @if (customGooglePayFlow && googlePayMethod) {
+                <ul class="custom-payment-methods">
+                    <li class="adyen-checkout__payment-method google-pay-br" [class.expended]="expandedGooglePay">
+                        <button class="btn-expand-google-pay" (click)="expandedGooglePay = !expandedGooglePay">
+                            <img class="paymentmethod-logo" src="app/images/paymentMethods/{{ googlePayMethod.type }}.png" />
+                            {{ googlePayMethod.name }}
+                            @if (!expandedGooglePay) {
+                                <img class="img-arrow" src="assets/images/arrow-right-neutral-500.svg" />
+                            }
+                        </button>
+
+                        @if (expandedGooglePay) {
+                            <form class="form-group social-security-number" [formGroup]="cardForm">
+                                <label
+                                    for="social-security-number"
+                                    [class.invisible]="socialSecurityNumberInput.value.length === 0"
+                                    [class.error]="socialSecurityNumberControl.dirty && socialSecurityNumberControl.invalid"
+                                >
+                                    {{ 'premium.socialSecurityNumber' | translate }}
+                                </label>
+                                <input
+                                    #socialSecurityNumberInput
+                                    type="text"
+                                    class="input-wrapper"
+                                    formControlName="socialSecurityNumber"
+                                    id="social-security-number"
+                                    autocomplete="off"
+                                    name="socialSecurityNumber"
+                                    placeholder="{{ 'premium.socialSecurityNumber' | translate }}"
+                                    [class.filled]="socialSecurityNumberControl.dirty && socialSecurityNumberControl.valid"
+                                    [class.error]="socialSecurityNumberControl.dirty && socialSecurityNumberControl.invalid"
+                                />
+                                <div
+                                    class="green-check"
+                                    [class.invisible]="socialSecurityNumberControl.pristine || socialSecurityNumberControl.invalid"
+                                ></div>
+                                @if (socialSecurityNumberControl.invalid && socialSecurityNumberControl.dirty) {
+                                    <div class="input-error">
+                                        {{ 'premium.error.emptySocialSecurityNumber' | translate }}
+                                    </div>
+                                }
+                            </form>
+                        }
+                        <div id="googlepay-container" class="googlepay-container" [class.expanded]="expandedGooglePay"></div>
+                    </li>
+                </ul>
+            }
+
+            @if (showErrorOfType === 'initialPayment') {
+                <system-button class="btn-reload" (click)="restart()">
+                    {{ 'premium.retry.cta' | translate }}
+                </system-button>
+            }
+        </div>
+
+        <premium-terms [renewDate]="renewDate" [recurringPayment]="showErrorOfType === 'recurringPayment'"></premium-terms>
+    </div>
+</div>

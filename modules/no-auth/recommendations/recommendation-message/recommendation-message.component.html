@@ -1,0 +1,59 @@
+<div class="page-container">
+    <div
+        class="title"
+        innerText="{{ 'recommendations.askParentForReviewBySendingMessage' | translate: { firstName: name | ucfirst } }}"
+    ></div>
+
+    <form #messageForm="ngForm" class="message-form">
+        <div>
+            <div class="textarea-container">
+                <textarea
+                    id="messageText"
+                    ngModel
+                    name="messageText"
+                    #messageText
+                    class="form-control message"
+                    [(ngModel)]="initMessage"
+                ></textarea>
+
+                <div class="recommendation-link">
+                    {{ recommendationLink }}
+                </div>
+            </div>
+
+            <div class="link-note">
+                <img src="app/images/recommendations/info-yellow.svg" />{{ 'recommendations.linkCouldBeSharedWithOneParent' | translate }}
+            </div>
+        </div>
+    </form>
+
+    @if (!isDesktop()) {
+        <div class="send-options-container">
+            @for (sharingMethod of sharingMethods; track sharingMethod) {
+                <button class="btn-send-option" (click)="share(sharingMethod)">
+                    <div class="method-img method-{{ sharingMethod }}">
+                        <img image2x="recommendations/{{ sharingMethod }}" />
+                    </div>
+                    <div>{{ 'recommendations.option' + (sharingMethod | ucfirst) | translate }}</div>
+                </button>
+            }
+        </div>
+        <div class="or">{{ 'chat.or' | translate }}</div>
+    }
+
+    @if (isDesktop()) {
+        <button class="btn btn-send btn-email" (click)="share(ShareMethod.email)">
+            <div class="btn-content">
+                <div>{{ 'recommendations.sendViaEmail' | translate }}</div>
+                <img image2x="recommendations/email" />
+            </div>
+        </button>
+    }
+
+    <button class="btn btn-send btn-copy" (click)="share(ShareMethod.copy)">
+        <div class="btn-content">
+            <div>{{ 'recommendations.copyMessage' | translate }}</div>
+            <img image2x="recommendations/copy" />
+        </div>
+    </button>
+</div>

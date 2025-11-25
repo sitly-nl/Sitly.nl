@@ -1,0 +1,64 @@
+<ng-container>
+    @if (!hasPhoto) {
+        <div class="add-photo-container" (click)="showPhotoOverlay()">
+            <button class="btn-pulse" [trackLabel]="{ category: trackCategory, type: 'button', description: 'photo-upload' }">
+                <img />
+            </button>
+
+            <div class="description">
+                {{ (authUser.isParent ? 'photo.description.parent' : 'photo.description.foster') | translate }}
+            </div>
+
+            <div class="source-container">
+                <img class="gallery" />
+                <img class="facebook" />
+                <img class="instagram" />
+            </div>
+        </div>
+    }
+
+    @if (hasPhoto) {
+        <div class="photos-container">
+            @if (selectedPhoto) {
+                <div class="selected-photo">
+                    <div>
+                        <img [src]="selectedPhotoUrl" />
+                        <button
+                            class="btn-delete-photo"
+                            (click)="showDeletePhotoOverlay(selectedPhoto.id)"
+                            [trackLabel]="{ category: trackCategory, type: 'button', description: 'photo-delete' }"
+                        ></button>
+                        @if (selectedPhoto.id !== authUser.photos[0].id) {
+                            <button
+                                class="btn-use-main"
+                                (click)="usePhotoAsMain(selectedPhoto.id)"
+                                [trackLabel]="{ category: trackCategory, type: 'button', description: 'photo-set-main' }"
+                            >
+                                <span>{{ 'photo.cta.useAsMain' | translate }}</span>
+                            </button>
+                        }
+                    </div>
+                </div>
+            }
+            <div class="thumbnails-container">
+                @for (photo of authUser.photos; track photo.id) {
+                    <div class="thumbnail" [class.selected]="selectedPhoto?.id === photo.id" (click)="selectedPhoto = photo">
+                        <img [src]="photo.links.photo" />
+                    </div>
+                }
+                @if (authUser.photos.length < 4) {
+                    <div
+                        class="btn-add-photo"
+                        (click)="showPhotoOverlay()"
+                        [trackLabel]="{ category: trackCategory, type: 'button', description: 'photo-add' }"
+                    >
+                        <div class="btn-add-photo-content">
+                            <img />
+                            <span>{{ 'photo.cta.addPhoto' | translate }}</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</ng-container>

@@ -1,0 +1,216 @@
+@import (reference) "includes";
+
+.payment-methods-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: @neutral-100;
+    transition: all @animation-duration ease-out;
+    position: relative;
+}
+
+.payment-methods-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+    overflow: auto;
+    width: 100%;
+
+    premium-terms {
+        margin: 40px 0;
+    }
+
+    .premium-content {
+        width: 100%;
+
+        .premium-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+
+            .header-error {
+                text-align: center;
+
+                .title {
+                    font-weight: 700;
+
+                    &.restore-recurring {
+                        color: @error-500;
+                    }
+
+                    .mobile({
+                        font-size: 1.8rem;
+                    });
+
+                    .desktop({
+                        font-size: 2.4rem;
+                    });
+                }
+
+                .subtitle {
+                    color: @neutral-700;
+                    margin-top: 12px;
+                }
+            }
+
+            .header-title {
+                flex: 1;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .title-text {
+                    display: flex;
+                    flex-flow: row wrap;
+                    justify-content: center;
+                    align-items: center;
+
+                    .desktop({
+                        margin-top: 7px;
+                    });
+                }
+
+                .mobile({
+                    rating-bar {
+                        margin-bottom: 14px;
+                    }
+                });
+
+                .desktop({
+                    rating-bar {
+                        margin-top: 4px;
+                    }
+                });
+            }
+        }
+
+        .btn-reload {
+            margin-top: 20px;
+        }
+
+        .mobile({
+            margin-top: 20px;
+        });
+
+        .desktop({
+            margin-top: 40px;
+        });
+    }
+
+    > * {
+        max-width: 460px;
+    }
+}
+
+.custom-payment-methods {
+    flex: 1;
+
+    .google-pay-br {
+        height: auto;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-top: 10px;
+        min-height: 58px;
+        cursor: pointer;
+
+        &.expended {
+            border: 2px solid @neutral-900;
+        }
+
+        .btn-expand-google-pay {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            line-height: 58px;
+
+            .paymentmethod-logo {
+                height: auto;
+                width: 30px;
+                margin-left: 15px;
+                margin-right: 17px;
+            }
+
+            .img-arrow {
+                margin: 0 10px 0 auto;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .form-group {
+            width: 100%;
+            padding: 4px 16px;
+            line-height: normal;
+            position: relative;
+
+            .input-error {
+                font-size: 1.2rem;
+                margin-top: 2px;
+                font-weight: normal;
+                color: @error-500;
+                text-align: center;
+            }
+
+            .input-wrapper {
+                height: 40px;
+                display: flex;
+                border-radius: 16px;
+                border: solid 1px @neutral-500;
+                padding: 5px 8px;
+
+                &.filled {
+                    border-color: @neutral-900;
+                    color: @neutral-900;
+                }
+
+                &.error {
+                    border-color: @error-500;
+                }
+            }
+
+            label {
+                top: -2px;
+                left: 25px;
+                font-weight: normal;
+                visibility: visible;
+                position: absolute;
+                color: @neutral-900;
+                background-color: #fff;
+                padding: 0 4px;
+                font-size: 1rem;
+
+                &.invisible {
+                    visibility: hidden;
+                }
+
+                &.error {
+                    color: @error-500;
+                }
+            }
+
+            .green-check {
+                position: absolute;
+                top: 23px;
+                right: 30px;
+                width: 12px;
+                height: 10px;
+                .background("checkmark-green");
+            }
+        }
+
+        .googlepay-container {
+            width: 100%;
+            display: none;
+
+            &.expanded {
+                padding: 16px;
+                display: block;
+            }
+        }
+    }
+}
