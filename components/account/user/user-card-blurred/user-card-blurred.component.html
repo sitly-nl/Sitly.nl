@@ -1,0 +1,19 @@
+<div class="user-card-container">
+    <div class="user-avatar">
+        <img avatar [user]="user()" [size]="100" />
+    </div>
+    <div class="column-right" #columnRight>
+        <div class="user-info">
+            <div class="user-name"></div>
+            @if (!user().isParent) {
+                <div>• {{ 'profile.yearsOld' | translate: { years: user().age } }}</div>
+            }
+            <div>• {{ 'main.distanceFromYou' | translate: { distance: user().distance + ' km' } }}</div>
+        </div>
+        <div class="btn-view-container" [class.stretched]="buttonState() === 'stretched'">
+            <system-button [buttonType]="'primary-small'" [iconLeft]="'profile/lock'" (click)="viewClicked.emit(user().id)">{{
+                'main.view' | translate
+            }}</system-button>
+        </div>
+    </div>
+</div>

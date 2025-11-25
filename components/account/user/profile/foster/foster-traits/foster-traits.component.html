@@ -1,0 +1,15 @@
+<div class="profile-block">
+    <div class="block-header"><img image2x="icon-traits" /> {{ 'profile.traits.title.' + (user.gender ?? 'female') | translate }}</div>
+
+    @if (user.isBabysitter) {
+        <div class="profile-property-container">
+            <div class="profile-property-value">
+                @for (trait of user.fosterProperties.traits; track trait) {
+                    <div class="profile-property-value-item checked">
+                        {{ 'profile.traits.' + trait | translate }}
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

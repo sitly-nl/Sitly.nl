@@ -1,0 +1,48 @@
+@import (reference) "includes";
+
+.days {
+    display: flex;
+    gap: 4px;
+
+    > li {
+        position: relative;
+        display: inline-flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
+        font-weight: normal;
+        line-height: 1.5;
+        color: @neutral-500;
+        background: @neutral-100;
+        border-radius: 4px;
+
+        &.active {
+            color: #fff;
+            background-color: @neutral-700;
+        }
+    }
+}
+
+.mobile({
+    .days {
+        > li {
+            flex: 1;
+            position: relative;
+            font-size: 1.2rem;
+            height: 30px;
+
+            img {
+                margin-top: -2px;
+            }
+        }
+    }
+});
+
+.desktop({
+    .days {
+        > li {
+            height: 36px;
+            width: 28px;
+        }
+    }
+});

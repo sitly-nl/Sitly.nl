@@ -1,0 +1,50 @@
+@if (!isDesktop() && user.similarUsers.length > 0) {
+    <div class="scroll-snap-container" [class.single-card]="user.similarUsers.length === 1">
+        @for (similarUser of user.similarUsers; track similarUser.id; let i = $index) {
+            <div class="scroll-snap-slide">
+                <div
+                    user-card
+                    [user]="similarUser"
+                    [size]="'compact'"
+                    [rounded]="true"
+                    [isFavorite]="similarUser.isFavorite"
+                    [showCalendar]="false"
+                    (onProfileOpen)="onUserClick(similarUser, i)"
+                ></div>
+            </div>
+        }
+    </div>
+}
+
+@if (isDesktop()) {
+    <div class="similar-users-container">
+        <div class="similar-users-content">
+            <div class="similar-users-header">
+                <div class="title">
+                    {{
+                        'profile.similarUsers.header'
+                            | translate: { role: (user.isParent ? 'main.parents' : 'main.babysitters') | translate | lowercase }
+                    }}
+                </div>
+                @if (showScrollButtons()) {
+                    <div class="similar-buttons-container">
+                        <button [disabled]="!canScrollPrevious()" class="similar-navigate-button" (click)="onPrevious()">
+                            <img
+                                [src]="canScrollPrevious() ? 'assets/images/arrow-left.svg' : 'assets/images/arrow-left-neutral-500.svg'"
+                            />
+                        </button>
+                        <button [disabled]="!canScrollNext()" class="similar-navigate-button" (click)="onNext()">
+                            <img [src]="canScrollNext() ? 'assets/images/arrow-right.svg' : 'assets/images/arrow-right-neutral-500.svg'" />
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <div class="similar-users-grid" #similarUsersGrid>
+                @for (similarUser of user.similarUsers; track similarUser.id) {
+                    <div user-card [user]="similarUser" [size]="'compact'" [rounded]="true"></div>
+                }
+            </div>
+        </div>
+    </div>
+}

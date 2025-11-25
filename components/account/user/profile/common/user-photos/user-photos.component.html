@@ -1,0 +1,30 @@
+<div class="photos-container">
+    <div>
+        @if (images.length === 0) {
+            <img avatar [user]="user" [size]="500" />
+        }
+        @if (images.length > 0) {
+            <div #scrollSnapContainer class="scroll-snap-container">
+                @for (image of images; track image) {
+                    <div class="scroll-snap-slide">
+                        <img avatar [url]="image" [size]="500" />
+                    </div>
+                }
+            </div>
+        }
+        @if (showReportPhotoButton) {
+            <div class="btn-report" (click)="onReportPhoto()"><span class="icon"></span> {{ 'profile.reportPhoto' | translate }}</div>
+        }
+
+        @if (images.length > 1) {
+            <div class="scroll-progress">{{ shownIndex + 1 }} / {{ images.length }}</div>
+        }
+        <!-- Desktop controls -->
+        @if (isDesktop() && images.length > 1 && shownIndex > 0) {
+            <button class="carousel-previous carousel-button" (click)="onPrevious()"></button>
+        }
+        @if (isDesktop() && images.length > 1 && shownIndex < images.length - 1) {
+            <button class="carousel-next carousel-button" (click)="onNext()"></button>
+        }
+    </div>
+</div>

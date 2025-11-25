@@ -1,0 +1,87 @@
+<div #componentContainer>
+    <div class="actions-container" [class.mobile-view]="view === 'mobile'" [class.simple-view]="view === 'desktop-simple'">
+        <div class="contact-buttons-container">
+            @if (!ownProfile) {
+                @if (showProfileSent) {
+                    <system-button [buttonType]="view === 'desktop-simple' ? 'secondary-small' : 'secondary'" [disabled]="true">
+                        {{ 'profile.cta.profileSent' | translate }}
+                    </system-button>
+                }
+                @if (showInterested) {
+                    <system-button
+                        #interestedBtn
+                        [loading]="inviteLoading"
+                        [buttonType]="
+                            authUser.isPremium
+                                ? view === 'desktop-simple'
+                                    ? 'thirdly-small'
+                                    : 'thirdly'
+                                : view === 'desktop-simple'
+                                  ? 'primary-small'
+                                  : 'primary'
+                        "
+                        (click)="onInterestedClick()"
+                        [trackLabel]="{ category: 'invites', type: 'button', description: 'interested' }"
+                    >
+                        {{ 'profile.cta.interested' | translate }}
+                    </system-button>
+                }
+                @if (showMessage) {
+                    <system-button
+                        [buttonType]="view === 'desktop-simple' ? 'primary-small' : 'primary'"
+                        [iconLeft]="canChat ? undefined : 'profile/lock'"
+                        (click)="action.emit(ProfileActionType.message)"
+                        [trackLabel]="{ category: 'profile', type: 'button', description: 'send-message' }"
+                    >
+                        {{ 'profile.cta.message' | translate }}
+                    </system-button>
+                }
+            }
+        </div>
+
+        @if (isDesktop()) {
+            <div class="icon-buttons-container">
+                @if (showViewMapLink) {
+                    <button
+                        class="btn-action"
+                        (click)="action.emit(ProfileActionType.map)"
+                        title="{{ 'profile.viewMap' | translate }} ({{ user.distance }} km)"
+                    >
+                        <img [image2x]="'icon-pin'" />
+                    </button>
+                }
+
+                @if (showFavoriteButton) {
+                    <button
+                        class="btn-action"
+                        (click)="isFavorite.set(!isFavorite()); action.emit(ProfileActionType.save)"
+                        title="{{ (isFavorite() ? 'main.saved' : 'main.save') | translate }}"
+                    >
+                        <img [src]="btnFavoriteIcon" />
+                    </button>
+                }
+
+                @if (showShareButton) {
+                    <button
+                        class="btn-action"
+                        (click)="action.emit(ProfileActionType.share)"
+                        title="{{ (ownProfile ? 'profile.shareYourProfile' : 'main.share') | translate }}"
+                    >
+                        <img src="assets/images/profile/share.svg" />
+                    </button>
+                }
+
+                @if (showOptionsButton) {
+                    <button class="btn-action" [matMenuTriggerFor]="profileMenu">
+                        <img src="assets/images/profile/options.svg" />
+                    </button>
+                    <mat-menu #profileMenu="matMenu">
+                        <button mat-menu-item (click)="action.emit(ProfileActionType.report)">
+                            {{ 'profile.reportUser' | translate: { user: user.firstName | ucfirst } }}
+                        </button>
+                    </mat-menu>
+                }
+            </div>
+        }
+    </div>
+</div>

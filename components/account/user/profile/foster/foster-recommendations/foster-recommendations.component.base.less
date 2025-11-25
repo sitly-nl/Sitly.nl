@@ -1,0 +1,106 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+@import "~app/components/user/profile/profile.common.less";
+
+button {
+    width: 100%;
+    .font-size(1.4);
+}
+
+.btn-more-recommendations {
+    padding: 10px 12px;
+}
+
+.user-recommendations-container {
+    .font-size(1.4);
+}
+
+.rating-bar-container {
+    margin-top: 8px;
+}
+
+.recommendation-container {
+    padding: @user-profile-vertical-padding-double 0 0 0;
+}
+
+.show-more-container {
+    text-align: center;
+    margin-top: 35px;
+}
+
+.recommendation-description {
+    display: block;
+    margin: 12px 0 0;
+    line-height: normal;
+}
+
+.recommendation-date {
+    .font-size(1.4);
+    color: @neutral-900;
+    margin: 10px 0 0;
+
+    .name {
+        font-weight: 600;
+    }
+}
+
+.ask-for-recommendations-container {
+    background-color: #dee9ee;
+    padding: 25px 35px 30px;
+    margin-bottom: 40px;
+    color: @neutral-900;
+    align-content: center;
+
+    &:active {
+        background-color: #c8d9e8;
+    }
+
+    .description {
+        .font-size(1.4);
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .note {
+        text-align: center;
+        font-style: italic;
+        .font-size(1.4);
+    }
+
+    .messengers {
+        margin-top: 10px;
+        display: grid;
+        width: 100%;
+        grid-template-columns: auto auto auto;
+        grid-gap: 5px;
+        justify-content: center;
+
+        .icon-medium {
+            height: 21px;
+            width: 21px;
+            object-fit: contain;
+            align-self: center;
+        }
+    }
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+
+    img {
+        height: 25px;
+        width: 25px;
+        object-fit: contain;
+        margin-right: 15px;
+    }
+}
+
+.mobile({
+    @import "./foster-recommendations.component.less";
+});
+
+.desktop({
+    @import "./foster-recommendations.component.desktop.less";
+});

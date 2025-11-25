@@ -1,0 +1,26 @@
+<div class="profile-block">
+    @if (isDesktop()) {
+        <div class="block-header big-margin">
+            <img image2x="icon-nav" />
+            {{ 'profile.userLocation' | translate: { user: user.firstName | ucfirst } }}
+        </div>
+    } @else {
+        <div class="block-header padded">
+            {{ 'profile.userLocation' | translate: { user: user.firstName | ucfirst } }}
+        </div>
+    }
+
+    <div class="block-content">
+        <div class="user-location" [class.placeholder]="!mapActivated" id="map">
+            @if (!mapActivated) {
+                <img class="map-avatar" avatar [user]="user" [size]="60" />
+            }
+
+            @if (!mapActivated) {
+                <button class="btn-activate-map" (click)="mapActivated = !mapActivated; reloadMap()">
+                    {{ 'map.showUserLocation.format' | translate: { userName: user.firstName | ucfirst } }}
+                </button>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,144 @@
+<div class="profile-block">
+    <div class="block-header" [class.big-margin]="isDesktop()">
+        <img image2x="icon-experience" />
+        {{
+            (user.isBabysitter ? 'profile.babysittingExperience' : 'profile.childmindingExperience')
+                | translate: { firstName: user.firstName | ucfirst }
+        }}
+    </div>
+
+    <div class="block-content">
+        @if (!isDesktop()) {
+            <div class="profile-property-container">
+                <div class="profile-property-header">{{ 'profile.experience.howMuch' | translate }}:</div>
+                <div class="profile-property-value">
+                    <span>
+                        @if (user.fosterProperties.yearsOfExperience === '1') {
+                            {{ 'profile.experience.oneYear' | translate }}
+                        } @else {
+                            {{
+                                'profile.experience.years'
+                                    | translate: { years: user.fosterProperties.yearsOfExperience ?? '' | experienceYears }
+                            }}
+                        }
+                    </span>
+                </div>
+            </div>
+            <div class="profile-property-container experience-with-container">
+                <div class="profile-property-header">{{ 'profile.experience.with' | translate }}:</div>
+                <div class="profile-property-value">
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.ageGroupExperience?.['0']"
+                        [class.unchecked]="!user.fosterProperties.ageGroupExperience?.['0']"
+                    >
+                        {{ 'profile.experience.withBabies' | translate }}
+                    </div>
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.ageGroupExperience?.['1-3']"
+                        [class.unchecked]="!user.fosterProperties.ageGroupExperience?.['1-3']"
+                    >
+                        {{ 'profile.experience.withToddlers' | translate }}
+                    </div>
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.ageGroupExperience?.['4-6']"
+                        [class.unchecked]="!user.fosterProperties.ageGroupExperience?.['4-6']"
+                    >
+                        {{ 'profile.experience.withKindergartners' | translate }}
+                    </div>
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.ageGroupExperience?.['7-11']"
+                        [class.unchecked]="!user.fosterProperties.ageGroupExperience?.['7-11']"
+                    >
+                        {{ 'profile.experience.withGradeSchoolers' | translate }}
+                    </div>
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.ageGroupExperience?.['12plus']"
+                        [class.unchecked]="!user.fosterProperties.ageGroupExperience?.['12plus']"
+                    >
+                        {{ 'profile.experience.withTeenagers' | translate }}
+                    </div>
+                </div>
+            </div>
+        } @else {
+            @if (hasExperience) {
+                <div class="experience-details">
+                    <div class="header">
+                        {{
+                            user.fosterProperties.yearsOfExperience && hasManyYearsExperience
+                                ? ('profile.experience.hasManyYearsExperienceWithAgeGroups'
+                                  | translate
+                                      : {
+                                            firstName: user.firstName | ucfirst,
+                                            years: user.fosterProperties.yearsOfExperience | experienceYears,
+                                        })
+                                : ('profile.experience.hasOneYearsExperienceWithAgeGroups'
+                                  | translate: { firstName: user.firstName | ucfirst })
+                        }}:
+                    </div>
+                    <div class="groups-container">
+                        @if (user.fosterProperties.ageGroupExperience?.['0']) {
+                            <div class="age-group">
+                                <img image2x="icon-baby" />
+                                <div class="group-title">{{ 'profile.experience.babies' | translate }}</div>
+                                <div class="group-description">{{ 'profile.experience.zeroOneYearsOld' | translate }}</div>
+                            </div>
+                        }
+                        @if (user.fosterProperties.ageGroupExperience?.['1-3']) {
+                            <div class="age-group">
+                                <img image2x="icon-toddler" />
+                                <div class="group-title">{{ 'profile.experience.toddlers' | translate }}</div>
+                                <div class="group-description">{{ 'profile.experience.oneThreeYearsOld' | translate }}</div>
+                            </div>
+                        }
+                        @if (user.fosterProperties.ageGroupExperience?.['4-6']) {
+                            <div class="age-group">
+                                <img image2x="icon-people-kinder" />
+                                <div class="group-title">{{ 'profile.experience.kindergartners' | translate }}</div>
+                                <div class="group-description">{{ 'profile.experience.fourSixYearsOld' | translate }}</div>
+                            </div>
+                        }
+                        @if (user.fosterProperties.ageGroupExperience?.['7-11']) {
+                            <div class="age-group">
+                                <img image2x="icon-grade-schooler" />
+                                <div class="group-title">{{ 'profile.experience.gradeSchoolers' | translate }}</div>
+                                <div class="group-description">{{ 'profile.experience.sevenElevenYearsOld' | translate }}</div>
+                            </div>
+                        }
+                        @if (user.fosterProperties.ageGroupExperience?.['12plus']) {
+                            <div class="age-group">
+                                <img image2x="icon-teenager" />
+                                <div class="group-title">{{ 'profile.experience.teenagers' | translate }}</div>
+                                <div class="group-description">{{ 'profile.experience.twelvePlusYearsOld' | translate }}</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        @if (user.fosterProperties.hasReferences && (!user.references || user.references.length === 0)) {
+            @if (isDesktop()) {
+                <div class="references-container">
+                    <img src="assets/images/checkmark-neutral.svg" />
+                    <div class="title">{{ 'profile.experience.referencesAvailable.desktop' | translate }}:&nbsp;</div>
+                    <div class="description">
+                        {{ 'profile.experience.providesReferencesOnRequest' | translate: { firstName: user.firstName | ucfirst } }}
+                    </div>
+                </div>
+            } @else {
+                <div class="profile-property-container">
+                    <div class="profile-property-header">{{ 'profile.references' | translate }}:</div>
+                    <div class="profile-property-value">
+                        <div class="profile-property-value-item checked">
+                            {{ 'profile.experience.referencesAvailable' | translate: { firstName: user.firstName | ucfirst } }}
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

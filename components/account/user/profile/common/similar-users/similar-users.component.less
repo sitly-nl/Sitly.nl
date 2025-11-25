@@ -1,0 +1,107 @@
+@import (reference) "includes";
+
+.mobile({
+    .scroll-snap-container {
+        display: flex;
+        height: 207px;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 15px;
+        gap: 15px;
+        padding: 0 15px;
+        overflow: auto;
+        width: 100%;
+        .hide-scrollbar();
+
+        .scroll-snap-slide {
+            scroll-snap-align: start;
+            height: 100%;
+            width: 90%;
+            flex-shrink: 0;
+
+            div[user-card] {
+                height: 100%;
+            }
+        }
+
+        &.single-card {
+            .scroll-snap-slide {
+                width: 100%;
+            }
+        }
+    }
+});
+
+.similar-users-container {
+    display: block;
+
+    .similar-users-content {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+
+    .similar-users-header {
+        display: flex;
+        justify-content: space-between;
+
+        .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: @neutral-900;
+        }
+
+        .similar-buttons-container {
+            display: flex;
+            .flex-gap(8px);
+
+            .similar-navigate-button {
+                display: flex;
+                width: 20px;
+                height: 20px;
+                justify-content: center;
+                align-items: center;
+                outline: none;
+                border: none;
+
+                &:disabled {
+                    color: @neutral-500;
+                }
+
+                img {
+                    margin: 0;
+                    height: 18px;
+                }
+
+                .similar-navigate-title {
+                    display: inline;
+                    padding: 0 5px;
+                }
+            }
+        }
+    }
+
+    .similar-users-grid {
+        display: flex;
+        padding: 21px 0 55px;
+        overflow: hidden;
+        white-space: nowrap;
+        height: max-content;
+        min-height: max-content;
+        scroll-snap-type: x mandatory;
+        .hide-scrollbar();
+
+        div[user-card] {
+            flex-shrink: 0;
+            width: 428px;
+            white-space: normal;
+            scroll-snap-align: start;
+
+            .lg({
+                width: 375px;
+            });
+
+            &:not(:last-child) {
+                margin-right: 8px;
+            }
+        }
+    }
+}

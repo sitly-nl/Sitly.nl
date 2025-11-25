@@ -1,0 +1,56 @@
+@import "~app/components/user/profile/profile.common.less";
+@import "~app/components/user/profile/common/profile-block/profile-block.common.less";
+
+.user-location {
+    border-radius: 2px;
+
+    &.placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .background("profile/map-blur", "png");
+        background-size: cover;
+    }
+
+    .map-avatar {
+        position: relative;
+        top: 78px;
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        border: solid 2px #fff;
+    }
+
+    .btn-activate-map {
+        position: relative;
+        top: 88px;
+        min-height: 35px;
+        padding: 0 30px;
+        background-color: #fff;
+        font-weight: normal;
+        color: @neutral-900;
+        border-radius: 16px;
+        box-shadow: 0 0 4px 0 rgba(229 229 229 / 50%);
+    }
+}
+
+.mobile({
+    .profile-block .block-content {
+        padding: 0;
+    }
+});
+
+.desktop({
+    #map {
+        height: 330px;
+    }
+
+    .profile-block {
+        .block-header {
+            img {
+                width: 21px;
+                height: auto;
+            }
+        }
+    }
+});

@@ -1,0 +1,17 @@
+<div class="profile-block user-about-container">
+    <div class="block-header" [class.desktop]="isDesktop()">
+        {{ 'profile.about.header' | translate: { firstName: user.firstName | ucfirst } }}
+    </div>
+    <div class="block-content">
+        <div class="expandable-text" [class.desktop]="isDesktop()">
+            <div class="user-about" #aboutField [class.collapsed]="!extended">
+                {{ user.about }}
+            </div>
+            @if (extendable && !extended) {
+                <div class="read-more" (click)="extendText()">
+                    {{ 'main.readMore' | translate }}
+                </div>
+            }
+        </div>
+    </div>
+</div>

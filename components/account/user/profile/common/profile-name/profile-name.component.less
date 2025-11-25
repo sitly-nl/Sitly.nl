@@ -1,0 +1,81 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+
+.user-details-section {
+    display: block;
+    width: 100%;
+}
+
+.first-name-container {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    align-items: baseline;
+
+    .first-name {
+        .font-size(2);
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: clip;
+        .line-clamp(1.4em, 1);
+        /* autoprefixer: ignore next */
+        -webkit-box-orient: vertical;
+        line-height: normal;
+        font-weight: bold;
+        vertical-align: middle;
+        font-style: normal;
+        white-space: nowrap;
+
+        &.fade-out {
+            background-image: linear-gradient(to right, @neutral-900 80%, #fff);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+
+    > * {
+        margin-right: 6px;
+    }
+
+    .space {
+        flex: 1;
+    }
+}
+
+.user-role {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.user-variables-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 8px;
+
+    .user-variable {
+        margin-bottom: 6px;
+        height: 20px;
+        padding: 0 7px;
+        border-radius: 12px;
+        border: solid 0.5px @neutral-900;
+        .font-size(1.2);
+
+        &:not(:last-child) {
+            margin-right: 6px;
+        }
+    }
+}
+
+.desktop({
+    .first-name {
+        .font-size(2.4);
+    }
+
+    .user-role {
+        position: relative;
+        font-size: 1.6rem;
+        flex-wrap: wrap;
+        .flex-gap(2px);
+    }
+});

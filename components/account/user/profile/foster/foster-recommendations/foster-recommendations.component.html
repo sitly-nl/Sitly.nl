@@ -1,0 +1,59 @@
+<div class="recommendations-block">
+    <div class="user-recommendations-container" id="recommendations">
+        <div class="profile-header">
+            <img image2x="icon-star" />
+            {{
+                (recommendationsNumber > 1 ? 'profile.recommendationsItemTitlePlural' : 'profile.recommendationsItemTitleSingular')
+                    | translate: { number: recommendationsNumber }
+            }}
+        </div>
+
+        <ul>
+            @for (recommendation of visibleRecommendations; track recommendation.id) {
+                <li>
+                    <div class="recommendation-container">
+                        <rating-bar [rating]="recommendation.score" [starSize]="isDesktop() ? 14 : 13"> </rating-bar>
+                        <expandable-text class="recommendation-description" [fullText]="recommendation.description" [initialLength]="150">
+                        </expandable-text>
+                        <div class="recommendation-date">
+                            <span class="name">{{ recommendation.authorName | ucfirst }}</span> -
+                            {{ recommendation.created | std | dfnsFormat: 'd MMMM y' }}
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @if (recommendationsNumber > 2 && !recommendationsExpanded) {
+                <li>
+                    <div class="show-more-container">
+                        <button (click)="expandRecommendations()" class="btn-bordered btn-more-recommendations">
+                            {{
+                                (recommendationsNumber > 3
+                                    ? 'profile.showMoreRecommendationsPlural'
+                                    : 'profile.showMoreRecommendationsSingular'
+                                ) | translate: { number: recommendationsNumber - 2 }
+                            }}
+                        </button>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+
+    @if (!isDesktop() && ownProfile) {
+        <div class="ask-for-recommendations-container" (click)="toAskForRecommendation()">
+            <div class="description">{{ 'profile.askMoreParentsForRecommendation' | translate }}</div>
+            <button class="btn-default btn-ask-for-recommendations" (click)="toAskForRecommendation()">
+                {{ 'profile.askParentForOneClickRecommendation' | translate }}
+            </button>
+            <div class="messengers">
+                <img src="app/images/whatsapp.png" class="icon-medium" />
+                <img src="app/images/sms.png" class="icon-medium" />
+                <img src="app/images/facebook-messenger.png" class="icon-medium" />
+            </div>
+            <div class="note">
+                {{ 'profile.dontHaveToBeOnSitly' | translate }}
+            </div>
+        </div>
+    }
+</div>

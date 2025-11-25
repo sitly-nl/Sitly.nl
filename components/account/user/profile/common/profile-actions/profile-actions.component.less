@@ -1,0 +1,87 @@
+@import "~app/components/user/profile/common/profile-block/profile-block.common.less";
+
+@actionsContainerSpacing: 15px;
+
+.top-container {
+    position: relative;
+}
+
+.actions-container {
+    position: relative;
+    display: flex;
+    overflow: visible;
+    flex-wrap: wrap;
+    .flex-gap(10px);
+
+    .contact-buttons-container {
+        max-width: 100%;
+
+        system-button {
+            flex: 1;
+            white-space: nowrap;
+            max-width: 100%;
+        }
+
+        .desktop({
+            margin-bottom: 10px;
+        });
+    }
+
+    .contact-buttons-container,
+    .icon-buttons-container {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn-action {
+        width: 48px;
+        height: 48px;
+        padding: @spacing-s;
+        border: solid 2px @neutral-900;
+        color: @neutral-900;
+        border-radius: 12px;
+
+        img {
+            margin: 0;
+        }
+    }
+
+    &.simple-view {
+        .flex-gap(8px);
+
+        .contact-buttons-container {
+            margin-bottom: 0;
+        }
+
+        system-button {
+            height: 40px;
+        }
+
+        .btn-action {
+            height: 40px;
+            width: 40px;
+            padding: 0;
+
+            img {
+                width: 20px;
+                height: 20px;
+                object-fit: contain;
+            }
+        }
+    }
+
+    &.mobile-view {
+        width: 100%;
+        display: flex;
+        .flex-gap(@spacing-s);
+        background-color: #fff;
+        padding: @spacing-xl @spacing-2xl;
+        box-shadow: 0 -3px 21px rgba(0 0 0 / 9%);
+        z-index: @z-index-high-regular;
+
+        .contact-buttons-container {
+            flex: 1;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<div class="profile-block" [class.desktop]="isDesktop()">
+    <div class="block-header">
+        <img image2x="icon-non-responder" />
+        {{ 'profile.userMightNotRespond' | translate: { firstName: user.firstName | ucfirst } }}
+    </div>
+
+    <div>
+        {{ 'profile.nonResponderDescription' | translate: { firstName: user.firstName | ucfirst } }}
+    </div>
+</div>

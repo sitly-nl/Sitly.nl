@@ -1,0 +1,106 @@
+<div class="profile-block">
+    <div class="block-header" [class.big-margin]="isDesktop()">
+        <img image2x="icon-job-description" />
+        {{ 'profile.jobdescription.title' | translate }}
+    </div>
+    @if (!isDesktop()) {
+        <div class="block-content">
+            <div class="profile-property-container">
+                <div class="profile-property-header">{{ 'main.lookingFor' | translate }}:</div>
+                <div class="profile-property-value">
+                    @if (user.searchPreferences.babysitters) {
+                        <div class="profile-property-value-item">
+                            {{ 'main.babysitter' | translate }}
+                        </div>
+                    }
+                    @if (user.searchPreferences.childminders) {
+                        <div class="profile-property-value-item">
+                            {{ 'main.childminder' | translate }}
+                        </div>
+                    }
+                </div>
+            </div>
+            @if (hasHourlyRates) {
+                <div class="profile-property-container">
+                    <div class="profile-property-header">{{ 'profile.jobDescription.pays' | translate }}:</div>
+                    <div class="profile-property-value">
+                        <div class="profile-property-value-item regular">
+                            {{ hourlyRatesShort | ucfirst }}
+                        </div>
+                        <div class="profile-property-value-item">
+                            @if (!hasNegotiableRate) {
+                                {{
+                                    'profile.jobDescription.willingToPayDescription'
+                                        | translate: { firstName: user.firstName | ucfirst, amount: hourlyRatesLong | lowercase }
+                                }}
+                            }
+                            @if (hasNegotiableRate) {
+                                {{ 'profile.jobDescription.willingToNegotiate' | translate: { firstName: user.firstName | ucfirst } }}
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (hasChores) {
+                <div class="profile-property-container">
+                    <div class="profile-property-header">{{ 'profile.jobDescription.alsoNeedsHelpWith' | translate }}:</div>
+                    <div class="profile-property-value">
+                        @for (chore of choresOptions; track chore.code) {
+                            <div class="profile-property-value-item" [class.checked]="chore.value" [class.unchecked]="!chore.value">
+                                {{ 'profile.jobDescription.' + chore.code | translate }}
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    } @else {
+        <div class="block-content">
+            <div class="looking-for">
+                <div class="title">{{ 'profile.jobDescription.parentNeeds' | translate: { firstName: user.firstName } }}:&nbsp;</div>
+                @if (user.searchPreferences.babysitters && user.searchPreferences.childminders) {
+                    <div class="description">
+                        {{ 'profile.babysitterOrChildminder' | translate }}
+                    </div>
+                } @else {
+                    @if (user.searchPreferences.babysitters) {
+                        <div class="description">{{ 'profile.babysitter' | translate }}</div>
+                    }
+                    @if (user.searchPreferences.childminders) {
+                        <div class="description">{{ 'profile.childminder' | translate }}</div>
+                    }
+                }
+            </div>
+            @if (hasHourlyRates) {
+                <div class="willing-to-pay">
+                    <div class="title">
+                        {{ 'profile.jobDescription.willingToPay' | translate }}: {{ hourlyRatesShort | ucfirst | lowercase }}
+                    </div>
+                    <div class="description">
+                        @if (!hasNegotiableRate) {
+                            {{
+                                'profile.jobDescription.willingToPayDescription'
+                                    | translate: { firstName: user.firstName | ucfirst, amount: hourlyRatesLong | lowercase }
+                            }}
+                        }
+                        @if (hasNegotiableRate) {
+                            {{ 'profile.jobDescription.willingToNegotiate' | translate: { firstName: user.firstName | ucfirst } }}
+                        }
+                    </div>
+                </div>
+            }
+            @if (hasChores) {
+                <div class="chores profile-property-container">
+                    <div class="title">{{ 'profile.jobDescription.alsoNeedsHelpWith' | translate }}:</div>
+                    <div class="description profile-property-value">
+                        @for (chore of choresOptions; track chore.code) {
+                            <div class="profile-property-value-item" [class.checked]="chore.value" [class.unchecked]="!chore.value">
+                                {{ 'profile.jobDescription.' + chore.code | translate }}
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

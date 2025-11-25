@@ -1,0 +1,15 @@
+<div>
+    @if (!expanded) {
+        <span>
+            {{ collapsedText }}
+            @if (showLink) {
+                <a (click)="expanded = true" class="read-more" innerHTML="{{ 'main.readMore' | translate | nbsp }}"></a>
+            }
+        </span>
+    }
+    @if (expanded) {
+        <span>
+            {{ fullText }}
+        </span>
+    }
+</div>

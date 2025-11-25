@@ -1,0 +1,46 @@
+@import (reference) "~app/styles/includes-old.less";
+@import "~app/components/user/profile/profile.common.less";
+@import "~app/components/user/profile/common/profile-block/profile-block.common.less";
+
+.profile-block {
+    .profile-property-container {
+        &:first-child {
+            padding-top: 0;
+        }
+
+        .profile-property-value {
+            line-height: 1.5;
+        }
+    }
+
+    .title {
+        font-weight: 600;
+    }
+}
+
+.looking-for {
+    .title {
+        display: inline-block;
+    }
+
+    .description {
+        display: inline-block;
+    }
+}
+
+.willing-to-pay,
+.chores {
+    margin-top: 20px;
+    line-height: 1.57;
+    padding: 0;
+    flex-direction: column;
+
+    .title {
+        display: block;
+    }
+
+    .description {
+        display: block;
+        font-weight: 300;
+    }
+}

@@ -1,0 +1,41 @@
+<div class="content-container">
+    <button
+        class="btn-overlay-close"
+        (click)="cancel.emit()"
+        [trackLabel]="{ category: 'profile', type: 'overlay', description: 'close-share-profile' }"
+    ></button>
+
+    <div class="title">
+        {{ 'profile.shareVia' | translate }}
+    </div>
+
+    <div class="buttons-container column">
+        @if (showCopyBtn) {
+            <system-button [buttonType]="'secondary'" iconLeft="copy" (click)="onShareClick(ProfileShareType.copy)">
+                {{ 'profile.shareVia.copy' | translate }}
+            </system-button>
+        }
+
+        @if (isDesktop()) {
+            <system-button [buttonType]="'secondary'" iconLeft="social/icon-facebook" (click)="onShareClick(ProfileShareType.facebook)">
+                {{ 'profile.shareVia.facebook' | translate }}
+            </system-button>
+
+            <system-button [buttonType]="'secondary'" iconLeft="email" (click)="onShareClick(ProfileShareType.email)">
+                {{ 'profile.shareVia.email' | translate }}
+            </system-button>
+        }
+
+        @if (!isDesktop()) {
+            <system-button [buttonType]="'secondary'" iconLeft="social/icon-whatsapp" (click)="onShareClick(ProfileShareType.whatsapp)">
+                {{ 'profile.shareVia.whatsapp' | translate }}
+            </system-button>
+
+            <system-button [buttonType]="'secondary'" iconLeft="social/icon-messenger" (click)="onShareClick(ProfileShareType.messenger)">
+                {{ 'profile.shareVia.messenger' | translate }}
+            </system-button>
+        }
+
+        <system-button type="secondary" (click)="cancel.emit()"> Cancel </system-button>
+    </div>
+</div>

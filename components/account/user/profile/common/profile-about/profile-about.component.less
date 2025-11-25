@@ -1,0 +1,45 @@
+@import (reference) "~app/styles/includes-old.less";
+@import "~app/components/user/profile/profile.common.less";
+@import "~app/components/user/profile/common/profile-block/profile-block.common.less";
+
+.profile-block {
+    .block-header {
+        &.desktop {
+            .font-size(1.8);
+        }
+    }
+}
+
+.expandable-text {
+    .font-size(1.4);
+    line-height: 1.5;
+
+    &.desktop {
+        .font-size(1.6);
+    }
+
+    .user-about {
+        &.collapsed {
+            .line-clamp(1.5em, 3);
+            display: -webkit-box;
+            /* autoprefixer: ignore next */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &.desktop {
+                .line-clamp(1.5em, 4);
+            }
+        }
+    }
+
+    .read-more {
+        color: @primary-500;
+        cursor: pointer;
+        font-weight: normal;
+    }
+}
+
+.user-about-container {
+    .font-size(1.4);
+}

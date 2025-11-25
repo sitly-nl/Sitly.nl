@@ -1,0 +1,60 @@
+<div class="profile-block">
+    <div class="block-header" [class.big-margin]="isDesktop()" [class.desktop]="isDesktop()">
+        @if (user.children.length == 1) {
+            {{ 'profile.children.oneChild' | translate }}
+        }
+        @if (user.children.length > 1) {
+            {{ 'profile.children.manyChildren' | translate: { number: user.children.length } }}:
+        }
+    </div>
+    <div class="block-content">
+        @for (child of user.children; track child.id) {
+            <div class="child-row" [class.desktop]="isDesktop()">
+                @if (child.age) {
+                    @if (child.gender !== Gender.unknown && child.age >= 12) {
+                        <img
+                            [image2x]="child.gender === Gender.female ? 'icon-people-teenager-girl' : 'icon-people-teenager'"
+                            class="gender-image"
+                        />
+                    }
+                    @if (child.gender !== Gender.unknown && child.age >= 7 && child.age <= 11) {
+                        <img
+                            [image2x]="child.gender === Gender.female ? 'icon-people-schoolgirl' : 'icon-people-schoolboy'"
+                            class="gender-image"
+                        />
+                    }
+                    @if (child.gender !== Gender.unknown && child.age >= 4 && child.age <= 6) {
+                        <img [image2x]="'icon-people-kinder'" class="gender-image" />
+                    }
+                    @if (child.gender !== Gender.unknown && child.age >= 1 && child.age <= 3) {
+                        <img [image2x]="'icon-toddler'" class="gender-image" />
+                    }
+                    @if (child.gender === Gender.unknown || child.age < 1) {
+                        <img [image2x]="'icon-baby'" class="gender-image" />
+                    }
+                }
+                @if (child.gender === Gender.female) {
+                    {{ 'main.girl' | translate }}
+                } @else if (child.gender === Gender.male) {
+                    {{ 'main.boy' | translate }}
+                } @else {
+                    {{ 'main.baby' | translate }}
+                }
+                <div class="separator"></div>
+                @if (child.age !== 1 && child.gender !== Gender.unknown) {
+                    <span class="child-age">{{ 'profile.years' | translate: { years: child.age } }}</span>
+                }
+                @if (child.age === 1 && child.gender !== Gender.unknown) {
+                    <span class="child-age">{{ 'profile.oneYear' | translate }}</span>
+                }
+                @if (child.gender === Gender.unknown) {
+                    <span class="child-age">{{ 'profile.expected' | translate }}</span>
+                }
+                @if (child.traits.length > 0) {
+                    <div class="separator"></div>
+                    {{ child | traits | async }}
+                }
+            </div>
+        }
+    </div>
+</div>

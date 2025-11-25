@@ -1,0 +1,99 @@
+<div
+    class="user-card-container"
+    #userCardContainer
+    [class.compact]="size === 'compact'"
+    [class.normal]="size === 'normal'"
+    [class.rounded]="rounded"
+>
+    <button class="user-item-container" (click)="openProfile()">
+        <div class="left-container">
+            <img avatar [user]="user()" [size]="200" />
+            <div class="avatar-overlays">
+                <div class="online-status" [ngClass]="user().onlineStatus"></div>
+                @if (showPremium) {
+                    <div class="badge premium">{{ 'premium.premium' | translate }}</div>
+                }
+            </div>
+        </div>
+
+        <div class="right-container">
+            <div class="right-top-container">
+                <span class="user-name" [class.no-name]="!user().hasFirstName">{{
+                    user().hasFirstName ? (user().firstName | ucfirst) : ('user-item.name.placeholder' | translate)
+                }}</span>
+                @if (showUnViewedIndicator) {
+                    <div class="un-viewed"></div>
+                }
+                <div class="btns-container">
+                    @if (hiddenFunctionality === 'hide' && size === 'normal') {
+                        <button class="btn-hide" (click)="hideClicked($event)"></button>
+                    }
+                    @if (hiddenFunctionality === 'unhide') {
+                        <button class="btn-unhide" (click)="unhideClicked($event)"></button>
+                    } @else {
+                        <button class="btn-favorite" [class.active]="isFavorite" (click)="toggleFavorite($event)"></button>
+                    }
+                </div>
+            </div>
+
+            @if (user().hasRating) {
+                <rating-bar
+                    class="second-line"
+                    [starsHaveBorder]="true"
+                    [text]="user().recommendationNumberString"
+                    [textSize]="size === 'normal' ? 14 : 12"
+                    [rating]="user().averageRecommendationScore"
+                    [starSize]="size === 'normal' ? 16 : 12"
+                ></rating-bar>
+            }
+            @if (user().isNew && (user().isParent || !user().hasRating)) {
+                <div class="badge new second-line">
+                    {{ 'user-item.newMember.label' | translate }}
+                </div>
+            }
+
+            <div class="medium-container">
+                @for (line of mediumLines(); track line; let i = $index) {
+                    @if (size === 'normal' && i > 0) {
+                        <div class="list-divider"></div>
+                    }
+                    <div class="medium-line">
+                        @if (size === 'compact') {
+                            <div class="medium-line-dot">{{ '•' }}</div>
+                        }
+                        <div>{{ line }}</div>
+                    </div>
+                }
+            </div>
+
+            @if (size === 'normal') {
+                <div class="about">
+                    @if (user().speaksLanguages.length > 0) {
+                        <div>{{ 'profile.alsoSpeaks.format' | translate: { value: user().speaksLanguages } | ucfirst }}</div>
+                    }
+                    {{ user().about }}
+                </div>
+            }
+
+            <div class="spacer"></div>
+
+            @if (size === 'normal') {
+                <div class="divider"></div>
+            }
+
+            <div class="bottom-line-container">
+                <p class="bottom-line" [innerHtml]="bottomLine()"></p>
+                @if (showCalendar && user().showAvailabilityDays) {
+                    <availability-days [user]="user()"></availability-days>
+                }
+            </div>
+        </div>
+    </button>
+
+    @if (size === 'compact' && hiddenFunctionality === 'hide') {
+        <a class="hide-slider" (click)="hideClicked($event)">
+            <img src="assets/images/eye-crossed-white.svg" />
+            <div class="text">{{ 'search.hide' | translate }}</div>
+        </a>
+    }
+</div>

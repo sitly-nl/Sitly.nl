@@ -1,0 +1,26 @@
+<div class="profile-block">
+    <div class="block-header padded" [class.big-margin]="isDesktop()">
+        <img image2x="icon-calendar-mobile" />
+        <div>
+            @if (!user.isParent) {
+                {{ 'profile.usersAvailability' | translate: { firstName: user.firstName | ucfirst } }}
+            }
+            @if (user.isParent && user.showAvailabilityDays) {
+                {{ 'profile.babysittingDays' | translate }}
+            }
+            @if (user.isParent && !user.showAvailabilityDays) {
+                {{ 'profile.parentNeeds' + (careTypeLabelCode | ucfirst) + 'Care' | translate: { firstName: user.firstName | ucfirst } }}
+            }
+        </div>
+    </div>
+    @if (!user.showAvailabilityDays) {
+        <div class="block-content" [class.padded]="isDesktop()">
+            {{ 'profile.' + careTypeLabelCode + 'ChildcareDescription' | translate: { firstName: user.firstName | ucfirst } }}
+        </div>
+    }
+    @if (user.showAvailabilityDays) {
+        <div>
+            <availability [user]="user"></availability>
+        </div>
+    }
+</div>

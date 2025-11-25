@@ -1,0 +1,50 @@
+@import (reference) "~app/styles/includes-old.less";
+@import "~app/components/user/profile/profile.common.less";
+@import "~app/components/user/profile/common/profile-block/profile-block.common.less";
+
+.child-row {
+    height: 22px;
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    .font-size(1.4);
+    line-height: 1.36;
+
+    &.desktop {
+        height: 41px;
+        .font-size(1.6);
+        line-height: 1.5;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    img {
+        height: 100%;
+        width: 32px;
+        object-fit: contain;
+        margin-right: 10px;
+    }
+
+    .separator {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: @neutral-900;
+        margin: 0 10px;
+    }
+
+    .child-age {
+        white-space: nowrap;
+    }
+}
+
+.profile-block {
+    .block-header {
+        &.desktop {
+            .font-size(1.8);
+        }
+    }
+}

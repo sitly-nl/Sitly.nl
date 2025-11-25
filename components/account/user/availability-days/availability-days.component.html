@@ -1,0 +1,16 @@
+<ul class="days">
+    @for (day of AvailabilityUtils.weekDays; track day.name) {
+        <li
+            [class.active]="weekDaysCheck[day.name]"
+            [class.medium]="size === AvailabilityDaysSize.medium"
+            [class.small]="size === AvailabilityDaysSize.small"
+        >
+            <span>{{ day.labelShort | translate | titlecase }}</span>
+            @if (weekDaysCheck[day.name]) {
+                <img src="app/images/icon-available.svg" />
+            } @else {
+                <img src="app/images/icon-not-available.svg" />
+            }
+        </li>
+    }
+</ul>

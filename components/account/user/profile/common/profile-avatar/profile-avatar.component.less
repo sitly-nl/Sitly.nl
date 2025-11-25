@@ -1,0 +1,40 @@
+@import "includes";
+
+.component-container {
+    display: block;
+    position: relative;
+
+    .desktop({
+        border-radius: 16px;
+        overflow: hidden;
+    });
+}
+
+.online-status {
+    position: absolute;
+    top: 15px;
+    left: 25px;
+    place-self: center right;
+    color: #fff;
+    text-align: right;
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    white-space: nowrap;
+    font-weight: 600;
+    line-height: 1.4em;
+    font-style: italic;
+
+    span {
+        font-size: 1.6rem;
+        font-style: normal;
+    }
+}
+
+.online-status-indicator {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 6px;
+}

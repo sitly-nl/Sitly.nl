@@ -1,0 +1,8 @@
+<div class="component-container">
+    <user-photos [user]="user" (reportPhoto)="onReportPhoto()" [showReportPhotoButton]="user.meta.hasAvatarWarning"> </user-photos>
+
+    <div class="online-status">
+        <div class="online-status-indicator" [ngClass]="user.onlineStatus"></div>
+        <span>{{ user | onlineAgoFormatted | async }}</span>
+    </div>
+</div>

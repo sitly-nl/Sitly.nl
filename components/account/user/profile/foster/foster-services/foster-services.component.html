@@ -1,0 +1,101 @@
+<div class="profile-block">
+    <div class="block-header padded">
+        <img image2x="icon-services" />
+        {{
+            (user.isBabysitter ? 'profile.babysittingServices.title' : 'profile.childmindingServices.title')
+                | translate: { firstName: user.firstName | ucfirst }
+        }}
+    </div>
+    <div class="block-content" [class.padded]="isDesktop()">
+        @if (hasNumberOfChildren) {
+            <div class="profile-property-container">
+                <div class="profile-property-header">{{ 'profile.babysittingServices.babysits' | translate }}:</div>
+                <div class="profile-property-value">
+                    <div class="profile-property-value-item">
+                        @if (user.searchPreferences.maxChildren > 1) {
+                            <span>
+                                {{ 'profile.maxNumberOfChildrenAtSameTime' | translate: { number: user.searchPreferences.maxChildren } }}
+                            </span>
+                        }
+                        @if (user.searchPreferences.maxChildren === 1) {
+                            <span>
+                                {{ 'profile.maxOneChildAtSameTime' | translate }}
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        @if (user.isBabysitter && hasFosterChores) {
+            <div class="profile-property-container">
+                <div class="profile-property-header">{{ 'profile.babysittingServices.helpsWith' | translate }}:</div>
+                <div class="profile-property-value">
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.fosterChores.chores"
+                        [class.unchecked]="!user.fosterProperties.fosterChores.chores"
+                    >
+                        {{ 'profile.fosterChores' | translate }}
+                    </div>
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.fosterChores.shopping"
+                        [class.unchecked]="!user.fosterProperties.fosterChores.shopping"
+                    >
+                        {{ 'profile.fosterShopping' | translate }}
+                    </div>
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.fosterChores.cooking"
+                        [class.unchecked]="!user.fosterProperties.fosterChores.cooking"
+                    >
+                        {{ 'profile.fosterCooking' | translate }}
+                    </div>
+                    <div class="profile-property-value-item" [class.checked]="hasHomeworkChore" [class.unchecked]="!hasHomeworkChore">
+                        {{ 'profile.fosterHomework' | translate }}
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="profile-property-container">
+            <div class="profile-property-header">{{ 'profile.babysittingServices.driving' | translate }}:</div>
+            <div class="profile-property-value">
+                <div
+                    class="profile-property-value-item"
+                    [class.checked]="user.fosterProperties.fosterChores.driving"
+                    [class.unchecked]="user.fosterProperties.fosterChores.driving === false"
+                    [class.question]="user.fosterProperties.fosterChores.driving === null"
+                >
+                    {{ 'profile.babysittingServices.willingToDrive' | translate }}
+                </div>
+                <div
+                    class="profile-property-value-item"
+                    [class.checked]="user.fosterProperties.hasCar"
+                    [class.unchecked]="user.fosterProperties.hasCar === false"
+                    [class.question]="user.fosterProperties.hasCar === null"
+                >
+                    {{ 'profile.babysittingServices.hasCar' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="profile-property-container">
+            <div class="profile-property-header">{{ 'profile.hourlyRate' | translate }}:</div>
+            <div class="profile-property-value">
+                <div class="profile-property-value-item">{{ user.fosterProperties.averageHourlyRate | hourlyRate }}</div>
+            </div>
+        </div>
+        <div class="profile-property-container">
+            <div class="profile-property-header">{{ 'profile.smoking' | translate }}</div>
+            <div class="profile-property-value">
+                @if (user.fosterProperties.isSmoker) {
+                    <div class="profile-property-value-item checked">
+                        {{ 'main.yes' | translate }}
+                    </div>
+                }
+                @if (!user.fosterProperties.isSmoker) {
+                    <div class="profile-property-value-item">{{ 'profile.nonSmoker' | translate }}</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

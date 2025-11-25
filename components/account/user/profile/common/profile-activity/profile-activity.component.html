@@ -1,0 +1,11 @@
+<div class="profile-block activity-block">
+    <div class="block-header padded">
+        <img image2x="icon-activity" /> {{ 'profile.activity.title' | translate: { firstName: user.firstName | ucfirst } }}
+    </div>
+    <div class="block-content padded">
+        <ul>
+            <li>{{ 'profile.activity.joinedIn' | translate: { date: (user.created | std | dfnsFormat: 'MMMM y') } }}</li>
+            <li>{{ 'profile.activity.lastLoggedIn' | translate: { time: user.lastLogin | std | dfnsFormatDistanceToNow } }}</li>
+        </ul>
+    </div>
+</div>

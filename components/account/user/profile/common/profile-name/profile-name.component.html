@@ -1,0 +1,31 @@
+<div class="user-details-section flex-column">
+    <div class="first-name-container">
+        <div class="first-name" [class.fade-out]="firstNameOverflow">
+            {{ user.firstName | ucfirst }}
+            @if (!user.isParent) {
+                <span> ({{ user.age }})</span>
+            }
+        </div>
+        @if (isNew) {
+            <cool-label text="user-item.newMember.desktop" color="blue"></cool-label>
+        }
+        @if (showPremium) {
+            <cool-label text="premium.premium"></cool-label>
+        }
+        <div #firstNameSpace class="space"></div>
+    </div>
+
+    <div class="user-role" id="userRoleContainer">
+        @if (user.isParent) {
+            <span class="user-role-item" id="userRole">{{ userRoleGender }}</span>
+        } @else {
+            <div class="user-variables-container">
+                @for (variable of userMainVariables; track variable.value) {
+                    <span class="user-variable">
+                        {{ variable.value | translate: variable.args }}
+                    </span>
+                }
+            </div>
+        }
+    </div>
+</div>

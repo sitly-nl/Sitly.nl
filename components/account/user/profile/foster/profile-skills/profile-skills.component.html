@@ -1,0 +1,101 @@
+<div class="profile-block">
+    <div class="block-header">
+        <img image2x="icon-badge" /> {{ 'profile.skills.title' | translate: { firstName: user.firstName | ucfirst } }}
+    </div>
+    <div class="block-content">
+        @if (!isDesktop()) {
+            @if (user.fosterProperties.hasFirstAidCertificate) {
+                <div class="profile-property-container">
+                    <div class="profile-property-header">{{ 'profile.skills.firstAid' | translate }}:</div>
+                    <div class="profile-property-value">
+                        <div class="profile-property-value-item checked">
+                            {{ 'profile.skills.hasFirstAidCertificate' | translate }}
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="profile-property-container">
+                <div class="profile-property-header">{{ 'profile.speaks' | translate }}:</div>
+                <div class="profile-property-value">
+                    @if (nativeLanguage) {
+                        <div class="profile-property-value-item checked">
+                            {{ nativeLanguage.name | ucfirst }} ({{ 'profile.native' | translate }})
+                        </div>
+                    }
+                    @for (lang of otherLanguages; track lang.code) {
+                        <div class="profile-property-value-item checked">{{ lang.name | ucfirst }}</div>
+                    }
+                </div>
+            </div>
+            @if (hasFosterSkills) {
+                <div class="profile-property-container">
+                    <div class="profile-property-header">{{ 'profile.skills.specialties' | translate }}:</div>
+                    <div class="profile-property-value">
+                        @for (skill of user.fosterProperties.skills; track skill) {
+                            <div class="profile-property-value-item checked">
+                                {{ 'profile.skills.' + skill | translate }}
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            @if (user.isChildminder && user.fosterProperties.isEducated) {
+                <div class="profile-property-container">
+                    <div class="profile-property-header">{{ 'profile.education.title' | translate }}:</div>
+                    <div class="profile-property-value">
+                        <div class="profile-property-value-item checked">
+                            {{ 'profile.education.hasRelevantEducation' | translate }}
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (showCertificateOfGoodBehaviour && user.fosterProperties.hasCertificateOfGoodBehavior) {
+                <div class="profile-property-container">
+                    <div class="profile-property-header">{{ 'profile.verifications' | translate }}:</div>
+                    <div class="profile-property-value">
+                        <div class="profile-property-value-item checked">
+                            {{ 'profile.verification.hasGoodBehaviorCertificate' | translate }}
+                        </div>
+                    </div>
+                </div>
+            }
+        } @else {
+            @if (user.fosterProperties.hasFirstAidCertificate) {
+                <div class="block-row">
+                    <img src="assets/images/checkmark-neutral.svg" />
+                    {{ 'profile.skills.hasFirstAidCertificate' | translate }}
+                </div>
+            }
+            <div class="block-row">
+                <div class="title">{{ 'profile.speaks' | translate }}:&nbsp;</div>
+                <div class="value">
+                    {{ languages }}
+                </div>
+            </div>
+            @if (hasFosterSkills) {
+                <div class="block-row">
+                    <div class="title">{{ 'profile.skills.specialties' | translate }}:&nbsp;</div>
+                    <div class="value">
+                        {{ skills }}
+                    </div>
+                </div>
+            }
+            @if (user.isChildminder && user.fosterProperties.isEducated) {
+                <div class="block-row">
+                    <div class="title">{{ 'profile.education.title' | translate }}:&nbsp;</div>
+                    <div class="value">
+                        {{ 'profile.education.hasRelevantEducation' | translate }}
+                    </div>
+                </div>
+            }
+            @if (showCertificateOfGoodBehaviour && user.fosterProperties.hasCertificateOfGoodBehavior) {
+                <div class="block-row">
+                    <div class="title">{{ 'profile.verifications' | translate }}:&nbsp;</div>
+                    <div class="value">
+                        {{ 'profile.verification.hasGoodBehaviorCertificate' | translate }}
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,347 @@
+<!-- mobile -->
+@if (!isDesktop() && user) {
+    <div class="profile-container">
+        <div class="top-bar">
+            <a (click)="back()" class="with-label">
+                <img image2x="back-mobile" />
+                <span class="btn-back-label">
+                    {{ backButtonTitle | translate | ucfirst }}
+                </span>
+            </a>
+            @if (showCloseButton) {
+                <div class="separator"></div>
+            }
+            @if (showCloseButton) {
+                <a (click)="close()" class="with-label">
+                    <img image2x="icon-close" class="btn-back" />
+                    <span class="btn-back-label">
+                        {{ 'main.close' | translate }}
+                    </span>
+                </a>
+            }
+
+            <div class="space"></div>
+
+            @if (!ownProfile) {
+                <div class="options">
+                    @if (user.hasPublicProfile) {
+                        <div class="btn-share" (click)="showShareProfileOverlay()"></div>
+                    }
+                    <div class="btn-favorite" [class.active]="isFavorite" (click)="toggleFavorite()"></div>
+                    <div class="btn-more" [matMenuTriggerFor]="profileMenu"></div>
+                </div>
+            }
+            <mat-menu #profileMenu="matMenu">
+                <button mat-menu-item (click)="showReportOverlay()">
+                    {{ 'profile.reportUser' | translate: { user: user.firstName | ucfirst } }}
+                </button>
+            </mat-menu>
+        </div>
+
+        <div class="content-container">
+            <div #userDetails class="user-details">
+                @if (showLinkCopiedMessage) {
+                    <div class="profile-link-copied-toast">
+                        {{ 'profile.linkToProfileCopied' | translate }}
+                    </div>
+                }
+
+                <div>
+                    <profile-avatar [user]="user"></profile-avatar>
+                </div>
+
+                <div class="user-details-section flex-column">
+                    <profile-name [user]="user"></profile-name>
+                </div>
+
+                @if (showNonResponderWarning) {
+                    <div class="user-details-section">
+                        <profile-non-responder [user]="user"></profile-non-responder>
+                    </div>
+                }
+
+                @if (!ownProfile) {
+                    <div class="user-details-section">
+                        @if (showRatingBar()) {
+                            <div class="rating-view" (click)="scrollTo('recommendations')">
+                                <rating-bar [rating]="user.averageRecommendationScore" [starSize]="13"></rating-bar>
+                                <div class="reviews-number">
+                                    {{ 'profile.reviewsNumber' | translate: { number: recommendationsNumber } }}
+                                </div>
+                            </div>
+                        }
+                        @if (showMap && showRatingBar()) {
+                            <div class="rating-separator"></div>
+                        }
+                        @if (showMap) {
+                            <div class="view-map" (click)="scrollToMap()">{{ 'search.map' | translate }} ({{ user.distance }} km)</div>
+                        }
+                    </div>
+                }
+
+                @if (user.isParent) {
+                    <div class="user-information-block">
+                        <profile-children [user]="user"></profile-children>
+                    </div>
+                }
+
+                <div class="user-information-block">
+                    <profile-about [user]="user"></profile-about>
+                </div>
+
+                @if (!user.isParent && !hasRecommendations && ownProfile) {
+                    <div class="recommendations-block">
+                        <div class="recommendations-banner-container" (click)="toAskForRecommendation()">
+                            <img class="recommendations-banner" src="app/images/illustration-recommendations.png" />
+                            <div class="recommendation-banner-label">{{ 'profile.noStarsYet' | translate }}</div>
+                        </div>
+
+                        <div class="ask-for-recommendations-container" (click)="toAskForRecommendation()">
+                            <div class="description">{{ 'profile.askParentsForRecommendation' | translate }}</div>
+                            <button class="btn-ask-for-recommendations">
+                                {{ 'profile.askParentForOneClickRecommendation' | translate }}
+                            </button>
+                            <div class="images">
+                                <img src="app/images/whatsapp.png" class="icon-medium" />
+                                <img src="app/images/sms.png" class="icon-medium" />
+                                <img src="app/images/facebook-messenger.png" class="icon-medium" />
+                            </div>
+                            <div class="note">
+                                {{ 'profile.dontHaveToBeOnSitly' | translate }}
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="user-information-block">
+                    <profile-availability [user]="user"></profile-availability>
+                </div>
+
+                @if (user.isParent) {
+                    <div class="user-information-block">
+                        <profile-job-description [user]="user"></profile-job-description>
+                    </div>
+                }
+
+                @if (!user.isParent) {
+                    @if ((user.fosterProperties.traits?.length ?? 0) > 0) {
+                        <div class="user-information-block padded">
+                            <foster-traits [user]="user"></foster-traits>
+                        </div>
+                    }
+
+                    @if (hasRecommendations) {
+                        <div class="user-information-block">
+                            <div class="block-content">
+                                <foster-recommendations [user]="user"></foster-recommendations>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="user-information-block">
+                        <profile-experience [user]="user"></profile-experience>
+                    </div>
+
+                    <div class="user-information-block">
+                        <foster-services [user]="user"></foster-services>
+                    </div>
+
+                    <div class="user-information-block">
+                        <profile-skills [user]="user"></profile-skills>
+                    </div>
+                }
+
+                <div class="user-information-block">
+                    <profile-activity [user]="user"></profile-activity>
+                </div>
+
+                @if (showMap) {
+                    <div class="user-information-block map-container">
+                        <profile-map [user]="user"></profile-map>
+                    </div>
+                }
+
+                @if (!user.isParent && user.canBeInvitedToApply && !invitedToApply) {
+                    <div class="invite-to-apply-container">
+                        <button class="btn-default invite-to-apply" (click)="showInviteToApplyOverlay()">
+                            {{ 'profile.inviteUserToApplyTitle' | translate: { user: user.firstName | ucfirst } }}
+                        </button>
+                        <span>
+                            {{
+                                (user.isMale ? 'profile.inviteMaleUserToApplyDescription' : 'profile.inviteUserToApplyDescription')
+                                    | translate: { user: user.firstName | ucfirst }
+                            }}
+                        </span>
+                    </div>
+                }
+
+                @if (!ownProfile) {
+                    <div class="similar-users-container">
+                        @if (authUser.isParent) {
+                            <div class="similar-users-header">
+                                {{ 'profile.similarBabysittersToUser' | translate: { user: user.firstName | ucfirst } }}
+                            </div>
+                        }
+                        @if (!authUser.isParent) {
+                            <div class="similar-users-header">
+                                {{ 'profile.similarParentsToUser' | translate: { user: user.firstName | ucfirst } }}
+                            </div>
+                        }
+                        <similar-users [user]="user"></similar-users>
+                    </div>
+                }
+            </div>
+
+            @if (!ownProfile) {
+                <profile-actions
+                    class="bottom-button-container"
+                    [view]="'mobile'"
+                    [user]="user"
+                    [inviteLoading]="inviteLoading()"
+                    (action)="onProfileAction($event)"
+                ></profile-actions>
+            }
+        </div>
+    </div>
+}
+
+@if (!isDesktop() && showScrollToTop) {
+    <button class="btn-scroll-top" (click)="smoothScrollToTop()"></button>
+}
+
+<!-- desktop -->
+@if (isDesktop() && user) {
+    <button class="top-header-button" (click)="back()">
+        <img image2x="back-desktop" />
+        <span> {{ backButtonTitle | translate }} </span>
+    </button>
+
+    @if (showLinkCopiedMessage) {
+        <div class="profile-link-copied-toast">
+            {{ 'profile.linkToProfileCopied' | translate }}
+        </div>
+    }
+
+    @if (showDesktopTopBarActions) {
+        <div class="top-bar-actions">
+            <div class="actions-container">
+                <button class="back-button" (click)="back()">
+                    <img image2x="back-desktop" />
+                    <span> {{ backButtonTitle | translate }} </span>
+                </button>
+                <div class="separator"></div>
+                <img class="avatar" avatar [user]="user" [size]="50" />
+                <div class="first-name">
+                    {{ user.firstName | ucfirst }}
+                    @if (!user.isParent) {
+                        <span> ({{ user.age }})</span>
+                    }
+                </div>
+
+                <div class="actions">
+                    <profile-actions
+                        [user]="user"
+                        [view]="'desktop-simple'"
+                        [inviteLoading]="inviteLoading()"
+                        (action)="onProfileAction($event)"
+                    ></profile-actions>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="content-container" #userDetails (scroll)="onScrollDesktop($event)">
+        <div class="profile-container">
+            <div class="page-container">
+                <div class="column-left">
+                    <profile-avatar [user]="user"></profile-avatar>
+
+                    <div class="user-information-block">
+                        <profile-availability [user]="user"></profile-availability>
+                    </div>
+
+                    @if (!user.isParent) {
+                        <div class="user-information-block">
+                            <foster-services [user]="user"></foster-services>
+                        </div>
+                    }
+
+                    <div class="user-information-block">
+                        <profile-activity [user]="user"></profile-activity>
+                    </div>
+                </div>
+
+                <div class="column-right">
+                    <div>
+                        <profile-name [user]="user"></profile-name>
+                    </div>
+
+                    <div class="user-information-block-underlined">
+                        <profile-actions
+                            [user]="user"
+                            [inviteLoading]="inviteLoading()"
+                            [view]="'desktop'"
+                            (action)="onProfileAction($event)"
+                        ></profile-actions>
+                    </div>
+
+                    @if (showNonResponderWarning) {
+                        <div class="user-information-block-underlined">
+                            <profile-non-responder [user]="user"></profile-non-responder>
+                        </div>
+                    }
+
+                    @if (user.isParent) {
+                        <div class="user-information-block-underlined">
+                            <profile-children [user]="user"></profile-children>
+                        </div>
+                    }
+
+                    <div class="user-information-block-underlined">
+                        <profile-about [user]="user"></profile-about>
+                    </div>
+
+                    @if (user.isParent) {
+                        <div class="user-information-block-underlined">
+                            <profile-job-description [user]="user"></profile-job-description>
+                        </div>
+                    }
+
+                    @if (!user.isParent) {
+                        @if ((user.fosterProperties.traits?.length ?? 0) > 0) {
+                            <div class="user-information-block-underlined">
+                                <foster-traits [user]="user"></foster-traits>
+                            </div>
+                        }
+
+                        @if (hasRecommendations) {
+                            <div class="user-information-block-underlined">
+                                <foster-recommendations [user]="user" id="recommendations"></foster-recommendations>
+                            </div>
+                        }
+
+                        <div class="user-information-block-underlined">
+                            <profile-experience [user]="user"></profile-experience>
+                        </div>
+
+                        <div class="user-information-block-underlined">
+                            <profile-skills [user]="user"></profile-skills>
+                        </div>
+                    }
+
+                    @if (showMap) {
+                        <div class="user-information-block-borderless map-container">
+                            <profile-map [user]="user"></profile-map>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="similar-users-container">
+            @if (user && !ownProfile) {
+                <similar-users [user]="user"></similar-users>
+            }
+        </div>
+    </div>
+}

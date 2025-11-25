@@ -1,0 +1,53 @@
+@import "~app/components/user/profile/profile.common.less";
+@import "~app/components/user/profile/common/profile-block/profile-block.common.less";
+
+.groups-container {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    .flex-gap(35px);
+
+    .age-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 12px;
+        }
+
+        .group-title {
+            font-weight: 600;
+        }
+    }
+}
+
+.references-container {
+    margin-top: 15px;
+
+    .title,
+    .description {
+        display: inline-block;
+    }
+
+    .title {
+        font-weight: 600;
+    }
+
+    img {
+        margin-right: 8px;
+        width: 10px;
+        height: auto;
+        object-fit: contain;
+    }
+}
+
+.experience-with-container {
+    .profile-property-value-item {
+        line-height: 1.57;
+    }
+}
