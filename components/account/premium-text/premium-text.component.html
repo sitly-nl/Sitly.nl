@@ -1,0 +1,13 @@
+<div class="premium-text">
+    <div class="header-logo">
+        <img [src]="logoSrc" alt="Sitly" />
+    </div>
+    <div class="header-title">
+        {{ (authUser.isParent ? 'premium.header.parent.title' : 'premium.header.babysitter.title') | translate }}
+    </div>
+    <ul class="header-list">
+        <li>{{ (authUser.isParent ? 'premium.header.parent.line1' : 'premium.header.babysitter.line1') | translate }}</li>
+        <li>{{ (authUser.isParent ? 'premium.header.parent.line2' : 'premium.header.babysitter.line2') | translate }}</li>
+        <li>{{ (authUser.isParent ? 'premium.header.parent.line3' : 'premium.header.babysitter.line3') | translate }}</li>
+    </ul>
+</div>

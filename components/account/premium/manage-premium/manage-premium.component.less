@@ -1,0 +1,94 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+
+.btn-solid-purple {
+    padding: 12px;
+    color: #fff;
+    border-radius: 16px;
+    font-weight: bold;
+    letter-spacing: 0.27px;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    background-color: @primary-500;
+}
+
+.user-subscription-information {
+    .subscription-type {
+        color: @sitly-dark-gray;
+        margin-bottom: 5px;
+    }
+
+    .subscription-description {
+        margin-bottom: 11px;
+        color: @neutral-900;
+    }
+
+    .unlock-button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        padding: 6px 9px;
+        text-align: left;
+        border: none;
+        border-radius: 16px;
+        .font-size(1.4);
+
+        img {
+            height: 14px;
+        }
+    }
+
+    .btn-voucher {
+        margin-top: 11px;
+    }
+}
+
+.desktop({
+    .manage-premium-container {
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        text-align: center;
+        box-shadow: 0 0 4px 0 rgba(229, 229, 229, 0.5);
+        border-radius: 16px;
+        overflow: hidden;
+
+        > span {
+            display: block;
+        }
+    }
+
+    .header-image {
+        width: 100%;
+    }
+
+    .title {
+        padding: 12px 15px 0;
+        .font-size(2);
+        color: @neutral-900;
+    }
+
+    .description {
+        padding: 15px 30px 0;
+        .font-size(1.6);
+        font-weight: 300;
+        line-height: 1.25;
+        color: @sitly-dark-gray;
+    }
+
+    .btn-get-premium {
+        margin: 25px 15px 18px;
+        padding: 12px;
+        border-radius: 16px;
+        background-color: #fef0f4;
+        color: @primary-500;
+        .font-size(1.8);
+    }
+
+    .btn-voucher {
+        padding-top: 0;
+        margin-bottom: 18px;
+    }
+});

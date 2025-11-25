@@ -1,0 +1,23 @@
+<overlay-template [data]="overlayData()">
+    <div class="form-container">
+        <mat-form-field [class.ng-invalid]="showNameError">
+            <mat-label>
+                {{ 'references.familySurname' | translate }}
+            </mat-label>
+            <input matInput #name [value]="reference?.familyName" (keyup)="onTextChanged()" />
+        </mat-form-field>
+
+        <mat-form-field [class.ng-invalid]="showDescriptionError">
+            <mat-label>
+                {{ 'main.description' | translate }}
+            </mat-label>
+            <textarea matInput #description [value]="reference?.description" (keyup)="onTextChanged()"></textarea>
+        </mat-form-field>
+
+        @if (reference && (showDescriptionError || showNameError)) {
+            <div class="error">
+                {{ 'edit-reference.error' | translate }}
+            </div>
+        }
+    </div>
+</overlay-template>

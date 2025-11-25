@@ -1,0 +1,10 @@
+<div class="header">{{ 'prompts.newFields.first.header.format' | translate: { stepsCount: stepsCount } }}</div>
+
+<div class="prompt-content-container">
+    <div class="question-number">{{ 'prompts.newFields.questionNumber.format' | translate: { number: 1, count: stepsCount } }}</div>
+    <div class="question-title">{{ 'prompts.newFields.parent.first.title' | translate }}</div>
+    <div class="buttons-container">
+        <button class="btn-solid-neutral" (click)="updateUser(Gender.female)">{{ 'profile.mom' | translate }}</button>
+        <button class="btn-solid-neutral" (click)="updateUser(Gender.male)">{{ 'profile.dad' | translate }}</button>
+    </div>
+</div>

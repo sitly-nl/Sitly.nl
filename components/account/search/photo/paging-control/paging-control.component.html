@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="paging-container">
+        @if (selectedPage !== 1) {
+            <button class="btn-left" (click)="goToPreviousPage()"></button>
+        }
+
+        @for (item of items; track $index) {
+            <div>
+                @if (item.page) {
+                    <button class="btn-page" [class.selected]="item.page === selectedPage" (click)="selectedPage = item.page">
+                        {{ item.page }}
+                    </button>
+                }
+                @if (item.spacer) {
+                    <span class="spacer">...</span>
+                }
+            </div>
+        }
+
+        @if (selectedPage !== numberOfPages) {
+            <button class="btn-right" (click)="goToNextPage()"></button>
+        }
+    </div>
+
+    <span class="bottom-line">
+        {{ bottomLineText }}
+    </span>
+</div>

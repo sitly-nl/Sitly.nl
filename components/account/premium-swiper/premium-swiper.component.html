@@ -1,0 +1,33 @@
+<div class="container">
+    <swiper #swiper class="premium-swiper" [config]="swiperConfig" (touchStart)="toggleSwiperAutoplay()" (slideChange)="onSlideChange()">
+        @for (slide of slides; track slide.title; let i = $index) {
+            <ng-template swiperSlide>
+                <div class="swiper-slide-content" [class.bordered]="slideBorder">
+                    <div class="img-container">
+                        <img
+                            src="assets/images/{{ slide.imgName }}.svg"
+                            class="slide-img"
+                            [trackLabel]="{ category: 'premium', type: 'miss', description: 'slide-image-' + i }"
+                        />
+                    </div>
+                    <div class="text-container">
+                        <div class="title" innerText="{{ slide.title | translate }}"></div>
+                        <div
+                            class="subtitle"
+                            [trackLabel]="{ category: 'premium', type: 'miss', description: 'slide-subtitle-' + i }"
+                            innerText="{{ slide.subtitle | translate }}"
+                        ></div>
+                    </div>
+                </div>
+            </ng-template>
+        }
+    </swiper>
+    @if (isDesktop() && !slideBorder) {
+        <button class="swiper-prev-btn" [trackLabel]="{ category: 'premium', type: 'button', description: 'slide-prev-' + currentSlide }">
+            <img src="assets/images/arrow-left.svg" />
+        </button>
+        <button class="swiper-next-btn" [trackLabel]="{ category: 'premium', type: 'button', description: 'slide-next-' + currentSlide }">
+            <img src="assets/images/arrow-right.svg" />
+        </button>
+    }
+</div>

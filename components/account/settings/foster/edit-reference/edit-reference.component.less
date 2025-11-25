@@ -1,0 +1,29 @@
+@import "includes";
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    .flex-gap(@spacing-m, "column");
+    width: 100%;
+
+    > * {
+        width: 100%;
+    }
+
+    textarea {
+        min-height: 144px;
+    }
+
+    .error {
+        text-align: left;
+        padding: 0 @spacing-l;
+    }
+
+    .mobile({
+        padding: 0 40px;
+    });
+
+    .desktop({
+        padding: 0 110px;
+    });
+}

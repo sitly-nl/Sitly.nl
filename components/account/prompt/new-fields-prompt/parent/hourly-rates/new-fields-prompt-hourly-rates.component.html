@@ -1,0 +1,18 @@
+<div class="prompt-content-container">
+    <div class="question-number">{{ 'prompts.newFields.questionNumber.format' | translate: { number: 2, count: stepsCount } }}</div>
+    <div class="question-title">{{ 'prompts.newFields.parent.hourlyRates.title' | translate }}</div>
+
+    @for (option of hourlyRatesOptions; track option.label) {
+        <form-checkbox>
+            <label [class.active]="option.selected">
+                <span>{{ option.label }}</span>
+                <input type="checkbox" name="{{ option.value }}" value="{{ option.value }}" [(ngModel)]="option.selected" />
+            </label>
+        </form-checkbox>
+    }
+</div>
+
+<div class="buttons-container">
+    <button class="btn-bordered btn-previous" (click)="moveBack.emit()">{{ 'main.back' | translate }}</button>
+    <button class="btn-solid-neutral btn-next" (click)="onNextPressed()">{{ 'next' | translate }}</button>
+</div>

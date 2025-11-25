@@ -1,0 +1,322 @@
+@if (!isDesktop()) {
+    <div class="fieldset children-group" role="group">
+        <label for="settings-user-children">
+            {{ 'settings.children' | translate }}
+        </label>
+
+        <div>
+            <ul>
+                @for (child of children; track child.id) {
+                    <li class="child-container">
+                        <child
+                            [child]="child"
+                            [removeButton]="children.length > 1"
+                            (childRemoved)="removeChild($event)"
+                            (childUpdated)="updateChild($event)"
+                        ></child>
+                    </li>
+                }
+            </ul>
+
+            @if (!showChildrenForm && canAddMoreChildren) {
+                <button type="button" class="add-child" (click)="showChildrenForm = true">
+                    + {{ 'settings.addAnotherChild' | translate | ucfirst }}
+                </button>
+            }
+
+            @if (showChildrenForm) {
+                <div class="add-child-form">
+                    <div>
+                        <label>{{ 'settings.addChild' | translate }}</label>
+                        <child [child]="newChild" [removeButton]="false"></child>
+
+                        <button type="button" class="btn btn-default save-button" [disabled]="childFormInvalid" (click)="saveChild()">
+                            {{ 'main.save' | translate }}
+                        </button>
+                        <button class="cancel-button" (click)="cancelNewChild()">
+                            {{ 'main.cancel' | translate }}
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (showChildminders) {
+        <div class="fieldset vertical">
+            <label>{{ 'settings.whatAreYouLookingFor' | translate }}</label>
+
+            <form-checkbox type="multi">
+                <label [class.active]="authUser.searchPreferences.babysitters">
+                    <span>{{ 'main.babysitters' | translate }}</span>
+                    <input
+                        name="lookingForBabysitters"
+                        type="checkbox"
+                        value="{{ 'main.babysitters' | translate }}"
+                        (change)="save($event)"
+                        [(ngModel)]="authUser.searchPreferences.babysitters"
+                    />
+                </label>
+                <label [class.active]="authUser.searchPreferences.childminders">
+                    <span>{{ 'main.childminders' | translate }}</span>
+                    <input
+                        name="lookingForChildminders"
+                        type="checkbox"
+                        value="{{ 'main.childminders' | translate }}"
+                        (change)="save($event)"
+                        [(ngModel)]="authUser.searchPreferences.childminders"
+                    />
+                </label>
+            </form-checkbox>
+        </div>
+    }
+
+    <div class="fieldset vertical group-availability">
+        <label>{{ 'settings.availability.title.parent' | translate }}</label>
+
+        <availability-calendar
+            (availabilityChange)="saveAvailability($event)"
+            (additionalAvailabilityChanged)="onAdditionalAvailabilityChanged($event)"
+            [availability]="authUser.availability"
+            [paddedOpaque]="true"
+            placement="settings"
+        ></availability-calendar>
+    </div>
+
+    @if (showChildminders && authUser.searchPreferences.fosterLocation) {
+        <div class="fieldset vertical">
+            <label>{{ 'settings.locationHomeCareProvider' | translate }}</label>
+
+            <form-checkbox>
+                <label [class.active]="authUser.searchPreferences.fosterLocation.receive">
+                    <span>{{ 'profile.atTheirLocation' | translate }}</span>
+                    <input
+                        #fosterLocationInput
+                        name="fosterLocation-receive"
+                        type="checkbox"
+                        value="receive"
+                        (change)="onFosterLocationChange()"
+                        [attr.name]="'fosterLocation-receive'"
+                        [(ngModel)]="authUser.searchPreferences.fosterLocation.receive"
+                    />
+                </label>
+                <label [class.active]="authUser.searchPreferences.fosterLocation.visit">
+                    <span>{{ 'search.fosterLocationVisit' | translate }}</span>
+                    <input
+                        #fosterLocationInput
+                        name="fosterLocation-visit"
+                        type="checkbox"
+                        value="visit"
+                        (change)="onFosterLocationChange()"
+                        [attr.name]="'fosterLocation-visit'"
+                        [(ngModel)]="authUser.searchPreferences.fosterLocation.visit"
+                    />
+                </label>
+            </form-checkbox>
+        </div>
+    }
+
+    <div class="fieldset vertical">
+        <label>{{ 'settings.whatYouWillingToPay' | translate }}</label>
+        <span class="light">
+            {{ 'settings.inYourAreaOnAverage' | translate }}
+            <div innerHTML="{{ statisticString | nl2br }}"></div>
+        </span>
+
+        <form-checkbox>
+            @for (option of hourlyRates; track option.label) {
+                <label [class.active]="hourlyRateInput.checked">
+                    <span>{{ option.label }}</span>
+                    <input
+                        #hourlyRateInput
+                        name="parentHourlyRate-{{ option.value }}"
+                        type="checkbox"
+                        value="{{ option.value }}"
+                        (change)="onHourlyRatesChanged()"
+                        [checked]="option.checked"
+                    />
+                </label>
+            }
+        </form-checkbox>
+    </div>
+
+    <div class="fieldset vertical">
+        <label>{{ 'settings.needsAdditionalHelp' | translate }}</label>
+
+        <form-checkbox>
+            @for (option of chores; track option.value) {
+                <label [class.active]="choresInput.checked">
+                    <span>{{ 'settings.parentChores.' + option.value | translate }}</span>
+                    <input
+                        #choresInput
+                        name="parentChores-{{ option.value }}"
+                        type="checkbox"
+                        value="{{ option.value }}"
+                        (change)="onChoresChanged()"
+                        [checked]="option.checked"
+                    />
+                </label>
+            }
+        </form-checkbox>
+    </div>
+} @else {
+    <form class="group-children">
+        <label>{{ 'settings.children' | translate }}</label>
+        <ul>
+            @for (child of children; track child.id) {
+                <li class="child-li child-container">
+                    <child
+                        [child]="child"
+                        [removeButton]="children.length > 1"
+                        (childRemoved)="removeChild($event)"
+                        (childUpdated)="updateChild($event)"
+                    ></child>
+                </li>
+            }
+        </ul>
+
+        @if (!showChildrenForm) {
+            <label></label>
+        }
+        @if (!showChildrenForm && canAddMoreChildren) {
+            <button type="button" class="add-child" (click)="showChildrenForm = true">
+                + {{ 'settings.addAnotherChild' | translate | ucfirst }}
+            </button>
+        }
+
+        @if (showChildrenForm) {
+            <label>{{ 'settings.addChild' | translate }}</label>
+        }
+        @if (showChildrenForm) {
+            <div class="add-child-container">
+                <child [child]="newChild" [removeButton]="false"></child>
+                <button type="button" class="btn btn-default save-button" [disabled]="childFormInvalid" (click)="saveChild()">
+                    {{ 'main.save' | translate }}
+                </button>
+                <button class="cancel-button" (click)="cancelNewChild()">
+                    {{ 'main.cancel' | translate }}
+                </button>
+            </div>
+        }
+    </form>
+
+    @if (showChildminders) {
+        <form>
+            <label>{{ 'settings.whatAreYouLookingFor' | translate }}</label>
+
+            <form-checkbox type="multi">
+                <label [class.active]="authUser.searchPreferences.babysitters">
+                    <span>{{ 'main.babysitters' | translate }}</span>
+                    <input
+                        name="lookingForBabysitters"
+                        type="checkbox"
+                        value="{{ 'main.babysitters' | translate }}"
+                        (change)="save($event)"
+                        [(ngModel)]="authUser.searchPreferences.babysitters"
+                    />
+                </label>
+                <label [class.active]="authUser.searchPreferences.childminders">
+                    <span>{{ 'main.childminders' | translate }}</span>
+                    <input
+                        name="lookingForChildminders"
+                        type="checkbox"
+                        value="{{ 'main.childminders' | translate }}"
+                        (change)="save($event)"
+                        [(ngModel)]="authUser.searchPreferences.childminders"
+                    />
+                </label>
+            </form-checkbox>
+        </form>
+    }
+
+    <form>
+        <label>{{ 'settings.availability.title.parent' | translate }}</label>
+        <availability-calendar
+            [availability]="authUser.availability"
+            [paddedOpaque]="true"
+            [additionalAvailabilityPadded]="false"
+            (availabilityChange)="saveAvailability($event)"
+            (additionalAvailabilityChanged)="save($event)"
+            placement="settings"
+        ></availability-calendar>
+    </form>
+
+    @if (showChildminders && authUser.searchPreferences.fosterLocation) {
+        <form>
+            <label>{{ 'settings.locationHomeCareProvider' | translate }}</label>
+            <form-checkbox>
+                <label [class.active]="authUser.searchPreferences.fosterLocation.receive">
+                    <span>{{ 'profile.atTheirLocation' | translate }}</span>
+                    <input
+                        #fosterLocationInput
+                        name="fosterLocation-receive"
+                        type="checkbox"
+                        value="receive"
+                        (change)="onFosterLocationChange()"
+                        [attr.name]="'fosterLocation-receive'"
+                        [(ngModel)]="authUser.searchPreferences.fosterLocation.receive"
+                    />
+                </label>
+                <label [class.active]="authUser.searchPreferences.fosterLocation.visit">
+                    <span>{{ 'search.fosterLocationVisit' | translate }}</span>
+                    <input
+                        #fosterLocationInput
+                        name="fosterLocation-visit"
+                        type="checkbox"
+                        value="visit"
+                        (change)="onFosterLocationChange()"
+                        [attr.name]="'fosterLocation-visit'"
+                        [(ngModel)]="authUser.searchPreferences.fosterLocation.visit"
+                    />
+                </label>
+            </form-checkbox>
+        </form>
+    }
+
+    <form>
+        <label>{{ 'settings.willingToPay' | translate }}</label>
+
+        <div>
+            <div class="light hourly-rates-stats">
+                <div class="header">{{ 'settings.inYourAreaOnAverage' | translate }}</div>
+                <div innerHTML="{{ statisticString | nl2br }}"></div>
+            </div>
+
+            <form-checkbox>
+                @for (option of hourlyRates; track option.label) {
+                    <label [class.active]="hourlyRateInput.checked">
+                        <span>{{ option.label }}</span>
+                        <input
+                            #hourlyRateInput
+                            name="parentHourlyRate-{{ option.value }}"
+                            type="checkbox"
+                            value="{{ option.value }}"
+                            (change)="onHourlyRatesChanged()"
+                            [checked]="option.checked"
+                        />
+                    </label>
+                }
+            </form-checkbox>
+        </div>
+    </form>
+
+    <form>
+        <label>{{ 'settings.needsAdditionalHelp' | translate }}</label>
+
+        <form-checkbox>
+            @for (option of chores; track option.value) {
+                <label [class.active]="choresInput.checked">
+                    <span>{{ 'settings.parentChores.' + option.value | translate }}</span>
+                    <input
+                        #choresInput
+                        name="parentChores-{{ option.value }}"
+                        type="checkbox"
+                        value="{{ option.value }}"
+                        (change)="onChoresChanged()"
+                        [checked]="option.checked"
+                    />
+                </label>
+            }
+        </form-checkbox>
+    </form>
+}

@@ -1,0 +1,65 @@
+<div [class.visible]="dialogVisible" [class.invisible]="!dialogVisible" class="dialog-window">
+    <div class="prompt-content">
+        <button class="dialog-top-button" (click)="hide()"></button>
+
+        <div class="progress-container">
+            <canvas id="progress-canvas"></canvas>
+            <span class="progress-value" [class.completed]="completed">{{ math.round(100 * progress) }}%</span>
+        </div>
+
+        @if (screens[step] === NewFieldsPromptScreen.gender) {
+            <new-fields-prompt-gender class="scrollable-container" [stepsCount]="screens.length - 1" (next)="moveFurther()">
+            </new-fields-prompt-gender>
+        }
+        @if (screens[step] === NewFieldsPromptScreen.hourlyRates) {
+            <new-fields-prompt-hourly-rates
+                class="scrollable-container"
+                [stepsCount]="screens.length - 1"
+                (next)="moveFurther()"
+                (moveBack)="moveBack()"
+            >
+            </new-fields-prompt-hourly-rates>
+        }
+        @if (screens[step] === NewFieldsPromptScreen.chores) {
+            <new-fields-prompt-chores
+                class="scrollable-container"
+                [stepsCount]="screens.length - 1"
+                (next)="moveFurther()"
+                (moveBack)="moveBack()"
+            >
+            </new-fields-prompt-chores>
+        }
+
+        @if (screens[step] === NewFieldsPromptScreen.additionalInfo) {
+            <new-fields-prompt-additional-info
+                class="scrollable-container"
+                [stepsCount]="screens.length - 1"
+                (next)="moveFurther()"
+                (moveBack)="hide()"
+            >
+            </new-fields-prompt-additional-info>
+        }
+        @if (screens[step] === NewFieldsPromptScreen.skills) {
+            <new-fields-prompt-skills
+                class="scrollable-container"
+                [stepsCount]="screens.length - 1"
+                (next)="moveFurther()"
+                (moveBack)="moveBack()"
+            >
+            </new-fields-prompt-skills>
+        }
+        @if (screens[step] === NewFieldsPromptScreen.fosterTraits) {
+            <new-fields-prompt-traits
+                class="scrollable-container"
+                [stepsCount]="screens.length - 1"
+                (next)="moveFurther()"
+                (moveBack)="moveBack()"
+            >
+            </new-fields-prompt-traits>
+        }
+
+        @if (screens[step] === NewFieldsPromptScreen.completed) {
+            <new-fields-prompt-completed class="scrollable-container" (next)="hide()"> </new-fields-prompt-completed>
+        }
+    </div>
+</div>

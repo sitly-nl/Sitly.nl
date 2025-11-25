@@ -1,0 +1,29 @@
+@import (reference) "includes";
+
+.mobile({
+    .prompt-container {
+        width: 100%;
+        display: block;
+        overflow-y: scroll;
+    }
+});
+
+.desktop({
+    .desktop-prompt-host {
+        background: transparent;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .prompt-container {
+        width: max-content;
+        max-width: 100%;
+    }
+
+    .alert-content-container {
+        min-width: 400px;
+    }
+});

@@ -1,0 +1,207 @@
+<ng-template #addressTemplate let-user="user" let-direction="direction">
+    <div class="fieldset address-fieldset" [class.vertical]="direction === 'column'" role="group">
+        <label>{{ 'settings.address' | translate }}</label>
+
+        <single-select-button
+            [rightIconType]="'edit'"
+            [title]="
+                (user.streetName ?? '') +
+                ' ' +
+                (user.houseNumber ?? '') +
+                '\n' +
+                (user.postalCode ? user.postalCode + '\n' : '') +
+                (user.placeName ?? '')
+            "
+            [titleStyle]="'normal'"
+            [subtitle]="'main.private' | translate"
+            (click)="changeAddress($event)"
+        ></single-select-button>
+    </div>
+</ng-template>
+
+@if (authUser) {
+    <div class="content-container">
+        @if (isDesktop()) {
+            <div class="settings">
+                <div class="user-form">
+                    <form>
+                        <h1 class="fieldset">{{ 'editYourProfile' | translate }}</h1>
+
+                        @if (showNewPhotoEditor) {
+                            <photo-editor class="fieldset"></photo-editor>
+                        } @else {
+                            <photo-editor-old class="fieldset"></photo-editor-old>
+                        }
+
+                        <fieldset class="padded-label">
+                            <label for="settings-user-first-name">{{ 'main.firstName' | translate }}</label>
+                            <input
+                                type="text"
+                                name="firstName"
+                                id="settings-user-first-name"
+                                class="semibold"
+                                [(ngModel)]="authUser.firstName"
+                                (blur)="save($event)"
+                            />
+                            <br />
+
+                            <p class="private private-last-name">{{ 'main.private' | translate }}</p>
+                            <label for="settings-user-last-name">{{ 'main.lastName' | translate }}</label>
+                            <input
+                                type="text"
+                                name="lastName"
+                                id="settings-user-last-name"
+                                class="semibold"
+                                [(ngModel)]="authUser.lastName"
+                                (blur)="save($event)"
+                            /><br />
+                        </fieldset>
+
+                        <fieldset>
+                            <label for="settings-about">{{ 'profile.about' | translate }}</label>
+                            <div class="about-container">
+                                <textarea
+                                    class="about-textarea"
+                                    id="about"
+                                    name="about"
+                                    spellcheck="true"
+                                    maxlength="1000"
+                                    [(ngModel)]="authUser.about"
+                                    (blur)="save($event)"
+                                >
+                                </textarea>
+                                <span class="about-validation" [class.highlighted]="highlightAboutValidation">{{
+                                    aboutValidationText
+                                }}</span>
+                            </div>
+                        </fieldset>
+
+                        @if (authUser.isParent) {
+                            <parent-settings (saved)="flashSaved()"> </parent-settings>
+                        }
+                        @if (!authUser.isParent) {
+                            <foster-settings (saved)="flashSaved()"> </foster-settings>
+                        }
+
+                        <ng-container *ngTemplateOutlet="addressTemplate; context: { user: authUser }"> </ng-container>
+                    </form>
+                </div>
+
+                <div>
+                    <div class="user-actions-container">
+                        <div class="user-actions-buttons">
+                            <button class="btn-info" [routerLink]="['/users/me']">
+                                {{ 'settings.viewPublicProfile' | translate }}
+                            </button>
+                            <a class="btn-info" [routerLink]="['/account']">
+                                {{ 'settings.accountSettings.short' | translate }}
+                            </a>
+
+                            @if (!authUser.isParent) {
+                                <div class="recommendations-container">
+                                    <div class="btn-info" (click)="openRecommendations()">
+                                        <span>{{ 'profile.askParentForOneClickRecommendation' | translate }}</span>
+                                        <span class="btn-recommendations-info" (click)="$event.stopPropagation(); openRecommendationsInfo()"
+                                            >?</span
+                                        >
+                                    </div>
+                                    <div>{{ 'profile.parentsDontHaveToBeOnSitly' | translate }}</div>
+                                </div>
+                            }
+                        </div>
+
+                        @if (!authUser.isPremium) {
+                            <manage-premium
+                                (showPremium)="showPremium()"
+                                (reactivatePremium)="showReactivatePremiumConfirmationDialog()"
+                                (resumePremium)="showResumePremiumConfirmationDialog()"
+                            ></manage-premium>
+                        }
+                    </div>
+                </div>
+            </div>
+        } @else {
+            <toolbar
+                [centralItem]="{ type: 'title', title: 'settings.profile' }"
+                [rightItems]="[ToolbarItem.settings]"
+                (itemSelected)="onToolbarItemSelected($event)"
+            ></toolbar>
+
+            <form>
+                @if (showNewPhotoEditor) {
+                    <photo-editor class="fieldset"></photo-editor>
+                } @else {
+                    <photo-editor-old></photo-editor-old>
+                }
+
+                <div class="fieldset center-aligned" role="group">
+                    <label for="settings-user-first-name">{{ 'main.firstName' | translate }}</label>
+                    <input
+                        type="text"
+                        name="firstName"
+                        id="settings-user-first-name"
+                        [(ngModel)]="authUser.firstName"
+                        (blur)="save($event)"
+                    />
+                </div>
+
+                <div class="fieldset center-aligned" role="group">
+                    <label for="settings-user-last-name">{{ 'main.lastName' | translate }}</label>
+                    <input type="text" name="lastName" id="settings-user-last-name" [(ngModel)]="authUser.lastName" (blur)="save($event)" />
+                    <span class="private">{{ 'main.private' | translate }}</span>
+                </div>
+
+                @if (!authUser.isPremium || authUser.canReactivatePremium) {
+                    <div class="fieldset" role="group">
+                        <label for="settings-user-membership">{{ 'membership' | translate }}</label>
+
+                        <manage-premium
+                            (showPremium)="showPremium()"
+                            (reactivatePremium)="showReactivatePremiumConfirmationDialog()"
+                            (resumePremium)="showResumePremiumConfirmationDialog()"
+                        ></manage-premium>
+                    </div>
+                }
+
+                <div class="fieldset" role="group">
+                    <label for="settings-user-about">{{ 'profile.about' | translate }}</label>
+
+                    <div class="about-textarea-container">
+                        <textarea
+                            id="aboutField"
+                            name="about"
+                            rows="1"
+                            spellcheck="true"
+                            maxlength="1000"
+                            (ngModelChange)="resizeAboutTextarea()"
+                            (blur)="save($event)"
+                            [(ngModel)]="authUser.about"
+                        ></textarea>
+                        <span class="about-validation" [class.highlighted]="highlightAboutValidation">{{ aboutValidationText }}</span>
+                    </div>
+                </div>
+
+                @if (authUser.isParent) {
+                    <parent-settings (saved)="flashSaved()"> </parent-settings>
+                }
+                @if (!authUser.isParent) {
+                    <foster-settings (saved)="flashSaved()"> </foster-settings>
+                }
+
+                <ng-container *ngTemplateOutlet="addressTemplate; context: { user: authUser, direction: 'column' }"> </ng-container>
+            </form>
+
+            <system-button
+                class="fieldset"
+                [buttonType]="'secondary'"
+                [routerLink]="['/users', 'me']"
+                iconLeft="eye-neutral"
+                (click)="trackCtaEvent('select_myprofile-select_viewpublicprofile', EventAction.myProfileMenu, true, false)"
+            >
+                {{ 'settings.viewPublicProfile' | translate }}
+            </system-button>
+        }
+    </div>
+}
+
+<span class="save-icon" [class.saved]="showSaved">{{ 'main.saved' | translate }}</span>

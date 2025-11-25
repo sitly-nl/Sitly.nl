@@ -1,0 +1,92 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+@import "search-filters.component.base.less";
+
+select {
+    height: 35px;
+    font-weight: normal;
+    border: solid 1px @neutral-900;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+.filters-form {
+    overflow: auto;
+}
+
+.form-group {
+    padding: 22px 15px 32px;
+    border-bottom: solid 1px #ddd;
+
+    > label {
+        margin-bottom: 11px;
+        .font-size(1.2);
+        color: @neutral-900;
+        font-weight: normal;
+    }
+}
+
+.top-insetted {
+    margin-top: 12px;
+}
+
+.role-options {
+    label {
+        padding: 0 5px;
+        flex: 1;
+    }
+}
+
+.use-filters {
+    text-align: center;
+}
+
+.group-availability {
+    padding: 22px 0 15px;
+
+    > label {
+        padding: 0 15px;
+    }
+}
+
+.group-language-knowledge {
+    label {
+        min-width: 40%;
+    }
+}
+
+form-checkbox.checkbox-chores {
+    label {
+        margin-bottom: 14px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.btn-see-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    color: #fff;
+    background-color: @primary-500;
+    font-weight: bold;
+
+    span {
+        .font-size(1.7);
+    }
+
+    .subtitle {
+        .font-size(1.4);
+        font-weight: normal;
+    }
+}

@@ -1,0 +1,39 @@
+<div class="header">{{ 'prompts.newFields.first.header.format' | translate: { stepsCount: stepsCount } }}</div>
+
+<div class="prompt-content-container">
+    <div class="question-number">{{ 'prompts.newFields.questionNumber.format' | translate: { number: 1, count: stepsCount } }}</div>
+    <div class="question-title">{{ 'prompts.newFields.foster.additionalInfo.title' | translate }}</div>
+
+    <form-checkbox>
+        <label [class.active]="authUser.fosterProperties.hasFirstAidCertificate">
+            <span>{{ 'fosterProperties.haveFirstAidCertificate' | translate }}</span>
+            <input
+                type="checkbox"
+                name="hasFirstAidCertificate"
+                value="hasFirstAidCertificate"
+                [(ngModel)]="authUser.fosterProperties.hasFirstAidCertificate"
+            />
+        </label>
+    </form-checkbox>
+    <form-checkbox>
+        <label [class.active]="authUser.fosterProperties.hasCertificateOfGoodBehavior">
+            <span>{{ 'fosterProperties.canPresentCertificateOfGoodBehaviour' | translate }}</span>
+            <input
+                type="checkbox"
+                name="hasCertificateOfGoodBehavior"
+                value="hasCertificateOfGoodBehavior"
+                [(ngModel)]="authUser.fosterProperties.hasCertificateOfGoodBehavior"
+            />
+        </label>
+    </form-checkbox>
+    <form-checkbox>
+        <label [class.active]="authUser.fosterProperties.hasCar">
+            <span>{{ 'fosterProperties.haveCar' | translate }}</span>
+            <input type="checkbox" name="hasCar" value="hasCar" [(ngModel)]="authUser.fosterProperties.hasCar" />
+        </label>
+    </form-checkbox>
+</div>
+
+<div class="buttons-container">
+    <button class="btn-solid-neutral btn-next single-button" (click)="onNextPressed()">{{ 'next' | translate }}</button>
+</div>

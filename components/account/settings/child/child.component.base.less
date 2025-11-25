@@ -1,0 +1,75 @@
+@import (reference) "includes";
+@import "~app/styles/settings.less";
+
+@sitly-dark-gray: #999;
+
+.gender-birthday-container {
+    display: flex;
+    align-items: center;
+
+    .child-gender {
+        select {
+            padding: 0 30px 0 0;
+            font-weight: normal;
+            font-style: normal;
+            color: @sitly-dark-gray;
+            border: none;
+            background-color: transparent;
+
+            option {
+                color: @neutral-900;
+            }
+
+            option.placeholder {
+                color: @sitly-dark-gray;
+            }
+
+            &.enabled {
+                color: @neutral-900;
+            }
+        }
+
+        .gender-label {
+            color: @neutral-900;
+        }
+    }
+
+    .space {
+        flex: 1;
+    }
+}
+
+.remove-child {
+    width: 30px;
+    height: 30px;
+    .background("overlay-close");
+    background-size: 30% 30%;
+    background-position: right center;
+
+    .desktop({
+        width: 40px;
+        height: 40px;
+    });
+}
+
+.trait-container {
+    select {
+        background-size: 8px 6px;
+        font-weight: normal;
+        border: solid 1px @sitly-dark-gray;
+        height: 35px;
+        margin-bottom: 10px;
+
+        &.active {
+            color: @neutral-900;
+        }
+    }
+}
+
+.mobile({
+    @import "./child.component.less";
+});
+
+.desktop({
+    @import "./child.component.desktop.less";
+});

@@ -1,0 +1,175 @@
+<!-- mobile -->
+@if (!isDesktop()) {
+    <div class="container">
+        @if (!showFiltersToolbar) {
+            <toolbar-old
+                [leftActions]="leftActions"
+                [rightActions]="rightActions"
+                (actionButtonClick)="toolbarActionSelected($event)"
+            ></toolbar-old>
+        }
+
+        @if (showFiltersToolbar) {
+            <div class="filters-toolbar" [class.no-map]="!showMap">
+                @if (showPhotoSearch) {
+                    <button
+                        class="btn-filter btn-distance"
+                        [class.active]="hasDistanceFilter"
+                        id="distance"
+                        (click)="onFilterClick($event)"
+                    >
+                        {{ 'search.distance' | translate }}
+                    </button>
+                }
+                @if (authUser.isParent) {
+                    <button class="btn-filter" [class.active]="hasCareTypeFilter" id="careType" (click)="onFilterClick($event)">
+                        {{ 'search.typeOfCare' | translate }}
+                    </button>
+                }
+                @if (authUser.isParent) {
+                    <button
+                        class="btn-filter btn-experience"
+                        [class.active]="hasExperienceGroupsFilter"
+                        id="ageGroups"
+                        (click)="onFilterClick($event)"
+                    >
+                        {{ 'search.experienceWithAgeGroups' | translate }}
+                    </button>
+                }
+                @if (!authUser.isParent) {
+                    <button
+                        class="btn-filter btn-availability"
+                        [class.active]="hasAvailabilityFilter"
+                        id="availability"
+                        (click)="onFilterClick($event)"
+                    >
+                        {{ 'main.availability' | translate }}
+                    </button>
+                }
+                @if (!authUser.isParent) {
+                    <button
+                        class="btn-filter btn-age-range"
+                        [class.active]="hasAgeRangeFilter"
+                        id="age-range"
+                        (click)="onFilterClick($event)"
+                    >
+                        {{ 'search.ageRange' | translate }}
+                    </button>
+                }
+                <button class="btn-more" id="more" (click)="onFilterClick($event)">{{ 'search.more' | translate }}</button>
+                @if (showMap && showPhotoSearch) {
+                    <button
+                        class="btn-map"
+                        (click)="onMapClick()"
+                        [trackLabel]="{ category: 'search', type: 'button', description: 'map-toolbar' }"
+                    >
+                        <img image2x="map-icon" />
+                        {{ 'search.map' | translate }}
+                    </button>
+                }
+            </div>
+        }
+
+        @if (!isLive) {
+            <button (click)="showDevMenu()">Dev menu (ctrl+shift+q)</button>
+        }
+
+        @if (showPhotoSearch) {
+            <photo-search
+                [searchResult]="searchResult"
+                [showLoader]="showLoader"
+                [searchParams]="searchParams"
+                [filtersChanged]="filtersChanged"
+                (onScrolled)="onScroll()"
+                (searchParamsChanged)="restartSearch()"
+                (adjustFilters)="filtersVisible = true"
+            >
+            </photo-search>
+        }
+
+        @if (searchType == SearchType.map && showMap && !needsUpdateAddress) {
+            <map-search #mapSearch [searchResult]="searchResult" (boundsChanged)="boundsChanged($event)"></map-search>
+        }
+
+        @if (searchParams && filtersVisible && searchType) {
+            <search-filters
+                [searchParams]="searchParams"
+                [totalCount]="searchResult?.totalCount"
+                [isPremium]="authUser.isPremium"
+                [searchType]="searchType"
+                [selectFilter]="selectedFilter"
+                (onFiltered)="onFiltered(searchParams)"
+                (onShowPremium)="showPremium()"
+                (onClosed)="filtersVisible = false; selectedFilter = undefined"
+                (onClearFilters)="clearFilters()"
+            ></search-filters>
+        }
+    </div>
+}
+
+<!-- desktop -->
+@if (isDesktop()) {
+    <div class="search-container">
+        @if (searchParams && searchType) {
+            <search-filters-desktop
+                type="bar"
+                [searchParams]="searchParams"
+                [totalCount]="searchResult?.totalCount"
+                [isPremium]="authUser.isPremium"
+                [searchType]="searchType"
+                (onFiltered)="onFiltered(searchParams)"
+                (onShowFilters)="filtersVisible = true"
+                (onShowPremium)="showPremium()"
+                (onClosed)="filtersVisible = false"
+                (onClearFilters)="clearFilters()"
+            ></search-filters-desktop>
+        }
+
+        @if (searchParams && authUser.isParent && searchType) {
+            <search-filters-desktop
+                type="overlay"
+                [searchParams]="searchParams"
+                [totalCount]="searchResult?.totalCount"
+                [visible]="filtersVisible"
+                [searchType]="searchType"
+                (onFiltered)="onFiltered(searchParams)"
+                (onClosed)="filtersVisible = false"
+                (onRestoreFilters)="restoreFilters()"
+                (onClearFilters)="clearFilters()"
+            ></search-filters-desktop>
+        }
+
+        @if (!isLive) {
+            <button (click)="showDevMenu()">Dev menu (ctrl+shift+q)</button>
+        }
+
+        <div class="search-filter-overlay" [class.search-filter-overlay-visible]="filtersVisible" (click)="filtersVisible = false"></div>
+
+        <div class="search-results-container" [class.combined-view]="searchType === SearchType.photoAndMap">
+            @if (searchType === SearchType.photo || searchType === SearchType.photoAndMap) {
+                <photo-search
+                    [searchResult]="searchResult"
+                    [showLoader]="showLoader"
+                    [searchParams]="searchParams"
+                    [filtersChanged]="filtersChanged"
+                    [isCombinedView]="searchType === SearchType.photoAndMap"
+                    (onScrolled)="onScroll()"
+                    (onPageChanged)="onPageChanged($event)"
+                    (searchParamsChanged)="restartSearch()"
+                    (onHighlightedUserChanged)="mapSearch.updateHighlightedUser($event)"
+                    (resetFilters)="clearFilters()"
+                    (adjustFilters)="filtersVisible = true"
+                ></photo-search>
+            }
+
+            @if (searchType === SearchType.map || searchType === SearchType.photoAndMap) {
+                <map-search
+                    #mapSearch
+                    [searchResult]="searchResult"
+                    [isCombinedView]="searchType === SearchType.photoAndMap"
+                    (boundsChanged)="boundsChanged($event)"
+                ></map-search>
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,24 @@
+form {
+    display: inline-grid;
+    grid-gap: 24px 10px;
+    grid-template-columns: 110px 380px;
+    border-bottom: 1px solid white;
+    padding: 35px 0;
+
+    > label {
+        font-size: 1.6rem;
+        color: @neutral-900;
+        font-weight: normal;
+    }
+
+    > select {
+        font-size: 1.6rem;
+        height: 40px;
+    }
+
+    &.padded-label {
+        > label {
+            margin-top: 8px;
+        }
+    }
+}

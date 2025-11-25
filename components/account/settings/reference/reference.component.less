@@ -1,0 +1,87 @@
+@import (reference) "includes";
+
+.show-reference-container {
+    position: relative;
+    padding: 15px;
+    background: #fff;
+    border-radius: 3px;
+    margin-top: 10px;
+
+    .reference-name {
+        color: @neutral-900;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .reference-description {
+        color: @neutral-900;
+        margin-bottom: 0;
+        font-size: 1.4rem;
+        overflow: hidden;
+    }
+
+    .manage-buttons {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        > button {
+            width: 25px;
+            height: 25px;
+            background-color: @neutral-100;
+            border-radius: 50%;
+        }
+
+        .edit-reference-button {
+            .background("edit-icon");
+        }
+
+        .remove-reference-button {
+            margin-left: 5px;
+            .background("bin-neutral");
+            background-size: 50%;
+        }
+    }
+}
+
+.desktop({
+    .show-reference-container {
+        position: relative;
+        margin: 20px 0;
+        color: @neutral-900;
+
+        .reference-name {
+            margin: 0 60px 0 0;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .reference-description {
+            font-size: 1.6rem;
+            margin: 3px 0 0;
+        }
+
+        .manage-buttons {
+            position: absolute;
+            right: 0;
+
+            > button {
+                width: 18px;
+                height: 18px;
+                margin-right: 10px;
+                border: none;
+            }
+
+            .edit-reference-button {
+                .background("edit-icon");
+            }
+
+            .remove-reference-button {
+                .background("bin-neutral");
+                background-size: 50%;
+                border-radius: 50%;
+                background-color: @neutral-100;
+            }
+        }
+    }
+});

@@ -1,0 +1,18 @@
+<div class="prompt-content-container">
+    <div class="question-number">{{ 'prompts.newFields.questionNumber.format' | translate: { number: 3, count: stepsCount } }}</div>
+    <div class="question-title">{{ 'prompts.newFields.parent.chores.title' | translate }}</div>
+
+    @for (chore of chores; track chore.label) {
+        <form-checkbox>
+            <label [class.active]="chore.selected">
+                <span>{{ 'settings.parentChores.' + chore.label | translate }}</span>
+                <input type="checkbox" name="{{ chore.label }}" value="{{ chore.label }}" [(ngModel)]="chore.selected" />
+            </label>
+        </form-checkbox>
+    }
+</div>
+
+<div class="buttons-container">
+    <button class="btn-bordered btn-previous" (click)="moveBack.emit()">{{ 'main.back' | translate }}</button>
+    <button class="btn-solid-neutral btn-next" (click)="onNextPressed()">{{ 'next' | translate }}</button>
+</div>

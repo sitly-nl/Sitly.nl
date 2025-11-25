@@ -1,0 +1,82 @@
+@if (!isDesktop()) {
+    <div>
+        <div class="user-avatar">
+            <img class="avatar-img" avatar [user]="authUser" [size]="500" />
+
+            <div
+                class="take-picture-button"
+                (click)="onPhotoRequested($event, PhotoUploadPurpose.avatar)"
+                [class.warning]="authUser.unsuitablePhotoReason"
+            >
+                @if (authUser.unsuitablePhotoReason) {
+                    <div class="warning-title">{{ 'profile.photoFlaggedUnsuitable' | translate }}</div>
+                }
+                @if (authUser.unsuitablePhotoReason) {
+                    <div class="warning-description">{{ authUser.unsuitablePhotoReason | translate }}</div>
+                }
+                <div class="img-change" [class.no-avatar]="!authUser.links.avatar || authUser.photoAsAvatar"></div>
+                @if (authUser.links.avatar && !authUser.photoAsAvatar) {
+                    <span [class.unsuitable]="authUser.unsuitablePhotoReason">
+                        {{ 'main.change' | translate | ucfirst }}
+                    </span>
+                }
+            </div>
+        </div>
+
+        <div class="additional-photos">
+            @for (n of [].constructor(4); track i; let i = $index) {
+                <div class="photo-container">
+                    <div>
+                        @if (photos.length > i) {
+                            <img class="with-picture" src="{{ photos[i].links.photo }}" />
+                            <button class="btn remove-photo" (click)="removePhoto(photos[i].id)"></button>
+                        } @else {
+                            <button class="add-photo" (click)="onPhotoRequested($event, PhotoUploadPurpose.photo)"></button>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (isDesktop()) {
+    <div class="user-avatar">
+        <div class="avatar-container">
+            <img class="avatar-img with-picture" avatar [user]="authUser" [size]="500" />
+
+            <button class="take-picture-button" (click)="onPhotoRequested($event, PhotoUploadPurpose.avatar)">
+                @if (authUser.unsuitablePhotoReason) {
+                    <div>{{ 'main.change' | translate | ucfirst }}</div>
+                }
+                <div
+                    class="img-change"
+                    [class.no-avatar]="!authUser.links.avatar || authUser.photoAsAvatar"
+                    [class.unsuitable]="authUser.unsuitablePhotoReason"
+                ></div>
+            </button>
+
+            <div class="avatar-warning" [class.visible]="authUser.unsuitablePhotoReason">
+                @if (authUser.unsuitablePhotoReason) {
+                    <div class="warning-title">{{ 'profile.photoFlaggedUnsuitable' | translate }}</div>
+                }
+                @if (authUser.unsuitablePhotoReason) {
+                    <div class="warning-description">
+                        {{ authUser.unsuitablePhotoReason | translate }}
+                    </div>
+                }
+            </div>
+        </div>
+
+        @for (n of [].constructor(4); track i; let i = $index) {
+            <div class="photo-container">
+                @if (photos.length > i) {
+                    <img class="with-picture" src="{{ photos[i].links.photo }}" />
+                    <button class="remove-photo" (click)="removePhoto(photos[i].id)"></button>
+                } @else {
+                    <button class="add-photo" (click)="onPhotoRequested($event, PhotoUploadPurpose.photo)"></button>
+                }
+            </div>
+        }
+    </div>
+}

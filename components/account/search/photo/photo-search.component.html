@@ -1,0 +1,246 @@
+<div
+    class="user-list-container"
+    #userListContainer
+    user-list
+    infinite-scroll
+    [infiniteScrollDistance]="4"
+    [infiniteScrollThrottle]="100"
+    [immediateCheck]="true"
+    [infiniteScrollDisabled]="isCombinedView"
+    [scrollWindow]="false"
+    (scrolled)="onScroll()"
+>
+    @if (!isDesktop()) {
+        @if (showSitterProfileGamification) {
+            <div class="gamification-container sitter-profile-gamification">
+                <div class="bar">
+                    <div class="progress">{{ 'search.yourProfile' | translate }}</div>
+                    <div class="pct">85%</div>
+                </div>
+                <div class="description">{{ 'search.completeToBeHigher' | translate }}:</div>
+                <div class="link" (click)="onAddReviewClicked()">
+                    {{ 'search.addReviewFromParent' | translate }} <span class="pct">(+15%)</span>
+                </div>
+            </div>
+        }
+
+        @if (showParentPhotoUploadGamification) {
+            <div class="gamification-container parent-photo-upload-gamification">
+                <div class="foreword">{{ 'search.parentUploadPhoto.foreword' | translate }}</div>
+                <img class="avatar-examples" [image2x]="avatarExample" />
+                <div class="description">{{ 'search.parentUploadPhoto.description' | translate }}</div>
+                <div class="link" (click)="onUploadPhotoClicked()">
+                    {{ 'search.parentUploadPhoto.uploadPhotoLink' | translate }} <span class="pct">(+15%)</span>
+                </div>
+            </div>
+        }
+
+        @if (model.totalCount > 0 || model.hiddenCount > 0) {
+            <div class="search-summary">
+                @if (model.totalCount > 0) {
+                    <div class="results-number">
+                        @if (model.totalCount === 1) {
+                            <span>{{ 'search.' + model.searchRole + 'Result' | translate }}</span>
+                        }
+                        @if (model.totalCount > 1) {
+                            <span>
+                                {{ 'search.' + model.searchRole + 'Results' | translate: { number: model.totalCount } }}
+                            </span>
+                        }
+                    </div>
+                }
+
+                @if (model.hiddenCount > 0) {
+                    <div (click)="showHidden()" class="hidden-number">
+                        {{ 'search.hiddenCount' | translate: { number: model.hiddenCount } }}
+                    </div>
+                }
+            </div>
+        }
+
+        <!-- additional distance filter -->
+        @if (showDistanceSlider) {
+            <div class="slider-container">
+                <div class="title">{{ 'search.emptyResults.title' | translate }}</div>
+                <div class="subtitle">
+                    {{
+                        'search.emptyResults.subtitle'
+                            | translate: { initialDistance: firstSearchDistance, fixedDistance: initialDistanceSliderValue }
+                    }}
+                </div>
+                <slider-picker
+                    [options]="distanceSliderOptions"
+                    [showLabels]="true"
+                    [value]="initialDistanceSliderValue"
+                    (valueChanged)="onDistanceChange($event)"
+                >
+                </slider-picker>
+            </div>
+        }
+
+        <!-- empty results message -->
+        @if (showEmptyResultsMessage) {
+            <div class="empty-results">
+                <div class="message">
+                    {{ 'search.emptyResults.message' | translate }}
+                </div>
+                <system-button class="btn-adjust" (click)="adjustFilters.emit()">{{ 'search.adjustFilters' | translate }}</system-button>
+            </div>
+        }
+    }
+
+    <ul class="users-list">
+        @if (isDesktop()) {
+            <li class="user-list-meta">
+                <div class="left">
+                    @if (searchResult) {
+                        <div class="search-count">
+                            <span>
+                                {{ searchResultDescription | translate: { count: searchResult.totalCount } }}
+                            </span>
+                        </div>
+                    }
+
+                    @if (model.hiddenCount > 0) {
+                        <button class="hidden-number" (click)="showHidden()">
+                            <span>{{ 'search.hiddenCount' | translate: { number: model.hiddenCount } }}</span>
+                            <img src="assets/images/eye-crossed-neutral.svg" />
+                        </button>
+                    }
+                </div>
+
+                <div class="right">
+                    @if (showMap) {
+                        <div class="search-options">
+                            @if (isCombinedView) {
+                                <a
+                                    [routerLink]="['/search', 'photo']"
+                                    (click)="trackCtaEvent('search-map-select-hide_map', EventAction.searchMapListView)"
+                                    [trackLabel]="{ category: 'search', type: 'button', description: 'hide-map' }"
+                                >
+                                    {{ 'search.hideMap' | translate }}
+                                </a>
+                            }
+
+                            @if (!isCombinedView && isDesktopWideScreen) {
+                                <a
+                                    [routerLink]="['/search', 'photo-and-map']"
+                                    (click)="trackCtaEvent('searchlist-select_showmap', EventAction.searchListView)"
+                                    [trackLabel]="{ category: 'search', type: 'button', description: 'show-map' }"
+                                >
+                                    {{ 'search.showMap' | translate }}
+                                </a>
+                            }
+                            @if (!isCombinedView && !isDesktopWideScreen) {
+                                <a
+                                    [routerLink]="['/search', 'map']"
+                                    (click)="trackCtaEvent('searchlist-select_showmap', EventAction.searchListView)"
+                                    [trackLabel]="{ category: 'search', type: 'button', description: 'show-map' }"
+                                >
+                                    {{ 'search.showMap' | translate }}
+                                </a>
+                            }
+                        </div>
+                    }
+
+                    <select class="sort form-control" name="sort" [(ngModel)]="searchParams.sort" (change)="searchParamsChanged.emit()">
+                        @for (sortOption of searchParams.sortOptions; track sortOption.label) {
+                            <option [ngValue]="sortOption.value" class="align-right">
+                                {{ 'search.sort' | translate | ucfirst }}: {{ sortOption.label | translate }}
+                            </option>
+                        }
+                    </select>
+                </div>
+            </li>
+
+            <!-- additional distance filter -->
+            @if (showDistanceSlider) {
+                <li class="slider-container">
+                    <div class="title">{{ 'search.emptyResults.title' | translate }}</div>
+                    <div class="subtitle">
+                        {{
+                            'search.emptyResults.subtitle'
+                                | translate: { initialDistance: firstSearchDistance, fixedDistance: initialDistanceSliderValue }
+                        }}
+                    </div>
+                    <slider-picker
+                        [options]="distanceSliderOptions"
+                        [showLabels]="true"
+                        [value]="initialDistanceSliderValue"
+                        (valueChanged)="onDistanceChange($event)"
+                    >
+                    </slider-picker>
+                </li>
+            }
+
+            <!-- empty results message -->
+            @if (showEmptyResultsMessage) {
+                <li class="empty-results">
+                    <div class="message">
+                        {{ 'search.emptyResults.message' | translate }}
+                    </div>
+                    @if (authUser.isParent) {
+                        <system-button class="btn-adjust" (click)="adjustFilters.emit()">
+                            {{ 'search.adjustFilters' | translate }}
+                        </system-button>
+                    }
+                    @if (!authUser.isParent) {
+                        <system-button class="btn-adjust" (click)="resetFilters.emit()">
+                            {{ 'search.resetAllFilters' | translate }}
+                        </system-button>
+                    }
+                </li>
+            }
+        }
+
+        @for (user of model.users; track user.data.id; let i = $index) {
+            @if (!user.hidden) {
+                <li
+                    user-card
+                    [size]="isDesktop() ? 'normal' : 'compact'"
+                    [user]="user.data"
+                    [isFavorite]="user.data.isFavorite"
+                    [searchPosition]="i"
+                    [hiddenFunctionality]="'hide'"
+                    (hide)="hideUser(user.data)"
+                    (onProfileOpen)="onUserClick(user.data, i)"
+                    (mouseenter)="onMouseEnterUserCard(user.data.id)"
+                    (mouseleave)="onMouseLeaveUserCard()"
+                ></li>
+            }
+            @if (user.hidden) {
+                <li class="user-card-hidden">
+                    {{ 'search.userIsHidden' | translate: { name: user.data.firstName | ucfirst } }} -
+                    <button (click)="unhideUser(i, user.data)">{{ 'main.undo' | translate }}</button>
+                </li>
+            }
+        }
+
+        @if (isDesktop() && model.users.length % 2 !== 0) {
+            <li></li>
+        }
+    </ul>
+
+    @if (showLoader) {
+        <div class="end-of-list-loader">
+            <div class="list-loader"></div>
+        </div>
+    }
+
+    @if (isCombinedView && searchResult && searchResult.totalPages > 1) {
+        <paging-control
+            [numberOfPages]="searchResult.totalPages"
+            [selectedPage]="searchParams.page"
+            [bottomLineText]="
+                'search.paging.bottomLine.format'
+                    | translate
+                        : {
+                              range: pagingRangeString,
+                              totalCount: searchResult.totalCount,
+                              role: searchParams.role + 's' | translate,
+                          }
+            "
+            (selectedPageChanged)="onPageChanged.emit($event)"
+        ></paging-control>
+    }
+</div>

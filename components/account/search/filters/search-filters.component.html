@@ -1,0 +1,442 @@
+<div class="content-container">
+    <toolbar-old
+        [trackingLabel]="'search-filters'"
+        [showLogo]="false"
+        [borderStyle]="ToolbarBorderStyle.normal"
+        [title]="'search.filters' | translate"
+        [leftActions]="[ToolbarActionType.close]"
+        [rightActions]="[ToolbarActionType.clear]"
+        (closeClick)="onCloseClick(); trackActiveFilters()"
+        (actionButtonClick)="toolbarActionSelected($event)"
+    >
+    </toolbar-old>
+
+    <form class="filters-form" #searchForm="ngForm">
+        @if (needsRoleSelector) {
+            <div class="form-group">
+                <label>{{ 'search.showMe' | translate }}:</label>
+                <div class="role-options">
+                    @for (userType of searchParams.availableUserTypes; track userType) {
+                        <label class="checkbox-button" [class.checked]="searchParams.role === userType">
+                            <input type="radio" name="role" [value]="userType" [(ngModel)]="searchParams.role" />
+                            <span
+                                (click)="
+                                    trackCtaEvent('select_filtermenu-select_show' + userType + 's', EventAction.filterMenu, true, false)
+                                "
+                            >
+                                {{ 'main.' + userType + 's' | translate }}
+                            </span>
+                        </label>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (searchType === SearchType.photo) {
+            <div class="form-group form-group-sort">
+                <label for="sort">{{ 'search.sortBy' | translate }}</label>
+
+                <select class="form-control" name="sort" [(ngModel)]="searchParams.sort" (change)="onSortParamChanged()">
+                    @for (sortOption of searchParams.sortOptions; track sortOption.label) {
+                        <option value="{{ sortOption.value }}">
+                            {{ sortOption.label | translate }}
+                        </option>
+                    }
+                </select>
+            </div>
+        }
+
+        @if (hasFiltersToRestore) {
+            <div class="form-group use-filters">
+                <button class="btn-underlined" (click)="$event.preventDefault(); onRestoreFilters.emit()">
+                    {{ 'search.useFilters' | translate: { date: storedFiltersDate } }}
+                </button>
+            </div>
+        }
+
+        @if (searchType === SearchType.photo) {
+            <div class="form-group" #distanceLayout>
+                <label for="distance">{{ 'search.maxDistance' | translate }}</label>
+
+                <select
+                    #distance
+                    [(ngModel)]="searchParams.maxDistance"
+                    name="distance"
+                    class="form-control"
+                    (change)="onDistanceParamChanged()"
+                >
+                    @for (option of searchParams.options.distances; track option) {
+                        <option value="{{ option }}">{{ option }} km</option>
+                    }
+                </select>
+            </div>
+        }
+
+        <div class="form-group group-last-seen-online">
+            <label for="lastSeenOnline">
+                {{ 'search.lastSeenOnline' | translate }}
+            </label>
+
+            <select
+                [(ngModel)]="searchParams.lastSeenOnline"
+                name="lastSeenOnline"
+                class="form-control"
+                (click)="onLastSeenOnlineParamChanged()"
+            >
+                @for (option of searchParams.options.lastSeenOnline; track option) {
+                    <option value="{{ option }}">
+                        {{ 'search.lastSeenOnline' + (option | titlecase) | translate }}
+                    </option>
+                }
+            </select>
+        </div>
+
+        @if (searchParams.availabilityObject) {
+            <div #availabilityLayout class="form-group group-availability">
+                <label>
+                    {{ 'main.availability' | translate }}
+                    @if (searchParams.role !== UserRole.parent) {
+                        <small>{{ 'search.whenBabysitter' | translate }}</small>
+                    }
+                    @if (searchParams.role === UserRole.parent) {
+                        <small>{{ 'search.whenYouAbleToBabysit' | translate }}</small>
+                    }
+                </label>
+
+                <availability-calendar
+                    [paddedOpaque]="true"
+                    [availability]="searchParams.availabilityObject"
+                    [searchParams]="searchParams"
+                    (availabilityChange)="onAvailabilityChanged($event)"
+                    (additionalAvailabilityChanged)="onAdditionalAvailabilityChanged($event)"
+                    placement="search-overlay"
+                ></availability-calendar>
+            </div>
+        }
+
+        @if (searchParams.role === UserRole.childminder) {
+            <div class="form-group">
+                <label>
+                    {{ 'search.fosterLocation' | translate }}
+                </label>
+                <form-checkbox type="multi">
+                    <label [class.active]="locationVisit.checked">
+                        {{ 'search.fosterLocationVisit' | translate }}
+                        <input
+                            #locationVisit
+                            type="checkbox"
+                            name="location[v]"
+                            value="visit"
+                            [(ngModel)]="searchParams.fosterLocation.visit"
+                        />
+                    </label>
+                    <label [class.active]="locationReceive.checked">
+                        {{ 'search.fosterLocationReceive' | translate }}
+                        <input
+                            #locationReceive
+                            type="checkbox"
+                            name="location[r]"
+                            value="receive"
+                            [(ngModel)]="searchParams.fosterLocation.receive"
+                        />
+                    </label>
+                </form-checkbox>
+            </div>
+        }
+
+        @if (searchParams.role !== UserRole.parent) {
+            <div class="form-group group-rate">
+                <label>
+                    {{ 'search.hourlyRate' | translate }}
+                </label>
+
+                <form-checkbox type="multi" class="hourly-rate-options">
+                    @for (rate of searchParams.hourlyRateOptions; track rate.label) {
+                        <label [class.active]="rateCheckbox.checked" [class.small]="rate.value === 'negotiate'">
+                            {{ rate.label }}
+                            <input
+                                #rateCheckbox
+                                type="checkbox"
+                                name="hourlyRates[{{ rate.value }}]"
+                                value="{{ rate.value }}"
+                                (change)="onHourlyRateChange($event)"
+                                [(ngModel)]="searchParams.hourlyRates[rate.value]"
+                            />
+                        </label>
+                    }
+                </form-checkbox>
+            </div>
+        }
+
+        @if (searchParams.role !== UserRole.parent) {
+            <div class="form-group">
+                <label>
+                    {{ 'main.resume' | translate }}
+                </label>
+
+                <form-checkbox>
+                    <label [class.active]="checkboxReferences.checked">
+                        {{ 'search.references' | translate }}
+                        <input
+                            #checkboxReferences
+                            type="checkbox"
+                            name="hasReferences"
+                            [(ngModel)]="searchParams.hasReferences"
+                            (change)="onReferencesChange($event)"
+                        />
+                    </label>
+                </form-checkbox>
+
+                @if (searchParams.role === UserRole.childminder) {
+                    <form-checkbox class="top-insetted">
+                        <label [class.active]="checkboxEducation.checked">
+                            {{ 'search.shouldHaveRelevantEducation' | translate }}
+                            <input #checkboxEducation type="checkbox" name="isEducated" [(ngModel)]="searchParams.isEducated" />
+                        </label>
+                    </form-checkbox>
+                }
+            </div>
+        }
+
+        @if (searchParams.role !== UserRole.parent) {
+            <div #ageGroupsLayout class="form-group">
+                <label>
+                    {{ 'search.experienceWithAgeGroups' | translate }}
+                </label>
+                <form-checkbox type="multi">
+                    @for (option of searchParams.ageGroupExperienceOptions; track option.label) {
+                        <label [class.active]="ageGroupCheckbox.checked">
+                            {{ option.label }}
+                            <input
+                                #ageGroupCheckbox
+                                type="checkbox"
+                                name="ageGroups[{{ option.key }}]"
+                                value="{{ option.key }}"
+                                [(ngModel)]="option.value"
+                                (change)="onAgeGroupExperienceChange($event)"
+                            />
+                        </label>
+                    }
+                </form-checkbox>
+            </div>
+        }
+
+        @if (searchParams.role === UserRole.parent) {
+            <div>
+                <div class="form-group">
+                    <label>{{ 'filters.children' | translate }}</label>
+
+                    <select
+                        [(ngModel)]="searchParams.childrenAmount"
+                        name="childrenAmount"
+                        class="form-control"
+                        (change)="onChildrenNumberChange($event)"
+                    >
+                        @for (option of searchParams.options.childrenAmount; track option) {
+                            <option value="{{ option }}">
+                                {{ option === '' ? ('filters.children.placeholder' | translate) : option }}
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div #ageRangeLayout class="form-group group-age">
+                    <label>
+                        {{ 'search.ageRange' | translate }}
+                    </label>
+
+                    <div class="slider-container">
+                        <slider
+                            [minRangeValue]="searchParams.options.childrenAge.min"
+                            [maxRangeValue]="searchParams.options.childrenAge.max"
+                            maxValueLabel="15+"
+                            [minValue]="searchParams.childrenMinAge"
+                            [maxValue]="searchParams.childrenMaxAge"
+                            (change)="trackCtaEvent('select_filtermenu-select_agerange', EventAction.filterMenu, true, false)"
+                            (minValueChanged)="searchParams.childrenMinAge = $event; onFiltered.emit(searchParams)"
+                            (maxValueChanged)="searchParams.childrenMaxAge = $event; onFiltered.emit(searchParams)"
+                        >
+                        </slider>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (searchParams.role !== UserRole.parent) {
+            <div>
+                <div class="form-group">
+                    <label>
+                        {{ 'main.gender' | translate }}
+                    </label>
+
+                    <form-checkbox type="multi">
+                        <label [class.active]="genderFemale.checked">
+                            {{ 'main.female' | translate }}
+                            <input
+                                #genderFemale
+                                type="checkbox"
+                                name="gender[female]"
+                                value="female"
+                                [(ngModel)]="searchParams.genders.f"
+                                (change)="onGenderChange($event)"
+                            />
+                        </label>
+
+                        <label [class.active]="genderMale.checked">
+                            {{ 'main.male' | translate }}
+                            <input
+                                #genderMale
+                                type="checkbox"
+                                name="gender[male]"
+                                value="male"
+                                [(ngModel)]="searchParams.genders.m"
+                                (change)="onGenderChange($event)"
+                            />
+                        </label>
+                    </form-checkbox>
+                </div>
+
+                <div class="form-group group-age">
+                    <label>
+                        {{ 'search.ageRange' | translate }}
+                    </label>
+
+                    <div class="slider-container">
+                        <slider
+                            [minRangeValue]="searchParams.options.babysitterAge.min"
+                            [maxRangeValue]="searchParams.options.babysitterAge.max"
+                            maxValueLabel="70+"
+                            [minValue]="searchParams.age.min"
+                            [maxValue]="searchParams.age.max"
+                            (minValueChanged)="searchParams.age.min = $event; onFiltered.emit(searchParams)"
+                            (maxValueChanged)="searchParams.age.max = $event; onFiltered.emit(searchParams)"
+                        >
+                        </slider>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="languages">
+                        {{ 'search.nativeLanguage' | translate }}
+                    </label>
+
+                    <select
+                        id="languages"
+                        name="language"
+                        class="form-control"
+                        [(ngModel)]="searchParams.nativeLanguage"
+                        (change)="onNativeLanguageChange($event)"
+                    >
+                        <option value="">
+                            {{ 'search.noPreference' | translate }}
+                        </option>
+                        @for (option of searchParams.nativeLanguageOptions; track option.code) {
+                            <option value="{{ option.code }}">
+                                {{ option.name }}
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group group-language-knowledge">
+                    <label for="languageKnowlegde">
+                        {{ 'search.shouldKnow' | translate }}
+                    </label>
+
+                    <form-checkbox type="multi">
+                        @for (option of searchParams.languageOptions; track option.code) {
+                            <label [class.active]="languageCheckbox.checked">
+                                {{ option.name }}
+                                <input
+                                    #languageCheckbox
+                                    type="checkbox"
+                                    name="languageKnowledge[{{ option.code }}]"
+                                    value="{{ option.code }}"
+                                    (change)="onLanguageChange($event)"
+                                    [(ngModel)]="searchParams.languageKnowledge[option.code]"
+                                />
+                            </label>
+                        }
+                    </form-checkbox>
+                </div>
+
+                @if (searchParams.role !== UserRole.childminder) {
+                    <div class="form-group group-foster-chores">
+                        <label>
+                            {{ 'search.shouldBeWillingTo' | translate }}
+                        </label>
+
+                        <form-checkbox class="checkbox-chores">
+                            @for (chore of searchParams.fosterChoresKeys; track chore) {
+                                <label [class.active]="choreCheckbox.checked">
+                                    {{ 'search.fosterChores' + (chore | titlecase) | translate }}
+                                    <input
+                                        #choreCheckbox
+                                        type="checkbox"
+                                        name="fosterChores[{{ chore }}]"
+                                        value="{{ chore }}"
+                                        [(ngModel)]="searchParams.fosterChores[chore]"
+                                        (change)="onChoresChange($event)"
+                                    />
+                                </label>
+                            }
+                        </form-checkbox>
+                    </div>
+                }
+
+                <div class="form-group group-foster-smoker">
+                    <label>
+                        {{ 'search.isSmoker.title' | translate }}
+                    </label>
+
+                    <form-checkbox>
+                        <label [class.active]="checkboxSmoker.checked">
+                            {{ 'search.isSmoker.description' | translate }}
+                            <input
+                                #checkboxSmoker
+                                type="checkbox"
+                                name="isSmoker"
+                                [(ngModel)]="searchParams.isNonSmoker"
+                                (change)="onNonSmokersChange($event)"
+                            />
+                        </label>
+                    </form-checkbox>
+                </div>
+            </div>
+        }
+    </form>
+
+    <button
+        type="button"
+        class="btn-see-results"
+        (click)="onClosed.emit(); trackActiveFilters()"
+        [trackLabel]="{ category: 'search', type: 'button', description: 'see-search-results' }"
+    >
+        @if (!totalCount) {
+            <span>{{
+                'filters.showButton.noResults'
+                    | translate
+                        : {
+                              role:
+                                  (searchParams.role === 'parent'
+                                      ? 'main.parents'
+                                      : searchParams.role === 'babysitter'
+                                        ? 'main.babysitters'
+                                        : 'main.childminders'
+                                  )
+                                  | translate
+                                  | lowercase,
+                          }
+            }}</span>
+        }
+        @if (!totalCount) {
+            <span class="subtitle">{{ 'filters.showButton.noResults.subtitle' | translate }}</span>
+        }
+        @if (totalCount) {
+            <span>{{
+                searchResultsTranslationKey
+                    | translate: { usersAmount: totalCount > 200 ? 100 * math.floor(totalCount / 100) + '+' : totalCount }
+            }}</span>
+        }
+    </button>
+</div>

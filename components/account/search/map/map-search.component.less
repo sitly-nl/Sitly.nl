@@ -1,0 +1,66 @@
+@import (reference) "includes";
+
+.maps-container {
+    height: 100%;
+}
+
+.user-window {
+    position: absolute;
+    bottom: 64px;
+    left: 3%;
+    width: 94%;
+    z-index: @z-index-high-minimum;
+}
+
+.center-map-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: white;
+    .background("current-location");
+    background-size: 50% 50%;
+    position: absolute;
+    bottom: 70px;
+    right: 8px;
+    border: 0;
+    z-index: @z-index-high-minimum;
+
+    &.lifted {
+        bottom: 162px;
+    }
+}
+
+.component-container {
+    height: 100%;
+    position: relative;
+}
+
+.photo-search {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    z-index: @z-index-high-minimum;
+    right: 30px;
+    top: 30px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 2px;
+    background-color: #fff;
+    padding: 0 15px;
+    font-weight: bold;
+    color: @neutral-900;
+    text-decoration: none;
+
+    .list-view-icon {
+        display: grid;
+        grid-template-columns: 16px 16px;
+        grid-gap: 1px;
+        margin-right: 12px;
+
+        span {
+            height: 5px;
+            border-radius: 1.6px;
+            background: @neutral-900;
+        }
+    }
+}

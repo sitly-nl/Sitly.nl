@@ -1,0 +1,20 @@
+<div class="prompt-content-container">
+    <div class="question-number">{{ 'prompts.newFields.questionNumber.format' | translate: { number: 3, count: stepsCount } }}</div>
+    <div class="question-title">{{ 'prompts.newFields.parent.traits.title' | translate }}</div>
+
+    @for (trait of traits; track trait.label) {
+        <form-checkbox>
+            <label [class.active]="trait.selected" [class.disabled]="selectedTraits.length === 3 && !trait.selected">
+                <span>{{ 'profile.traits.' + trait.label | translate }}</span>
+                <input type="checkbox" [disabled]="selectedTraits.length === 3 && !trait.selected" [(ngModel)]="trait.selected" />
+            </label>
+        </form-checkbox>
+    }
+</div>
+
+<div class="buttons-container">
+    <button class="btn-bordered btn-previous" (click)="moveBack.emit()">{{ 'main.back' | translate }}</button>
+    <button class="btn-solid-neutral btn-next" [disabled]="selectedTraits.length === 0" (click)="onNextPressed()">
+        {{ 'next' | translate }}
+    </button>
+</div>

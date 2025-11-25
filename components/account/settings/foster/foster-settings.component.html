@@ -1,0 +1,886 @@
+<!-- mobile -->
+@if (!isDesktop()) {
+    <div>
+        @if (!hasRecommendations) {
+            <div class="user-recommendations">
+                <label class="title">{{ 'settings.recommendations' | translate }}</label>
+                <p class="text-light margin-b-6">{{ 'settings.noRecommendations' | translate }}</p>
+                <p class="text-darker margin-b-12">{{ 'profile.askParentsForRecommendation' | translate }}</p>
+                <button class="btn btn-default btn-ask-recommendations" (click)="toAskForRecommendation()">
+                    <span class="label">{{ 'settings.askForRecommendation' | translate }}</span>
+                    <img image2x="arrow" />
+                </button>
+                <p class="text-dark italic bottom">{{ 'profile.dontHaveToBeOnSitly' | translate }}</p>
+            </div>
+        }
+
+        @if (hasRecommendations) {
+            <div class="user-recommendations">
+                <div class="rating-bar">
+                    <rating-bar [rating]="authUser.averageRecommendationScore" [starSize]="15"></rating-bar>
+                </div>
+                <p class="text-light margin-b-6">{{ 'settings.youHaveRecommendations' | translate: { number: recommendationsNumber } }}</p>
+                <p class="text-darker margin-b-12">{{ 'profile.askMoreParentsForRecommendation' | translate }}</p>
+                <button class="btn btn-default btn-ask-recommendations" (click)="toAskForRecommendation()">
+                    <span class="label">{{ 'settings.askForAnotherRecommendation' | translate }}</span>
+                    <img image2x="arrow" />
+                </button>
+                <p class="text-dark italic bottom">{{ 'profile.dontHaveToBeOnSitly' | translate }}</p>
+            </div>
+        }
+
+        <div class="fieldset vertical group-availability">
+            <label>{{ 'settings.availability.title.foster' | translate }}</label>
+
+            <availability-calendar
+                (availabilityChange)="saveAvailability($event)"
+                (additionalAvailabilityChanged)="onAdditionalAvailabilityChanged($event)"
+                [availability]="authUser.availability"
+                [paddedOpaque]="true"
+                placement="settings"
+            ></availability-calendar>
+
+            <label class="availability-description">{{ 'settings.availableAfterSchoolCareDescription' | translate }}</label>
+        </div>
+
+        @if (authUser.isChildminder) {
+            <div class="fieldset vertical">
+                <label>{{ 'settings.provideCare' | translate }}:</label>
+                <form-checkbox>
+                    @for (option of settings.locationOptions; track option.key) {
+                        <label [class.active]="fosterLocationInput.checked">
+                            {{ option.value | translate }}
+                            <input
+                                #fosterLocationInput
+                                name="fosterLocation-{{ option.key }}"
+                                type="checkbox"
+                                value="{{ option.key }}"
+                                (change)="onFosterLocationChange()"
+                                [checked]="fosterProperties.fosterLocation[option.key]"
+                            />
+                        </label>
+                    }
+                </form-checkbox>
+            </div>
+        }
+
+        <div class="fieldset vertical">
+            <label>{{ 'settings.children' | translate }}</label>
+            <div class="picker-container">
+                <div class="picker-value" #maxChildrenLabel>
+                    <div class="label">{{ 'settings.howManyChildren' | translate }}</div>
+                    <div class="value">{{ authUser.searchPreferences.maxChildren }}</div>
+                </div>
+                <select
+                    id="maxChildren"
+                    class="form-control"
+                    name="maxChildren"
+                    [(ngModel)]="authUser.searchPreferences.maxChildren"
+                    [attr.placeholder]="'main.select' | translate"
+                    [style.height]="maxChildrenLabel.offsetHeight"
+                    (change)="save($event)"
+                >
+                    @for (option of [1, 2, 3, 4, 5]; track option) {
+                        <option value="{{ option }}">
+                            {{ option }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="fieldset vertical">
+            <div>
+                <label>{{ 'settings.myExperience' | translate }}</label>
+                <div class="picker-container">
+                    <div class="picker-value" #experienceYearsLabel>
+                        <div class="label">{{ 'settings.howManyYearsOfExperience' | translate }}</div>
+                        <div class="value">
+                            {{ fosterProperties.yearsOfExperience ?? '' | experienceYears }}
+                        </div>
+                    </div>
+                    <select
+                        id="yearsOfExperience"
+                        class="form-control"
+                        name="yearsOfExperience"
+                        [style.height]="experienceYearsLabel.offsetHeight"
+                        [attr.placeholder]="'main.select' | translate"
+                        [(ngModel)]="fosterProperties.yearsOfExperience"
+                        (change)="save($event)"
+                    >
+                        @for (option of ['1', '2', '3', '4', '5', '5plus']; track option) {
+                            <option value="{{ option }}">
+                                {{ option | experienceYears }}
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label>{{ 'settings.inAgeGroups' | translate }}</label>
+                <form-checkbox>
+                    @for (option of ['0', '1-3', '4-6', '7-11', '12plus']; track option) {
+                        <label [class.active]="ageGroupInput.checked">
+                            <span>{{ 'settings.ageGroup' + option | translate }}</span>
+                            <input
+                                #ageGroupInput
+                                name="ageGroup-{{ option }}"
+                                type="checkbox"
+                                value="{{ option }}"
+                                (change)="onAgeGroupChange()"
+                                [checked]="settings.ageGroups[option]"
+                            />
+                        </label>
+                    }
+                </form-checkbox>
+            </div>
+        </div>
+
+        <div class="fieldset vertical">
+            <label>{{ 'profile.references' | translate }}:</label>
+
+            <div>
+                <form-checkbox>
+                    <label [class.active]="fosterProperties.hasReferences">
+                        {{ 'settings.haveReferences' | translate }}
+                        <input type="checkbox" name="hasReferences" (change)="save($event)" [(ngModel)]="fosterProperties.hasReferences" />
+                    </label>
+                </form-checkbox>
+
+                @if (authUser.references.length > 0 && fosterProperties.hasReferences) {
+                    <ul class="references-list">
+                        @for (reference of authUser.references; track reference.id) {
+                            <li>
+                                <reference
+                                    [reference]="reference"
+                                    (editingReference)="editReference($event)"
+                                    (removingReference)="showDeleteReferenceOverlay($event)"
+                                >
+                                </reference>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+
+        @if (authUser.isChildminder) {
+            <div class="fieldset vertical">
+                <label>{{ 'settings.myEducation' | translate }}</label>
+                <form-checkbox>
+                    <label [class.active]="fosterProperties.isEducated">
+                        {{ 'settings.iHaveRelevantEducation' | translate }}
+                        <input type="checkbox" name="isEducated" (change)="save($event)" [(ngModel)]="fosterProperties.isEducated" />
+                    </label>
+                </form-checkbox>
+            </div>
+        }
+
+        <div class="fieldset vertical">
+            <label>{{ 'settings.doYouSmoke' | translate }}</label>
+            <form-checkbox>
+                <label [class.active]="checkboxSmoker.checked">
+                    {{ 'settings.IAmSmoker' | translate }}
+                    <input
+                        #checkboxSmoker
+                        [(ngModel)]="fosterProperties.isSmoker"
+                        type="checkbox"
+                        name="isSmoker"
+                        (change)="save($event)"
+                    />
+                </label>
+            </form-checkbox>
+        </div>
+
+        <div class="fieldset vertical">
+            <label>{{ 'settings.whatIWantToMake' | translate }}:</label>
+            <div class="picker-container">
+                <div class="picker-value" #hourlyRateLabel>
+                    <div class="label">{{ 'profile.hourlyRate' | translate }}</div>
+                    <div class="value">
+                        {{ fosterProperties.averageHourlyRate | hourlyRate }}
+                    </div>
+                </div>
+                <select
+                    id="averageHourlyRate"
+                    class="form-control"
+                    name="averageHourlyRate"
+                    [(ngModel)]="fosterProperties.averageHourlyRate"
+                    [attr.placeholder]="'settings.myHourlyRate' | translate"
+                    [style.height]="hourlyRateLabel.offsetHeight"
+                    (change)="save($event)"
+                >
+                    @for (option of hourlyRateOptions; track option.label) {
+                        <option value="{{ option.value }}">{{ option.label }}</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="fieldset vertical">
+            <label>{{ 'settings.iHave' | translate }}:</label>
+            <form-checkbox class="group-certificates">
+                @for (option of settings.certificateOptions; track option.key) {
+                    <label [class.active]="certificateCheckbox.checked">
+                        {{ option.value | translate }}
+                        <input
+                            #certificateCheckbox
+                            name="{{ option.key }}"
+                            type="checkbox"
+                            value="{{ option.key }}"
+                            (change)="save($event)"
+                            [checked]="option.checked"
+                        />
+                    </label>
+                }
+            </form-checkbox>
+        </div>
+
+        <div class="fieldset vertical">
+            <label>{{ 'settings.willingToHelpWith' | translate }}</label>
+            <form-checkbox class="group-chores">
+                @for (option of settings.choresOptions; track option.key) {
+                    <label [class.active]="choresInput.checked">
+                        {{ option.value | translate }}
+                        <input
+                            #choresInput
+                            name="fosterChores-{{ option.key }}"
+                            type="checkbox"
+                            value="{{ option.key }}"
+                            (change)="onChoresChange()"
+                            [checked]="fosterProperties.fosterChores[option.key]"
+                        />
+                    </label>
+                }
+            </form-checkbox>
+        </div>
+
+        <div class="fieldset vertical">
+            <label>{{ 'account.language' | translate }}:</label>
+            <div class="picker-container">
+                <div class="picker-value" #nativeLanguageLabel>
+                    <div class="label">{{ 'settings.myNativeLanguage' | translate }}</div>
+                    <div class="value">{{ settings.nativeLanguageName }}</div>
+                </div>
+                <select
+                    id="nativeLanguage"
+                    class="form-control"
+                    name="nativeLanguage"
+                    [(ngModel)]="settings.nativeLanguage"
+                    [attr.placeholder]="'settings.myNativeLanguage' | translate"
+                    [style.height]="nativeLanguageLabel.offsetHeight"
+                    (change)="save($event)"
+                >
+                    @for (option of settings.nativeLanguageOptions; track option.code) {
+                        <option value="{{ option.code }}">{{ option.name }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="group-language-knowledge">
+                <label for="languageKnowlegde"> {{ 'settings.alsoSpeak' | translate }}:</label>
+                <form-checkbox>
+                    @for (option of settings.languageOptions; track option.code) {
+                        <label [class.active]="languageCheckbox.checked">
+                            {{ option.name }}
+                            <input
+                                #languageCheckbox
+                                type="checkbox"
+                                name="languageKnowledge-{{ option.code }}"
+                                class="languageKnowlegde"
+                                value="{{ option.code }}"
+                                [checked]="userLanguages[option.code]"
+                                (change)="onLanguageChange()"
+                            />
+                        </label>
+                    }
+                </form-checkbox>
+                <select
+                    id="otherLanguage"
+                    class="form-control"
+                    name="otherLanguage"
+                    #otherLanguage
+                    [class.unselected]="!settings.otherLanguage"
+                    [(ngModel)]="settings.otherLanguage"
+                    (change)="onLanguageChange()"
+                >
+                    <option value="undefined" selected>{{ 'settings.otherLanguage' | translate }}</option>
+                    @for (option of settings.otherLanguageOptions; track option.code) {
+                        <option value="{{ option.code }}">
+                            {{ option.name }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        @if (authUser.isBabysitter) {
+            <div class="fieldset vertical">
+                <div>
+                    <label>{{ 'settings.yourOccupation' | translate }}</label>
+                    <div class="picker-container">
+                        <div class="picker-value" #occupationLabel>
+                            <div class="label">{{ 'settings.iAm' | translate }}</div>
+                            <div class="value">
+                                @if (fosterProperties.occupation) {
+                                    {{ 'settings.occupation.' + fosterProperties.occupation | translate }}
+                                }
+                            </div>
+                        </div>
+                        <select
+                            id="occupation"
+                            class="form-control"
+                            name="occupation"
+                            [attr.placeholder]="'main.select' | translate"
+                            [style.height]="occupationLabel.offsetHeight"
+                            [(ngModel)]="fosterProperties.occupation"
+                            (change)="save($event)"
+                        >
+                            @for (option of settings.occupationOptions; track option) {
+                                <option value="{{ option }}">
+                                    {{ 'settings.occupation.' + option | translate }}
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="fieldset vertical">
+            <label>{{ 'settings.yourSpecialties' | translate }}:</label>
+            <form-checkbox class="group-skills">
+                @for (option of settings.skillsOptions; track option.key) {
+                    <label [class.active]="skillCheckbox.checked">
+                        {{ option.value | translate }}
+                        <input
+                            #skillCheckbox
+                            name="{{ option.key }}"
+                            type="checkbox"
+                            value="{{ option.key }}"
+                            (change)="onSkillChange()"
+                            [checked]="option.checked"
+                        />
+                    </label>
+                }
+            </form-checkbox>
+        </div>
+
+        <div class="fieldset vertical group-traits">
+            <label>{{ 'settings.howYouDescribeYourself' | translate }}:</label>
+
+            <select
+                #traitInput
+                id="trait1"
+                class="form-control"
+                [class.unselected]="!settings.trait1"
+                name="trait1"
+                [(ngModel)]="settings.trait1"
+                (change)="onTraitChange()"
+            >
+                <option value="undefined" selected disabled hidden></option>
+                @for (option of settings.traitOptions1; track option.key) {
+                    <option value="{{ option.key }}">
+                        {{ option.value | translate }}
+                    </option>
+                }
+            </select>
+
+            <select
+                #traitInput
+                id="trait2"
+                class="form-control"
+                [class.unselected]="!settings.trait2"
+                name="trait2"
+                [(ngModel)]="settings.trait2"
+                (change)="onTraitChange()"
+            >
+                <option value="undefined" selected disabled hidden></option>
+                @for (option of settings.traitOptions2; track option.key) {
+                    <option value="{{ option.key }}">
+                        {{ option.value | translate }}
+                    </option>
+                }
+            </select>
+
+            <select
+                #traitInput
+                id="trait3"
+                class="form-control"
+                [class.unselected]="!settings.trait3"
+                name="trait3"
+                [(ngModel)]="settings.trait3"
+                (change)="onTraitChange()"
+            >
+                <option value="undefined" selected disabled hidden></option>
+                @for (option of settings.traitOptions3; track option.key) {
+                    <option value="{{ option.key }}">
+                        {{ option.value | translate }}
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="fieldset vertical">
+            <label>{{ 'main.gender' | translate }}</label>
+
+            <div class="gender-buttons">
+                @for (gender of settings.genderOptions; track gender.key) {
+                    <button
+                        #genderButton
+                        name="gender"
+                        [class.checked]="authUser.gender === gender.key"
+                        (click)="authUser.gender = gender.key; genderButton.value = gender.key; save($event)"
+                    >
+                        {{ gender.value | translate }}
+                    </button>
+                }
+            </div>
+        </div>
+
+        <div class="fieldset center-aligned">
+            <label class="birthday-title">{{ 'main.birthday' | translate }}</label>
+
+            <datepicker
+                value="{{ authUser.birthdate }}"
+                name="birthdate"
+                [maxYear]="maxYear"
+                [restrictDateToYear]="true"
+                [border]="false"
+                [showPlaceholder]="!authUser.birthdate"
+                (dateUpdated)="save($event)"
+            >
+            </datepicker>
+        </div>
+    </div>
+}
+
+<!-- desktop -->
+@if (isDesktop()) {
+    <div>
+        <form>
+            <label>{{ 'profile.stars' | translate }}</label>
+            <div class="user-recommendations">
+                <div class="rating-bar">
+                    <rating-bar
+                        [rating]="authUser.averageRecommendationScore ? authUser.averageRecommendationScore : 0"
+                        [starSize]="15"
+                    ></rating-bar>
+                </div>
+                <p class="recommendations-number">
+                    @if (hasRecommendations) {
+                        <span>{{ 'settings.youHaveRecommendations' | translate: { number: recommendationsNumber } }}</span>
+                    }
+                    @if (!hasRecommendations) {
+                        <span>{{ 'profile.noRecommendationsYet' | translate }}</span>
+                    }
+                    <span class="btn-question-mark" (click)="showInfoDialog()">?</span>
+                </p>
+                <p class="recommendations-text">{{ 'profile.increaseYourChances' | translate }}</p>
+                <button class="btn btn-default" (click)="toAskForRecommendation()">
+                    @if (!hasRecommendations) {
+                        <span>{{ 'settings.askForRecommendation' | translate }}</span>
+                    }
+                    @if (hasRecommendations) {
+                        <span>{{ 'settings.askForAnotherRecommendation' | translate }}</span>
+                    }
+                </button>
+                <p class="btn-recommendation-note">{{ 'profile.dontHaveToBeOnSitly' | translate }}</p>
+            </div>
+        </form>
+
+        <form>
+            <label>{{ 'settings.availability.title.foster' | translate }}</label>
+            <div class="availability-calendar">
+                <availability-calendar
+                    [availability]="authUser.availability"
+                    [additionalAvailabilityPadded]="false"
+                    [paddedOpaque]="true"
+                    (availabilityChange)="saveAvailability($event)"
+                    (additionalAvailabilityChanged)="onAdditionalAvailabilityChanged($event)"
+                    placement="settings"
+                ></availability-calendar>
+                <label class="availability-description">{{ 'settings.availableAfterSchoolCareDescription' | translate }}</label>
+            </div>
+        </form>
+
+        @if (authUser.isChildminder) {
+            <form>
+                <label>{{ 'settings.provideCare' | translate }}:</label>
+                <form-checkbox>
+                    @for (option of settings.locationOptions; track option.key) {
+                        <label [class.active]="fosterLocationInput.checked">
+                            {{ option.value | translate }}
+                            <input
+                                #fosterLocationInput
+                                name="fosterLocation-{{ option.key }}"
+                                type="checkbox"
+                                value="{{ option.key }}"
+                                (change)="onFosterLocationChange()"
+                                [checked]="fosterProperties.fosterLocation[option.key]"
+                            />
+                        </label>
+                    }
+                </form-checkbox>
+            </form>
+        }
+
+        <form class="padded-label">
+            <label for="maxChildren">{{ 'settings.children' | translate }}</label>
+            <select
+                class="form-control"
+                name="maxChildren"
+                (change)="save($event)"
+                [(ngModel)]="authUser.searchPreferences.maxChildren"
+                [attr.placeholder]="'main.select' | translate"
+            >
+                @for (option of [1, 2, 3, 4, 5]; track option) {
+                    <option value="{{ option }}">
+                        @if (option > 1) {
+                            {{ 'settings.childrenAtTheSameTime.format' | translate: { childrenAmount: option } }}
+                        }
+                        @if (option == 1) {
+                            {{ option }} {{ 'settings.child' | translate | lowercase }}
+                        }
+                    </option>
+                }
+            </select>
+        </form>
+
+        <form class="group-ageGroups padded-label">
+            <label for="yearsOfExperience">{{ 'settings.myExperience' | translate }}</label>
+            <select
+                id="yearsOfExperience"
+                [attr.placeholder]="'main.select' | translate"
+                name="yearsOfExperience"
+                class="form-control"
+                (change)="save($event)"
+                [(ngModel)]="fosterProperties.yearsOfExperience"
+            >
+                @for (option of ['1', '2', '3', '4', '5', '5plus']; track option) {
+                    <option value="{{ option }}">
+                        @if (option === '1') {
+                            {{ 'settings.oneYearOfExperience' | translate }}
+                        }
+                        @if (option !== '1') {
+                            {{ 'settings.manyYearsOfExperience' | translate: { number: option | experienceYears } }}
+                        }
+                    </option>
+                }
+            </select>
+
+            <label>{{ 'settings.inAgeGroups' | translate }}</label>
+            <form-checkbox>
+                @for (option of ['0', '1-3', '4-6', '7-11', '12plus']; track option) {
+                    <label [class.active]="ageGroupInput.checked">
+                        <span>{{ 'settings.ageGroup' + option | translate }}</span>
+                        <input
+                            #ageGroupInput
+                            name="ageGroup-{{ option }}"
+                            type="checkbox"
+                            value="{{ option }}"
+                            (change)="onAgeGroupChange()"
+                            [checked]="settings.ageGroups[option]"
+                        />
+                    </label>
+                }
+            </form-checkbox>
+        </form>
+
+        <form class="padded-label">
+            <label>{{ 'settings.myReferences' | translate }}</label>
+
+            <div>
+                <form-checkbox>
+                    <label [class.active]="fosterProperties.hasReferences">
+                        {{ 'settings.haveReferences' | translate }}
+                        <input type="checkbox" name="hasReferences" (change)="save($event)" [(ngModel)]="fosterProperties.hasReferences" />
+                    </label>
+                </form-checkbox>
+
+                @if (authUser.references.length > 0 && fosterProperties.hasReferences) {
+                    <ul class="references-list">
+                        @for (reference of authUser.references; track reference.id) {
+                            <li>
+                                <reference
+                                    [reference]="reference"
+                                    (editingReference)="editReference($event)"
+                                    (removingReference)="showDeleteReferenceOverlay($event)"
+                                >
+                                </reference>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </form>
+
+        @if (authUser.isChildminder) {
+            <form class="padded-label">
+                <label>{{ 'settings.myEducation' | translate }}</label>
+                <form-checkbox>
+                    <label [class.active]="fosterProperties.isEducated">
+                        {{ 'settings.iHaveRelevantEducation' | translate }}
+                        <input type="checkbox" name="isEducated" (change)="save($event)" [(ngModel)]="fosterProperties.isEducated" />
+                    </label>
+                </form-checkbox>
+            </form>
+        }
+
+        <form class="padded-label">
+            <label>{{ 'editProfile.smoking' | translate }}</label>
+            <form-checkbox>
+                <label [class.active]="fosterProperties.isSmoker">
+                    {{ 'settings.IAmSmoker' | translate }}
+                    <input type="checkbox" name="isSmoker" (change)="save($event)" [(ngModel)]="fosterProperties.isSmoker" />
+                </label>
+            </form-checkbox>
+        </form>
+
+        <form class="padded-label">
+            <label>{{ 'profile.hourlyRate' | translate }}</label>
+            <select
+                id="averageHourlyRate"
+                name="averageHourlyRate"
+                class="form-control"
+                [(ngModel)]="fosterProperties.averageHourlyRate"
+                [attr.placeholder]="'settings.myHourlyRate' | translate"
+                (change)="save($event)"
+            >
+                @for (option of hourlyRateOptions; track option.label) {
+                    <option value="{{ option.value }}">{{ option.label }}</option>
+                }
+            </select>
+        </form>
+
+        <form class="padded-label">
+            <label>{{ 'settings.iHave' | translate }}:</label>
+            <form-checkbox>
+                @for (option of settings.certificateOptions; track option.key) {
+                    <label [class.active]="certificateCheckbox.checked">
+                        {{ option.value | translate }}
+                        <input
+                            #certificateCheckbox
+                            name="{{ option.key }}"
+                            type="checkbox"
+                            value="{{ option.key }}"
+                            (change)="save($event)"
+                            [checked]="option.checked"
+                        />
+                    </label>
+                }
+            </form-checkbox>
+        </form>
+
+        @if (authUser.isBabysitter) {
+            <form>
+                <label>{{ 'settings.willingToHelpWith' | translate }}</label>
+                <form-checkbox>
+                    @for (option of settings.choresOptions; track option.key) {
+                        <label [class.active]="choresInput.checked">
+                            {{ option.value | translate }}
+                            <input
+                                #choresInput
+                                name="fosterChores-{{ option.key }}"
+                                type="checkbox"
+                                value="{{ option.key }}"
+                                (change)="onChoresChange()"
+                                [checked]="fosterProperties.fosterChores[option.key]"
+                            />
+                        </label>
+                    }
+                </form-checkbox>
+            </form>
+        }
+
+        <form>
+            <label for="languages">
+                {{ 'settings.nativeLanguage' | translate }}
+            </label>
+
+            <select
+                id="nativeLanguage"
+                class="form-control"
+                name="nativeLanguage"
+                [(ngModel)]="settings.nativeLanguage"
+                [attr.placeholder]="'settings.myNativeLanguage' | translate"
+                (change)="save($event)"
+            >
+                @for (option of settings.nativeLanguageOptions; track option.code) {
+                    <option value="{{ option.code }}">{{ option.name }}</option>
+                }
+            </select>
+
+            <label for="languageKnowlegde"> {{ 'settings.alsoSpeak' | translate }}: </label>
+
+            <div class="other-languages-container">
+                <form-checkbox>
+                    @for (option of settings.languageOptions; track option.code) {
+                        <label [class.active]="languageCheckbox.checked">
+                            {{ option.name }}
+                            <input
+                                #languageCheckbox
+                                type="checkbox"
+                                name="languageKnowledge-{{ option.code }}"
+                                class="languageKnowlegde"
+                                value="{{ option.code }}"
+                                [checked]="userLanguages[option.code]"
+                                (change)="onLanguageChange()"
+                            />
+                        </label>
+                    }
+                </form-checkbox>
+                <select
+                    id="otherLanguage"
+                    class="form-control"
+                    name="otherLanguage"
+                    #otherLanguage
+                    [class.unselected]="!settings.otherLanguage"
+                    [(ngModel)]="settings.otherLanguage"
+                    (change)="onLanguageChange()"
+                >
+                    <option value="undefined" selected>{{ 'settings.otherLanguage' | translate }}</option>
+                    @for (option of settings.otherLanguageOptions; track option.code) {
+                        <option value="{{ option.code }}">
+                            {{ option.name }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </form>
+
+        @if (authUser.isBabysitter) {
+            <form class="padded-label">
+                <label for="occupation">
+                    {{ 'settings.yourOccupation' | translate }}
+                </label>
+                <select
+                    id="occupation"
+                    class="form-control"
+                    name="occupation"
+                    [class.unselected]="!fosterProperties.occupation"
+                    [attr.placeholder]="'main.select' | translate"
+                    [(ngModel)]="fosterProperties.occupation"
+                    (change)="save($event)"
+                >
+                    @for (option of settings.occupationOptions; track option) {
+                        <option value="{{ option }}">
+                            {{ 'settings.occupation.' + option | translate }}
+                        </option>
+                    }
+                    @if (fosterProperties.occupation === 'intern') {
+                        <option value="intern" disabled>
+                            {{ 'settings.occupation.intern' | translate }}
+                        </option>
+                    }
+                    @if (fosterProperties.occupation === 'retired') {
+                        <option value="retired" disabled>
+                            {{ 'settings.occupation.retired' | translate }}
+                        </option>
+                    }
+                </select>
+            </form>
+        }
+
+        <form>
+            <label>{{ 'settings.yourSpecialties' | translate }}:</label>
+            <form-checkbox class="group-skills">
+                @for (option of settings.skillsOptions; track option.key) {
+                    <label [class.active]="skillCheckbox.checked">
+                        {{ option.value | translate }}
+                        <input
+                            #skillCheckbox
+                            name="{{ option.key }}"
+                            type="checkbox"
+                            value="{{ option.key }}"
+                            (change)="onSkillChange()"
+                            [checked]="option.checked"
+                        />
+                    </label>
+                }
+            </form-checkbox>
+        </form>
+
+        <form>
+            <label>{{ 'settings.howYouDescribeYourself' | translate }}</label>
+
+            <div class="traits-container">
+                <select
+                    #traitInput
+                    id="trait1"
+                    class="form-control"
+                    [class.unselected]="!settings.trait1"
+                    name="trait1"
+                    [(ngModel)]="settings.trait1"
+                    (change)="onTraitChange()"
+                >
+                    <option value="undefined" selected disabled hidden></option>
+                    @for (option of settings.traitOptions1; track option.key) {
+                        <option value="{{ option.key }}">
+                            {{ option.value | translate }}
+                        </option>
+                    }
+                </select>
+
+                <select
+                    #traitInput
+                    id="trait2"
+                    class="form-control"
+                    [class.unselected]="!settings.trait2"
+                    name="trait2"
+                    [(ngModel)]="settings.trait2"
+                    (change)="onTraitChange()"
+                >
+                    <option value="undefined" selected disabled hidden></option>
+                    @for (option of settings.traitOptions2; track option.key) {
+                        <option value="{{ option.key }}">
+                            {{ option.value | translate }}
+                        </option>
+                    }
+                </select>
+
+                <select
+                    #traitInput
+                    id="trait3"
+                    class="form-control"
+                    [class.unselected]="!settings.trait3"
+                    name="trait3"
+                    [(ngModel)]="settings.trait3"
+                    (change)="onTraitChange()"
+                >
+                    <option value="undefined" selected disabled hidden></option>
+                    @for (option of settings.traitOptions3; track option.key) {
+                        <option value="{{ option.key }}">
+                            {{ option.value | translate }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </form>
+
+        <form class="padded-label">
+            <label for="gender">{{ 'main.gender' | translate }}</label>
+            <select id="gender" class="form-control" [(ngModel)]="authUser.gender" name="gender" (change)="save($event)">
+                @for (gender of settings.genderOptions; track gender.key) {
+                    <option value="{{ gender.key }}">
+                        {{ gender.value | translate }}
+                    </option>
+                }
+            </select>
+        </form>
+
+        <form class="padded-label">
+            <label for="birthdate">{{ 'main.birthday' | translate }}</label>
+            <datepicker
+                value="{{ authUser.birthdate }}"
+                name="birthdate"
+                [maxYear]="maxYear"
+                [restrictDateToYear]="true"
+                [transparent]="false"
+                [showPlaceholder]="!authUser.birthdate"
+                (dateUpdated)="save($event)"
+            ></datepicker>
+        </form>
+    </div>
+}

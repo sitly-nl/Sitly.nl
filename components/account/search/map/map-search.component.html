@@ -1,0 +1,45 @@
+<div class="component-container">
+    <div class="maps-container" id="mapsContainerSearch"></div>
+
+    @if (!isCombinedView) {
+        <a
+            class="photo-search"
+            [routerLink]="['/search', 'photo']"
+            (click)="trackCtaEvent('mapview-select-select_viewlist', EventAction.mapView)"
+        >
+            <div class="list-view-icon">
+                @for (number of [1, 2, 3, 4, 5, 6]; track number) {
+                    <span>&nbsp;</span>
+                }
+            </div>
+            {{ 'search.listView' | translate }}
+        </a>
+    }
+
+    <div class="center-map-button" [class.lifted]="activeUser && !isDesktop()" (click)="centerMap()"></div>
+
+    @if (isDesktop() && activeUser) {
+        <div
+            user-card
+            id="map-user-card"
+            (onFavoriteChange)="favoriteChanged($event)"
+            [user]="activeUser"
+            [size]="'compact'"
+            [rounded]="true"
+            [isFavorite]="activeUser.isFavorite"
+        ></div>
+    }
+
+    @if (activeUser && !isDesktop()) {
+        <div class="user-window">
+            <div
+                user-card
+                [user]="activeUser"
+                [size]="'compact'"
+                [rounded]="true"
+                [isFavorite]="activeUser.isFavorite"
+                (onProfileOpen)="onUserClick(activeUser)"
+            ></div>
+        </div>
+    }
+</div>

@@ -1,0 +1,9 @@
+<div class="show-reference-container">
+    <div class="manage-buttons">
+        <button type="button" class="edit-reference-button" (click)="editingReference.emit(reference)"></button>
+        <button type="button" class="remove-reference-button" (click)="removingReference.emit(reference)"></button>
+    </div>
+
+    <h3 class="reference-name">{{ reference.familyName }}:</h3>
+    <p class="reference-description">{{ reference.description }}</p>
+</div>

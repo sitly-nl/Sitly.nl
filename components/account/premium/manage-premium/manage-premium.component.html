@@ -1,0 +1,142 @@
+@if (!isDesktop()) {
+    <div>
+        @if (!authUser.isPremium && !authUser.subscription) {
+            <div class="user-subscription-information">
+                <div class="subscription-type">{{ 'premium.basicAccount' | translate }}</div>
+
+                <div class="subscription-description">
+                    {{ 'premium.unlockPremiumDescription' | translate }}
+                </div>
+
+                <button
+                    class="unlock-button btn-solid-purple"
+                    (click)="showPremium.emit()"
+                    [trackLabel]="{ category: 'premium', type: 'cta', description: 'in-account-settings-unlock' }"
+                >
+                    {{ 'premium.unlockPremium' | translate }}
+                    <img src="app/images/arrow-right-white.svg" />
+                </button>
+
+                @if (countrySettings.showWelfareVouchers && authUser.isParent) {
+                    <button class="btn-underlined btn-voucher" (click)="showVoucherOverlay = true">
+                        {{ 'premium.haveVoucher' | translate }}
+                    </button>
+                }
+            </div>
+        }
+
+        @if (authUser.canResumePremium) {
+            <div class="user-subscription-information">
+                <div class="subscription-type">{{ 'settings.basicMembership' | translate }}</div>
+
+                <div class="subscription-description">
+                    {{ 'settings.resumeSitlyPremiumToSendMessages' | translate }}
+                </div>
+
+                <button
+                    class="unlock-button btn-solid-purple"
+                    (click)="resumePremium.emit()"
+                    [trackLabel]="{ category: 'premium', type: 'cta', description: 'in-account-settings-unlock' }"
+                >
+                    {{ 'settings.resumePremiumCta' | translate }}
+                    <img src="app/images/arrow-right-white.svg" />
+                </button>
+            </div>
+        }
+
+        @if (authUser.canReactivatePremium) {
+            <div class="user-subscription-information">
+                <div class="subscription-type">
+                    {{
+                        'premium.manage.resume.title.format'
+                            | translate: { date: (authUser.premiumExpiryDate | std | dfnsFormat: 'd MMMM') }
+                    }}
+                </div>
+
+                <div class="subscription-description">
+                    {{ 'premium.manage.resume.description' | translate }}
+                </div>
+
+                <button
+                    class="unlock-button btn-solid-purple"
+                    (click)="reactivatePremium.emit()"
+                    [trackLabel]="{ category: 'premium', type: 'cta', description: 'in-account-settings-resume' }"
+                >
+                    {{ 'account.reactivatePremiumCta' | translate }}
+                    <img src="app/images/arrow-right-white.svg" />
+                </button>
+            </div>
+        }
+    </div>
+}
+
+@if (isDesktop()) {
+    @if (!authUser.isPremium || authUser.canReactivatePremium) {
+        <div class="manage-premium-container">
+            <img class="header-image" image2x="profile-account-premium" />
+
+            @if (authUser.premiumExpiryDate) {
+                <span class="title">
+                    {{
+                        authUser.canReactivatePremium
+                            ? ('premium.manage.resume.title.format'
+                              | translate: { date: (authUser.premiumExpiryDate | std | dfnsFormat: 'd MMMM') })
+                            : ('premium.manage.title.' + authUser.role | translate)
+                    }}
+                </span>
+            }
+
+            <span class="description">
+                @if (authUser.canReactivatePremium) {
+                    {{
+                        (authUser.canReactivatePremium
+                            ? 'premium.manage.resume.description'
+                            : 'premium.manage.description.' + (authUser.isParent ? 'parent' : 'foster')
+                        ) | translate
+                    }}
+                }
+                @if (authUser.canResumePremium) {
+                    {{ 'settings.resumeSitlyPremiumToSendMessages' | translate }}
+                }
+            </span>
+
+            @if (authUser.canReactivatePremium) {
+                <button
+                    class="btn-get-premium"
+                    (click)="reactivatePremium.emit()"
+                    [trackLabel]="{ category: 'premium', type: 'cta', description: 'in-account-settings' }"
+                >
+                    {{ 'premium.manage.resume.cta' | translate }}
+                </button>
+            }
+            @if (!authUser.isPremium && !authUser.subscription) {
+                <button
+                    class="btn-get-premium"
+                    (click)="showPremium.emit()"
+                    [trackLabel]="{ category: 'premium', type: 'cta', description: 'in-account-settings' }"
+                >
+                    {{ 'getPremium' | translate }}
+                </button>
+            }
+            @if (authUser.canResumePremium) {
+                <button
+                    class="btn-get-premium"
+                    (click)="resumePremium.emit()"
+                    [trackLabel]="{ category: 'premium', type: 'cta', description: 'in-account-settings' }"
+                >
+                    {{ 'settings.resumePremiumCta' | translate }}
+                </button>
+            }
+
+            @if (countrySettings.showWelfareVouchers && !authUser.isPremium && authUser.isParent) {
+                <button class="btn-underlined btn-voucher" (click)="showVoucherOverlay = true">
+                    {{ 'premium.haveVoucher' | translate }}
+                </button>
+            }
+        </div>
+    }
+}
+
+@if (showVoucherOverlay) {
+    <voucher (close)="showVoucherOverlay = false"></voucher>
+}

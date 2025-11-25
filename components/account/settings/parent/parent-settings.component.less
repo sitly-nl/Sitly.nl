@@ -1,0 +1,117 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+@import "~app/styles/settings.less";
+
+.mobile({
+    .children-group {
+        label {
+            margin-top: 8px;
+        }
+    }
+
+    .child-container {
+        border-bottom: solid 1px #d8d8d8;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+    }
+
+    .add-child {
+        padding-left: 0;
+        padding-top: 17px;
+        text-align: left;
+        height: auto;
+        font-weight: normal;
+    }
+
+    .save-button {
+        width: auto;
+        height: 34px;
+        padding: 0 14px;
+    }
+
+    .cancel-button {
+        width: auto;
+        text-decoration: underline;
+        height: 34px;
+        padding: 0 14px;
+    }
+
+    .light {
+        display: block;
+        font-weight: 300;
+        color: @neutral-900;
+        .font-size(1.2);
+        margin-bottom: 20px;
+    }
+});
+
+.desktop({
+    @import "~app/components/settings/settings.forms.less";
+
+    .child-container {
+        border-bottom: solid 1px #e2e9ef;
+        padding: 10px 0 20px;
+
+        &:first-of-type {
+            padding-top: 2px;
+        }
+
+        &:last-of-type {
+            margin-bottom: 10px;
+        }
+    }
+
+    form.group-children {
+        > label {
+            padding-top: 9px;
+        }
+    }
+
+    .child-li {
+        margin-bottom: 10px;
+    }
+
+    .add-child {
+        height: auto;
+        text-align: left;
+        margin: -20px 0 -8px;
+        padding-left: 0;
+        font-size: 1.6rem;
+    }
+
+    .add-child-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        child {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .save-button {
+            width: auto;
+
+            height: 34px;
+            padding: 0 14px;
+        }
+
+        .cancel-button {
+            width: auto;
+            height: 34px;
+            padding: 0 14px;
+            font-size: 1.6rem;
+        }
+    }
+
+    .hourly-rates-stats {
+        display: block;
+        .font-size(1.6);
+        line-height: 1.38;
+        margin-bottom: 30px;
+        font-weight: 300;
+
+        .header {
+            margin-bottom: 10px;
+        }
+    }
+});

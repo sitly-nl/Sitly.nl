@@ -1,0 +1,73 @@
+@import (reference) "includes";
+
+.premium-text {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+
+    .mobile({
+        padding: 0px 40px;
+    });
+
+    .desktop({
+        align-items: center;
+    });
+
+    .header-logo {
+        margin-bottom: 40px;
+
+        img {
+            .mobile({
+                width: 140px;
+                height: 48px;
+            });
+
+            .desktop({
+                width: 195px;
+                height: 66px;
+            });
+        }
+    }
+
+    .header-title {
+        margin-bottom: 16px;
+        .bold-heading();
+
+        .mobile({
+            font-size: 2.4rem;
+        });
+
+        .desktop({
+            font-size: 3.6rem;
+        });
+    }
+
+    .header-list {
+        text-align: left;
+
+        .desktop({
+            font-size: 1.6rem;
+        });
+
+        li {
+            position: relative;
+            padding-left: 21px;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 4px;
+                left: 0;
+                display: inline-block;
+                width: 13px;
+                height: 13px;
+                background: url("assets/images/premium/premium-overlay-bullet-tick.svg") 100% no-repeat;
+                margin-right: 8px;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 8px;
+            }
+        }
+    }
+}

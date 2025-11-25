@@ -1,0 +1,76 @@
+<div class="child-container">
+    <div class="gender-birthday-container">
+        <div class="child-gender">
+            @if (child.isExpecting) {
+                <div class="gender-label">
+                    {{ 'settings.babyExpected' | translate }}
+                </div>
+            } @else {
+                <select #gender class="form-control" [class.enabled]="gender.value !== 'unknown'" (change)="updateGender(gender.value)">
+                    @if (!child.id) {
+                        <option value="unknown" disabled selected class="placeholder">{{ 'main.gender' | translate }}</option>
+                    }
+                    <option value="male" [selected]="child.gender == Gender.male">{{ 'main.boy' | translate }}</option>
+                    <option value="female" [selected]="child.gender == Gender.female">{{ 'main.girl' | translate }}</option>
+                </select>
+            }
+        </div>
+
+        <div class="child-age">
+            <datepicker
+                [minDate]="child.isExpecting ? 'now' : '-14years'"
+                [maxDate]="child.isExpecting ? '+9months' : 'now'"
+                [day]="childBirthDate ?? 0"
+                [month]="childBirthMonth ?? 0"
+                [year]="childBirthYear ?? 0"
+                [separatorColor]="'#22313e'"
+                [border]="false"
+                [showPlaceholder]="!child.id"
+                (dateUpdated)="updateDate($event)"
+            ></datepicker>
+        </div>
+
+        <div class="space"></div>
+
+        @if (removeButton && child.id) {
+            <button type="button" class="remove-child" (click)="removeChild(child)"></button>
+        }
+    </div>
+
+    @if (!child.isExpecting) {
+        <div class="traits-block">
+            <div class="trait-container">
+                <select #traitPicker1 class="form-control" [class.active]="traitPicker1.value" (change)="onTraitChanged()">
+                    <option [selected]="!traitPicker1.value" value>{{ 'settings.child.pickChildTraits' | translate }}</option>
+                    @for (trait of availableTraits1; track trait) {
+                        <option value="{{ trait }}" [selected]="trait === trait1">
+                            {{ 'childTraits.' + trait | translate }}
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="trait-container">
+                <select #traitPicker2 class="form-control" [class.active]="traitPicker2.value" (change)="onTraitChanged()">
+                    <option [selected]="!traitPicker2.value" value>{{ 'settings.child.pickChildTraits' | translate }}</option>
+                    @for (trait of availableTraits2; track trait) {
+                        <option value="{{ trait }}" [selected]="trait === trait2">
+                            {{ 'childTraits.' + trait | translate }}
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="trait-container">
+                <select #traitPicker3 class="form-control" [class.active]="traitPicker3.value" (change)="onTraitChanged()">
+                    <option [selected]="!traitPicker3.value" value>{{ 'settings.child.pickChildTraits' | translate }}</option>
+                    @for (trait of availableTraits3; track trait) {
+                        <option value="{{ trait }}" [selected]="trait === trait3">
+                            {{ 'childTraits.' + trait | translate }}
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+</div>

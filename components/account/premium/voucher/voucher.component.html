@@ -1,0 +1,34 @@
+<div class="background">
+    <div class="voucher-content-container">
+        <button class="dialog-top-button" (click)="close.emit()"></button>
+
+        <span class="title">{{ 'voucher.title.' + (premiumActivated ? 'activated' : 'enter') | translate }}</span>
+
+        <div class="main-container">
+            @if (!premiumActivated) {
+                <input
+                    class="code-input"
+                    type="text"
+                    placeholder="{{ 'voucher.placeholder' | translate }}"
+                    autocomplete="off"
+                    [(ngModel)]="code"
+                />
+            }
+            @if (!premiumActivated && showError) {
+                <span class="error-label">{{ 'voucher.error.wrongCode' | translate }}</span>
+            }
+
+            @if (premiumActivated) {
+                <span class="description">
+                    {{
+                        'voucher.activated.description' | translate: { date: authUser.premiumExpiryDate | std | dfnsFormat: 'd MMMM yyyy' }
+                    }}
+                </span>
+            }
+        </div>
+
+        <system-button class="bottom-btn" (click)="premiumActivated ? onClose() : validateCode()">
+            {{ (premiumActivated ? 'premium.letsGo' : 'voucher.btn.activate') | translate }}
+        </system-button>
+    </div>
+</div>

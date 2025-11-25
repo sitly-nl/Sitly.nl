@@ -1,0 +1,257 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+@import "~app/styles/settings.less";
+
+.mobile({
+    .user-recommendations {
+        padding: 20px 10px;
+        border-bottom: 1px solid white;
+
+        .title {
+            color: #666;
+            .font-size(1.6);
+        }
+
+        .rating-bar {
+            margin-bottom: 12px;
+        }
+
+        p {
+            .font-size(1.4);
+        }
+
+        .margin-b-6 {
+            margin-bottom: 6px;
+        }
+
+        .margin-b-12 {
+            margin-bottom: 12px;
+        }
+
+        p.bottom {
+            .font-size(1.2);
+        }
+
+        .btn-ask-recommendations {
+            display: flex;
+            text-align: left;
+            margin-bottom: 6px;
+            .font-size(1.6);
+
+            .label {
+                flex: 1;
+            }
+
+            img {
+                width: 12px;
+                height: 24px;
+                object-fit: contain;
+            }
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .text-dark {
+            color: #666;
+        }
+
+        .text-darker {
+            color: @neutral-900;
+        }
+
+        .text-light {
+            color: @sitly-dark-gray;
+        }
+    }
+
+    .group-language-knowledge,
+    .group-chores {
+        label {
+            &:nth-child(n + 4) {
+                order: 1;
+            }
+        }
+    }
+
+    .gender-buttons {
+        display: flex;
+
+        button {
+            width: 50%;
+            padding: 7px;
+            border-radius: 16px;
+            border: solid 1px @neutral-700;
+            background-color: #fff;
+            color: @neutral-700;
+            font-weight: normal;
+            text-align: center;
+
+            &.checked {
+                font-weight: bold;
+                color: @neutral-900;
+                border-color: @neutral-900;
+            }
+
+            &:first-child {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+
+                &:not(.checked) {
+                    border-right: none;
+                }
+            }
+
+            &:last-child {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+
+                &:not(.checked) {
+                    border-left: none;
+                }
+            }
+        }
+    }
+
+    .group-availability {
+        .availability-description {
+            font-style: italic;
+            color: @sitly-dark-gray;
+            text-align: center;
+            padding-left: 27px;
+            padding-right: 27px;
+        }
+    }
+
+    .group-traits {
+        select {
+            margin-bottom: 13px;
+        }
+    }
+
+    .picker-container {
+        position: relative;
+
+        select {
+            opacity: 0;
+            height: 37px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            option {
+                opacity: 1;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+            }
+        }
+
+        .picker-value {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: solid 1px @neutral-900;
+            border-radius: 16px;
+            padding: 7px 10px;
+            background-color: white;
+
+            .label {
+                color: @neutral-900;
+                .font-size(1.2);
+
+                @media only screen and (max-width: 360px) {
+                    .font-size(1.4);
+                }
+            }
+
+            .value {
+                font-weight: bold;
+                white-space: nowrap;
+                margin-left: 10px;
+            }
+        }
+    }
+});
+
+.desktop({
+    @import "~app/components/settings/settings.forms.less";
+
+    .availability-calendar {
+        label {
+            font-style: italic;
+            font-weight: normal;
+            padding: 0 10px;
+            text-align: center;
+        }
+    }
+
+    .references-list {
+        li:last-child {
+            margin-bottom: -20px;
+        }
+
+        li:not(:last-child) {
+            border-bottom: solid 1px white;
+        }
+    }
+
+    .user-recommendations {
+        padding-top: 5px;
+        .font-size(1.6);
+        color: #666;
+
+        .recommendations-number {
+            margin-bottom: 19px;
+        }
+
+        .recommendations-text {
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .btn-recommendation-note {
+            margin-top: 8px;
+            .font-size(1.4);
+            font-style: italic;
+        }
+    }
+
+    .btn-question-mark {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        border: solid 1px @neutral-900;
+        text-align: center;
+        color: @neutral-900;
+        margin-left: 6px;
+        font-weight: bold;
+        .font-size(1.4);
+    }
+
+    .rating-bar {
+        margin-bottom: 10px;
+    }
+
+    .other-languages-container {
+        select {
+            .font-size(1.6);
+            margin-top: 10px;
+        }
+    }
+
+    .traits-container {
+        select {
+            .font-size(1.6);
+
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+        }
+    }
+});
