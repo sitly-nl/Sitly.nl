@@ -1,0 +1,9 @@
+<registration-page-container
+    [title]="authUser.isParent ? 'availability-schedule.title.parent' : 'availability-schedule.title.foster'"
+    (next)="handleNextClick()"
+>
+    <availability-schedule
+        [availability]="authUser.availability"
+        (availabilityChange)="registrationService.updateNextButtonShowState()"
+    ></availability-schedule>
+</registration-page-container>

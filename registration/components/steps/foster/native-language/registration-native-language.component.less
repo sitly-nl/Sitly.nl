@@ -1,0 +1,23 @@
+@import (reference) "includes";
+
+input[type="button"] {
+    text-align: left;
+    margin-top: auto;
+    padding: 20px 24px;
+    border: 2px solid @neutral-900;
+    border-radius: 16px;
+    appearance: none;
+    font-size: 1.6rem;
+    .regular-heading();
+    .background("arrow-down-bold");
+    background-size: 12px 12px;
+    background-position: right 33px center;
+    background-color: white;
+    transition: background @animation-duration;
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: @neutral-300;
+        }
+    }
+}

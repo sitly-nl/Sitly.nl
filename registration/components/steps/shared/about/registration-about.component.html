@@ -1,0 +1,30 @@
+<registration-page-container [title]="authUser.isParent ? 'about.title.parent' : 'about.title.foster'" (next)="handleNextClick()">
+    <textarea
+        [(ngModel)]="aboutText"
+        [attr.placeholder]="(authUser.isParent ? 'about.placeholder.parent' : 'about.placeholder.foster') | translate"
+        [class.error]="fake || showMinLengthError"
+        (keyup)="check()"
+        [trackLabel]="{ category: 'registration', type: 'input-text', description: 'about' }"
+    ></textarea>
+    <div class="error-container">
+        @if (personalDetailsMentioned) {
+            <div>{{ 'about.error.personalData' | translate }}</div>
+        }
+        @if (fake) {
+            <div>{{ 'about.error.fake' | translate }}</div>
+        }
+        @if (showMinLengthError) {
+            <div>{{ 'about.error.minLength' | translate: { characters: minChars - aboutText.length } }}</div>
+        }
+    </div>
+    <div>
+        @for (index of [0, 1, 2]; track index) {
+            <div class="bullet-list-item">
+                {{ 'about.description.' + (authUser.isParent ? 'parent.' : 'foster.') + index | translate }}
+            </div>
+        }
+    </div>
+    @if (showToast) {
+        <toast-message message="about.infoPopup.suggestion"></toast-message>
+    }
+</registration-page-container>

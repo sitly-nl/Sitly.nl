@@ -1,0 +1,38 @@
+<registration-page-container (next)="handleNextClick()">
+    <div class="btns-container">
+        @for (child of authUser.children; track child.id) {
+            <single-select-button
+                [iconLeft]="child | icon"
+                [rightIconType]="'edit'"
+                [title]="child | title | translate: { age: child.age }"
+                [subtitle]="
+                    child.gender === Gender.unknown && child.birthdate
+                        ? (child.birthdate | std | dfnsFormat: 'dd.MM.yyyy')
+                        : (child | traits | async) || ''
+                "
+                (click)="editChild(child)"
+                [trackLabel]="{ category: 'registration', type: 'button', description: 'child-add' }"
+            ></single-select-button>
+        }
+        @if (authUser.children.length < 4) {
+            <button
+                class="btn-add"
+                [class.grey]="authUser.children.length > 0"
+                (click)="addChild()"
+                [trackLabel]="{ category: 'registration', type: 'input', description: 'child-edit' }"
+            >
+                <img />
+                <span>{{ 'children.cta.addChild' | translate }}</span>
+            </button>
+        }
+    </div>
+    @if (showAddExpectingChild) {
+        <button
+            class="btn-underlined"
+            (click)="addExpectingChild()"
+            [trackLabel]="{ category: 'registration', type: 'input', description: 'child-expecting' }"
+        >
+            {{ 'children.cta.expectingBaby' | translate }}
+        </button>
+    }
+</registration-page-container>

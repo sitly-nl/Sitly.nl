@@ -1,0 +1,14 @@
+<registration-page-container (next)="handleNextClick()">
+    <div class="multi-select">
+        @for (item of chores; track item.value) {
+            <button
+                class="btn-checkbox"
+                [class.selected]="item.selected"
+                (click)="item.selected = !item.selected"
+                [trackLabel]="{ category: 'registration', type: 'select', description: 'chores-' + item.value }"
+            >
+                {{ 'settings.parentChores.' + item.value | translate }}
+            </button>
+        }
+    </div>
+</registration-page-container>

@@ -1,0 +1,39 @@
+<registration-page-container (next)="handleNextClick()">
+    <div class="multi-select">
+        @for (item of languages; track item.value.code) {
+            <button
+                class="btn-checkbox"
+                [class.selected]="item.selected"
+                (click)="item.selected = !item.selected"
+                [trackLabel]="{ category: 'registration', type: 'select', description: 'language-other-' + item.value.code }"
+            >
+                {{ item.value.localName }}
+            </button>
+        }
+
+        @for (item of selectedOtherLanguages; track item.value.code) {
+            <button
+                class="btn-checkbox"
+                [class.selected]="item.selected"
+                (click)="onSelectedOtherLanguageClick(item.value.code)"
+                [trackLabel]="{ category: 'registration', type: 'select', description: 'language-other-' + item.value.code }"
+            >
+                {{ item.value.localName }}
+            </button>
+        }
+
+        <input
+            type="button"
+            [matAutocomplete]="langAutocomplete"
+            value="{{ 'main.languages.other' | translate }}"
+            [trackLabel]="{ category: 'registration', type: 'select', description: 'language-other-other' }"
+        />
+        <mat-autocomplete #langAutocomplete="matAutocomplete">
+            @for (option of otherLanguages; track option.code) {
+                <mat-option value="{{ 'main.languages.other' | translate }}" (click)="selectOther(option.code)">
+                    {{ option.localName }}
+                </mat-option>
+            }
+        </mat-autocomplete>
+    </div>
+</registration-page-container>

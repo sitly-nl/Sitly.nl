@@ -1,0 +1,43 @@
+@import (reference) "includes";
+
+.btns-container {
+    display: flex;
+    flex-direction: column;
+
+    > :not(:last-child) {
+        margin-bottom: 12px;
+    }
+}
+
+.btn-add {
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px dashed @primary-500;
+    border-radius: 16px;
+
+    img {
+        .img-content("plus-filled-purple");
+    }
+
+    span {
+        margin-left: 12px;
+        .bold-heading();
+        font-size: 1.8rem;
+        color: @primary-500;
+    }
+
+    &.grey {
+        border: 1px dashed @neutral-500;
+
+        img {
+            .img-content("plus-filled-grey");
+        }
+
+        span {
+            color: @neutral-700;
+        }
+    }
+}

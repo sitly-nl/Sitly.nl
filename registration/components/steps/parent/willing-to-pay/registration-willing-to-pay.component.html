@@ -1,0 +1,19 @@
+<registration-page-container (next)="handleNextClick()">
+    <div class="multi-select">
+        @for (item of options; track item.label) {
+            <button
+                class="btn-checkbox"
+                [class.selected]="item.selected"
+                (click)="item.selected = !item.selected"
+                [trackLabel]="{ category: 'registration', type: 'select', description: 'willing-to-pay-' + item.value }"
+            >
+                {{ item.label }}
+            </button>
+        }
+    </div>
+    @if (showToast) {
+        <toast-message>
+            <div [innerHTML]="'main.averageHourlyRate.format' | translate: { rate: averageHourlyRate }"></div>
+        </toast-message>
+    }
+</registration-page-container>

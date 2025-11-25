@@ -1,0 +1,24 @@
+<registration-page-container subtitle="default" (next)="handleNextClick()">
+    <div>
+        <mat-form-field>
+            <mat-label>
+                {{ (focused || email.value ? 'email.input.label' : 'email.input.placeholder') | translate }}
+            </mat-label>
+            <input
+                matInput
+                [formControl]="email"
+                type="email"
+                [trackLabel]="{ category: 'registration', type: 'input-text', description: 'email' }"
+                (focus)="focused = true"
+                (blur)="focused = false"
+                (keyup)="email.setErrors(null)"
+            />
+        </mat-form-field>
+        @if (email.errors?.email) {
+            <div class="error">{{ 'email.error.invalid' | translate }}</div>
+        }
+        @if (email.errors?.duplicate) {
+            <div class="error">{{ 'email.error.duplicate' | translate }}</div>
+        }
+    </div>
+</registration-page-container>

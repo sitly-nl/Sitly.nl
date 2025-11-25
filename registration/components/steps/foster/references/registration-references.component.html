@@ -1,0 +1,17 @@
+<registration-page-container (next)="handleNextClick()">
+    <single-select-button
+        title="references.cta.have"
+        [selected]="authUser.fosterProperties.hasReferences === true"
+        (click)="save(true)"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'references-have' }"
+    ></single-select-button>
+    <single-select-button
+        title="references.cta.doNotHave"
+        [selected]="authUser.fosterProperties.hasReferences === false"
+        (click)="save(false)"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'references-dont-have' }"
+    ></single-select-button>
+    @if (showToast) {
+        <toast-message toast>{{ 'references.toast.title' | translate }}</toast-message>
+    }
+</registration-page-container>

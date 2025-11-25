@@ -1,0 +1,38 @@
+<registration-page-container (next)="handleNextClick()" [title]="'availability-type.title.' + (authUser.isParent ? 'parent' : 'foster')">
+    <button
+        class="checkbox"
+        [class.error]="showError"
+        [class.selected]="authUser.hasRegularCare"
+        (click)="authUser.hasRegularCare = !authUser.hasRegularCare; showError = false"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'regular' }"
+    >
+        <img />
+        <div class="title-container">
+            <div class="title">
+                {{ (authUser.isParent ? 'availability-type.cta.regular.parent' : 'availability-type.cta.regular.foster') | translate }}
+            </div>
+            <div class="subtitle">{{ 'availability-type.cta.regular.subtitle' | translate }}</div>
+        </div>
+    </button>
+    <button
+        class="checkbox"
+        [class.error]="showError"
+        [class.error]="showError"
+        [class.selected]="authUser.isAvailableOccasionally"
+        (click)="authUser.isAvailableOccasionally = !authUser.isAvailableOccasionally; showError = false"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'occasional' }"
+    >
+        <img />
+        <div class="title-container">
+            <div class="title">
+                {{
+                    (authUser.isParent ? 'availability-type.cta.occasional.parent' : 'availability-type.cta.occasional.foster') | translate
+                }}
+            </div>
+            <div class="subtitle">{{ 'availability-type.cta.occasional.subtitle' | translate }}</div>
+        </div>
+    </button>
+    @if (showError) {
+        <div class="error-msg">{{ 'availability-type.error' | translate }}</div>
+    }
+</registration-page-container>

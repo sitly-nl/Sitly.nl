@@ -1,0 +1,27 @@
+<div class="content-container">
+    <div class="title">
+        <span innerText="{{ titlePart1 | translate }}"></span>
+        <cool-label text="75%!" color="blue" size="large"></cool-label>
+        @if (titlePart2) {
+            <span innerText="{{ titlePart2 | translate }}"></span>
+        }
+    </div>
+
+    <div class="message">
+        {{ (authUser.isParent ? 'photo.addLaterOverlay.message.parent' : 'photo.addLaterOverlay.message.foster') | translate }}
+    </div>
+
+    <div class="btns-container">
+        <button
+            class="btn-underlined-new neutral-700"
+            (click)="onFinishClick()"
+            [trackLabel]="{ category: 'registration', type: 'button', description: 'add-later-finish-registration' }"
+        >
+            {{ 'photo.addLaterOverlay.cta.finishRegistration' | translate }}
+        </button>
+        <system-button (click)="onAddPhotoClick()">
+            {{ 'photo.cta.addPhoto' | translate }}
+        </system-button>
+    </div>
+</div>
+<button class="btn-overlay-close" (click)="dismiss()"></button>

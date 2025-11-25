@@ -1,0 +1,40 @@
+@import (reference) "includes";
+
+textarea {
+    min-height: 100px;
+    flex-grow: 1;
+    font-size: 1.6rem;
+
+    .desktop({
+        height: 180px;
+    });
+    .mobile({
+        max-height: 210px;
+    });
+
+    &::placeholder {
+        color: @neutral-700;
+    }
+
+    &.error {
+        color: @error-500;
+        border: 1px solid @error-500;
+
+        &::placeholder {
+            color: @error-500;
+        }
+    }
+
+    &:focus::placeholder {
+        color: transparent;
+    }
+}
+
+registration-page-container .error-container {
+    color: @error-500;
+    margin-bottom: 0;
+
+    > :last-child {
+        margin-bottom: 12px;
+    }
+}

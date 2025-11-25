@@ -1,0 +1,14 @@
+<registration-page-container (next)="handleNextClick()">
+    <single-select-button
+        title="role.cta.parent.title"
+        [selected]="authUser.isParent"
+        (click)="registrationService.startParentFlow()"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'need-sitter' }"
+    ></single-select-button>
+    <single-select-button
+        title="role.cta.babysitter.title"
+        [selected]="authUser.isBabysitter || authUser.isChildminder"
+        (click)="registrationService.startFosterFlow()"
+        [trackLabel]="{ category: 'registration', type: 'select', description: 'need-job' }"
+    ></single-select-button>
+</registration-page-container>

@@ -1,0 +1,20 @@
+<registration-page-container
+    [title]="editAddress.showMap ? 'address.map.title' : 'address.form.title'"
+    [subtitle]="editAddress.showMap ? 'none' : 'default'"
+    (next)="handleNextClick()"
+>
+    <edit-address
+        #editAddress
+        [trackCategory]="'registration'"
+        (addressChanged)="onAddressSaved()"
+        (loading)="registrationService.loading = $event"
+    ></edit-address>
+    @if (showToast) {
+        <toast-message
+            toast
+            icon="address-private"
+            message="address.yourAddressWillNotBeShared"
+            [class.hidden]="editAddress.showMap"
+        ></toast-message>
+    }
+</registration-page-container>

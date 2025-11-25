@@ -1,0 +1,52 @@
+@import (reference) "includes";
+
+.checkbox {
+    padding: 28px 20px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid @neutral-900;
+    border-radius: @radius-m;
+
+    img {
+        width: 24px;
+        height: 24px;
+        margin-right: 16px;
+        border: 1px solid @neutral-900;
+        border-radius: 6px;
+    }
+
+    .title-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .title {
+            .regular-heading();
+            font-size: 1.6rem;
+        }
+
+        .subtitle {
+            color: @neutral-700;
+        }
+    }
+
+    &.error {
+        border-color: @error-500;
+
+        img {
+            border: 1px solid @error-500;
+        }
+    }
+
+    &.selected {
+        img {
+            border: none;
+            .img-content("checkbox-on");
+        }
+    }
+}
+
+.error-msg {
+    color: @error-500;
+}

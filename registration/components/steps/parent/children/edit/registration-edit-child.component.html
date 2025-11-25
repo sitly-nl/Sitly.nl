@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="title-container">
+        <div class="title">{{ (type === 'unborn' ? 'children.expecting.title' : 'children.add.title') | translate }}</div>
+        <button
+            class="btn-close side-item"
+            (click)="overlayService.closeAll()"
+            [trackLabel]="{ category: 'registration', type: 'button', description: 'close-child-edit' }"
+        >
+            <img src="assets/images/overlay-close.svg" />
+        </button>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="content-row">
+        <div class="subtitle">{{ (type === 'unborn' ? 'children.expecting.birth.title' : 'children.add.info.title') | translate }}</div>
+        @if (type === 'born') {
+            <mat-button-toggle-group class="gender-selector" [formControl]="genderControl">
+                <mat-button-toggle value="female" [trackLabel]="{ category: 'registration', type: 'select', description: 'girl' }">
+                    {{ 'main.girl' | translate }}
+                </mat-button-toggle>
+                <mat-button-toggle value="male" [trackLabel]="{ category: 'registration', type: 'select', description: 'boy' }">
+                    {{ 'main.boy' | translate }}
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        }
+        <mat-form-field>
+            <mat-label>{{ 'children.expecting.birth.subtitle' | translate }}</mat-label>
+            <input
+                matInput
+                dateInput
+                type="tel"
+                [formControl]="birthdateControl"
+                [matDatepicker]="picker"
+                [min]="minDate"
+                [max]="maxDate"
+                [trackLabel]="{ category: 'registration', type: 'input', description: 'child-age' }"
+                (click)="picker.open()"
+                readonly
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        @if (birthdateControl.errors) {
+            <div class="error">{{ 'children.error.noBirthdateSelected' | translate }}</div>
+        }
+    </div>
+
+    @if (type === 'born') {
+        <div class="content-row top-separator">
+            <div class="subtitle">
+                {{ 'children.add.traits.title' | translate }}
+                <div class="subtitle-2">{{ 'children.add.traits.subtitle' | translate }}</div>
+            </div>
+
+            <div class="multi-select">
+                @for (item of traits; track item.value) {
+                    <button
+                        class="btn-checkbox"
+                        [class.selected]="item.selected"
+                        [disabled]="!item.selected && disableTraitSelection"
+                        (click)="onTraitChange(item)"
+                        [trackLabel]="{ category: 'registration', type: 'select', description: item.value }"
+                    >
+                        {{ 'childTraits.' + item.value | translate }}
+                    </button>
+                }
+            </div>
+        </div>
+    }
+
+    @if (isDesktop()) {
+        <div class="separator"></div>
+    }
+    <div class="spacer"></div>
+
+    <div responsive-buttons-container [data]="buttons"></div>
+</div>

@@ -1,0 +1,18 @@
+<registration-page-container
+    [title]="hasPhoto ? 'photo.title.photoUploaded' : undefined"
+    [subtitle]="hasPhoto ? 'none' : { custom: authUser.isParent ? 'photo.subtitle.parent' : 'photo.subtitle.foster' }"
+    (next)="handleNextClick()"
+>
+    @if (!hasPhoto) {
+        <button
+            titleAction
+            class="btn-underlined-new neutral-700"
+            (click)="onAddLaterClick()"
+            [trackLabel]="{ category: 'registration', type: 'button', description: 'photo-add-later' }"
+        >
+            {{ 'photo.cta.addLater' | translate }}
+        </button>
+    }
+
+    <photo-editor [trackCategory]="'registration'"></photo-editor>
+</registration-page-container>
