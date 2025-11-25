@@ -1,0 +1,80 @@
+<div class="auth-page-container">
+    <toolbar></toolbar>
+
+    <div class="form-container">
+        <div class="text-container">
+            <div class="title">{{ 'signIn.title' | translate }}</div>
+            <div class="message">{{ 'signIn.subtitle' | translate }}</div>
+        </div>
+
+        <form (submit)="$event.preventDefault(); continueClicked()">
+            <div class="form-field-group">
+                <mat-form-field class="email-field" [class.ng-invalid]="hasEmailError">
+                    <mat-label>
+                        {{ 'main.email.placeholder' | translate }}
+                    </mat-label>
+                    <input matInput type="email" class="form-control" [formControl]="email" name="email" />
+                    @if (email.valid && !emailValidationFailed) {
+                        <img class="action-right" src="assets/images/checkmark-green.svg" />
+                    }
+                </mat-form-field>
+                @if (hasEmailError) {
+                    <div class="error">
+                        {{ 'signIn.email.error' | translate }}
+                    </div>
+                }
+            </div>
+
+            @if (state.type === 'accountInCountries') {
+                <div class="form-field-group">
+                    <mat-form-field [class.ng-invalid]="hasPasswordError || failed">
+                        <mat-label>
+                            {{ 'main.password.placeholder' | translate }}
+                        </mat-label>
+                        <input #passwordInput type="password" matInput class="form-control" [formControl]="password" name="password" />
+                        <button
+                            class="mat-form-field-suffix"
+                            type="button"
+                            matSuffix
+                            aria-label="Show"
+                            (click)="$event.stopPropagation(); passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'"
+                        >
+                            {{ (passwordInput.type === 'password' ? 'main.password.show' : 'main.password.hide') | translate }}
+                        </button>
+                    </mat-form-field>
+                    @if (hasPasswordError) {
+                        <div class="error">
+                            {{ 'signIn.password.error' | translate }}
+                        </div>
+                    }
+                    @if (failed) {
+                        <div class="error">
+                            {{ 'signIn.error' | translate }}
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (state.type === 'accountInCountries') {
+                <button type="button" class="btn-underlined-new btn-forgot" (click)="forgotPasswordClicked()">
+                    {{ 'signIn.cta.forgotMyPassword' | translate }}
+                </button>
+            }
+
+            <system-button class="btn-continue" (click)="continueClicked()" [loading]="loading">
+                {{ 'main.continue' | translate }}
+            </system-button>
+
+            <div class="or-label">{{ 'signIn.or' | translate }}</div>
+            <social-sso
+                class="social-btn-container"
+                (token)="onAuthTokenReceived($event)"
+                (loading)="onSocialSsoLoading($event)"
+            ></social-sso>
+        </form>
+
+        @if (state.type === 'initial') {
+            <terms-and-privacy></terms-and-privacy>
+        }
+    </div>
+</div>

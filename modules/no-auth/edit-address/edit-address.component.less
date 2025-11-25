@@ -1,0 +1,119 @@
+@import (reference) "includes";
+@import "animations";
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    .flex-gap(@spacing-m, "column");
+    flex: 1;
+}
+
+.form-field-wrapper {
+    .error {
+        margin: 0 @spacing-l;
+        color: @error-500;
+        font-size: 1.6rem;
+    }
+}
+
+.place-row,
+.postal-code-row,
+.address-row {
+    width: 100%;
+}
+
+.street-row {
+    width: 100%;
+    display: flex;
+
+    .street-name {
+        flex: 1;
+    }
+
+    .house-number {
+        flex-basis: 120px;
+    }
+
+    &:not(.column) {
+        .flex-gap(@spacing-m);
+    }
+
+    &.column {
+        flex-direction: column;
+        .flex-gap(@spacing-m, "column");
+
+        .street {
+            flex: unset;
+        }
+
+        .house-number {
+            width: 100%;
+            flex-basis: unset;
+        }
+    }
+}
+
+.or-label {
+    text-align: center;
+}
+
+.postal-code-row {
+    &.loading {
+        position: relative;
+
+        &::after {
+            display: inline-block;
+            content: "";
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            right: @spacing-l;
+            top: @spacing-l;
+            .background("loader-neutral");
+            .spin-animation();
+        }
+    }
+}
+
+.map-screen-container,
+.map-container,
+.form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+
+    .space {
+        flex: 1;
+    }
+}
+
+.map-container {
+    border-radius: @radius-m;
+    overflow: hidden;
+
+    system-map {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+}
+
+.spacer {
+    flex: 1;
+    margin: 0;
+}
+
+.map-screen-container {
+    .desktop({
+        flex-basis: 432px;
+    });
+
+    .selected-address {
+        margin-top: @spacing-xl;
+
+        &.collapse {
+            visibility: collapse;
+        }
+    }
+}

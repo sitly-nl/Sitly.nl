@@ -1,0 +1,93 @@
+@import (reference) "includes";
+
+.modal-content-container {
+    height: 100%;
+    background: #fff;
+    position: relative;
+
+    &.map-screen {
+        background-color: @neutral-100;
+    }
+
+    .mobile({
+        display: flex;
+        flex-direction: column;
+    });
+
+    .desktop({
+        width: 700px;
+        height: fit-content;
+        border-radius: 24px;
+        overflow: hidden;
+    });
+
+    .btn-close {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 16px;
+        right: 16px;
+        .background("overlay-close");
+        background-size: 16px 16px;
+        background-position: center;
+    }
+}
+
+edit-address {
+    display: flex;
+    flex-direction: column;
+
+    .mobile({
+        flex: 1;
+        margin: 0 32px 16px;
+    });
+
+    .desktop({
+        margin: 0 100px 24px;
+    });
+}
+
+.top-container {
+    position: relative;
+
+    .title {
+        text-align: center;
+        font-weight: 700;
+
+        .mobile({
+            font-size: 1.8rem;
+            margin: 48px 32px 24px;
+        });
+
+        .desktop({
+            font-size: 2.4rem;
+            margin: 56px 100px 32px;
+        });
+    }
+}
+
+.button-container {
+    background-color: #fff;
+    display: flex;
+
+    .btn-save,
+    .btn-back {
+        display: block;
+    }
+
+    .mobile({
+        padding: 16px 32px;
+        flex-direction: column;
+        .flex-gap(8px, "column");
+    });
+
+    .desktop({
+        padding: 20px 100px 40px;
+        .flex-gap(16px);
+
+        .btn-save,
+        .btn-back {
+            flex: 1
+        }
+    });
+}

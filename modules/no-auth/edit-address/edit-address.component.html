@@ -1,0 +1,194 @@
+@if (!showMap) {
+    <form class="form-container" [formGroup]="addressForm" (ngSubmit)="saveAddress()">
+        @if (config.postalCode?.show === 'separate-screen') {
+            <div class="form-field-wrapper">
+                <mat-form-field class="postal-code-row" [class.loading]="postalCodeLoading()">
+                    <mat-label>
+                        {{ 'address.postalCode.label' | translate }}
+                    </mat-label>
+                    <input
+                        matInput
+                        [formControl]="postalCode"
+                        [validation]="false"
+                        inputMode="decimal"
+                        [mask]="postalCodeMask"
+                        autocomplete="off"
+                        [showMaskTyped]="false"
+                        [dropSpecialCharacters]="false"
+                        [trackLabel]="{ category: trackCategory(), type: 'input-text', description: 'postcode-separate' }"
+                    />
+                </mat-form-field>
+                @if (postalCode.errors) {
+                    <div class="error">
+                        {{ 'address.error.emptyPostalCode' | translate }}
+                    </div>
+                }
+            </div>
+        }
+
+        @if (config.postalCode?.show !== 'separate-screen' || place.value) {
+            @if (config.province?.show === 'default' && config.province?.editable) {
+                <mat-form-field class="province-selector-row">
+                    <mat-label>
+                        {{ 'address.province.label' | translate }}
+                    </mat-label>
+                    <mat-select [formControl]="province">
+                        @for (province of provinces; track province.id) {
+                            <mat-option value="{{ province.name }}">{{ province.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            }
+
+            @if (config.province?.show === 'default' && !config.province?.editable) {
+                <mat-form-field class="province-row">
+                    <mat-label>
+                        {{ 'address.province.label' | translate }}
+                    </mat-label>
+                    <input
+                        matInput
+                        [formControl]="province"
+                        [trackLabel]="{ category: trackCategory(), type: 'input-text', description: 'province' }"
+                    />
+                </mat-form-field>
+            }
+
+            @if (config.city?.show === 'default') {
+                <div class="form-field-wrapper">
+                    <mat-form-field class="place-row">
+                        <mat-label>
+                            {{ (placeInput.value.length > 0 ? 'address.city.labelShort' : 'address.city.label') | translate }}
+                        </mat-label>
+                        <input
+                            #placeInput
+                            matInput
+                            [formControl]="place"
+                            [matAutocomplete]="placeAutocomplete"
+                            [trackLabel]="{ category: trackCategory(), type: 'input-text', description: 'city' }"
+                        />
+                        @if (placeValidated()) {
+                            <img class="action-right" src="assets/images/checkmark-green.svg" />
+                        }
+
+                        <mat-autocomplete autoActiveFirstOption #placeAutocomplete="matAutocomplete">
+                            @for (option of placeSuggestions | async; track option.id) {
+                                <mat-option [value]="option.name" (click)="placeValidated.set(true)">
+                                    {{ option.name }}
+                                </mat-option>
+                            }
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    @if (place.errors) {
+                        <div class="error">
+                            {{ 'address.error.emptyPlaceName' | translate }}
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (config.postalCode?.show === 'default') {
+                <mat-form-field class="postal-code-row">
+                    <mat-label>
+                        {{ 'address.postalCode.label' | translate }}
+                    </mat-label>
+                    <input
+                        matInput
+                        [formControl]="postalCode"
+                        autocomplete="off"
+                        inputMode="decimal"
+                        [mask]="postalCodeMask"
+                        [showMaskTyped]="false"
+                        [dropSpecialCharacters]="true"
+                        [trackLabel]="{ category: trackCategory(), type: 'input-text', description: 'postcode-inline' }"
+                    />
+                </mat-form-field>
+            }
+
+            @if (config.street?.show === 'default') {
+                <div class="form-field-wrapper">
+                    <div class="street-row">
+                        <mat-form-field class="street-name">
+                            <mat-label>
+                                {{ streetLabel | translate }}
+                            </mat-label>
+                            <input
+                                #streetInput
+                                matInput
+                                [formControl]="street"
+                                [matAutocomplete]="streetAutocomplete"
+                                [trackLabel]="{ category: trackCategory(), type: 'input-text', description: 'street' }"
+                            />
+                            @if (streetValidated()) {
+                                <img class="action-right" src="assets/images/checkmark-green.svg" />
+                            }
+
+                            <mat-autocomplete autoActiveFirstOption #streetAutocomplete="matAutocomplete">
+                                @for (option of streetSuggestions | async; track option.id) {
+                                    <mat-option [value]="option.name" (click)="streetValidated.set(true)">
+                                        {{ option.name }}
+                                    </mat-option>
+                                }
+                            </mat-autocomplete>
+                        </mat-form-field>
+
+                        @if (config.buildingNumber?.show === 'inline') {
+                            <mat-form-field class="house-number">
+                                <mat-label>
+                                    {{ 'address.houseNumber.label' | translate }}
+                                </mat-label>
+                                <input
+                                    matInput
+                                    [formControl]="houseNumber"
+                                    [trackLabel]="{ category: trackCategory(), type: 'input-text', description: 'house-number' }"
+                                />
+                                @if (houseNumber.value) {
+                                    <img class="action-right" src="assets/images/checkmark-green.svg" />
+                                }
+                            </mat-form-field>
+                        }
+                    </div>
+                    @if (street.errors) {
+                        <div class="error">
+                            {{ 'address.error.emptyStreetName' | translate }}
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (config.buildingNumber?.show === 'default') {
+                <mat-form-field class="address-row">
+                    <mat-label>
+                        {{ 'address.addressLine2' | translate }}
+                    </mat-label>
+                    <input
+                        matInput
+                        [formControl]="houseNumber"
+                        [trackLabel]="{ category: trackCategory(), type: 'input-text', description: 'building-number' }"
+                    />
+                    @if (houseNumber.value) {
+                        <img class="action-right" src="assets/images/checkmark-green.svg" />
+                    }
+                </mat-form-field>
+            }
+        }
+
+        <div class="or-label">{{ 'address.or' | translate }}</div>
+
+        <system-button
+            [buttonType]="'secondary'"
+            iconLeft="current-location"
+            (click)="useCurrentLocation()"
+            [trackLabel]="{ category: trackCategory(), type: 'button', description: 'current-location' }"
+        >
+            {{ 'address.cta.location' | translate }}
+        </system-button>
+
+        @if (!isDesktop()) {
+            <div class="spacer"></div>
+        }
+    </form>
+}
+
+@if (showMap) {
+    <map-address class="map-screen-container" [bounds]="mapBounds"></map-address>
+}

@@ -1,0 +1,60 @@
+@import (reference) "includes";
+
+.modal-content-container {
+    background-color: @neutral-100;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .content-container {
+        flex-grow: 1;
+    }
+
+    .desktop({
+        width: 758px;
+        border-radius: 24px;
+
+        .title {
+            font-size: 2.4rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 40px 40px 0;
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .content-container {
+            padding: 32px 24px 20px;
+        }
+    });
+}
+
+ul {
+    .mobile({
+        padding: 10px 0;
+    });
+
+    .desktop({
+        padding: 0;
+    });
+}
+
+li[user-card] {
+    &:first-child {
+        margin-top: 0;
+    }
+
+    .mobile({
+        margin-top: 10px;
+    });
+
+    .desktop({
+        margin-top: 20px;
+    });
+}

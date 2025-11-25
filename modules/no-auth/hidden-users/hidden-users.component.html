@@ -1,0 +1,35 @@
+<div class="modal-component-container">
+    <div class="modal-content-container">
+        @if (!isDesktop()) {
+            <toolbar
+                [centralItem]="{ type: 'title', title: 'hidden.hiddenProfiles' }"
+                [leftItems]="[ToolbarItem.back]"
+                (itemSelected)="back()"
+            ></toolbar>
+        } @else {
+            <div class="title">
+                {{ 'hidden.hiddenProfiles' | translate }}
+            </div>
+            <button class="btn-close" (click)="back()">
+                <img alt="{{ 'main.close' | translate }}" src="assets/images/overlay-close.svg" />
+            </button>
+        }
+
+        <div class="content-container">
+            @if (hasHiddenUsers()) {
+                <ul>
+                    @for (user of hiddenUsers(); track user.id) {
+                        <li
+                            user-card
+                            [user]="user"
+                            [size]="isDesktop() ? 'normal' : 'compact'"
+                            [rounded]="isDesktop()"
+                            [hiddenFunctionality]="'unhide'"
+                            (unhide)="unhideUser(user)"
+                        ></li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

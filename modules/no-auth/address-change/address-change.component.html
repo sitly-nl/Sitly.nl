@@ -1,0 +1,27 @@
+<div class="modal-component-container">
+    <div class="modal-content-container" [class.map-screen]="editAddressComponent?.showMap">
+        <div class="top-container">
+            <div class="title">
+                {{ title | translate }}
+            </div>
+        </div>
+
+        <edit-address
+            #editAddress
+            [trackCategory]="'registration'"
+            [prefill]="false"
+            (addressChanged)="onAddressChanged()"
+            (loading)="loading.set($event)"
+        ></edit-address>
+        <div class="button-container">
+            @if (editAddressComponent?.showMap) {
+                <system-button class="btn-back" [disabled]="loading()" [buttonType]="'secondary'" (click)="toAddressForm()">{{
+                    'main.back' | translate
+                }}</system-button>
+            }
+            <system-button class="btn-save" [loading]="loading()" (click)="saveAddress()">{{ 'main.save' | translate }}</system-button>
+        </div>
+
+        <button class="btn-close" (click)="back()"></button>
+    </div>
+</div>

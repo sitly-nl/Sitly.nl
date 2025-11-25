@@ -1,0 +1,27 @@
+@import (reference) "includes";
+
+.photos-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: @spacing-xs;
+    padding: @spacing-xl;
+
+    .desktop({
+        gap: 6px;
+    });
+}
+
+.photo-item {
+    position: relative;
+    cursor: pointer;
+    border-radius: @radius-m;
+    overflow: hidden;
+    .square-container();
+}
+
+.img {
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

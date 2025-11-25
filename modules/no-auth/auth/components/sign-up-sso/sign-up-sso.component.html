@@ -1,0 +1,83 @@
+<ng-template #continueButton>
+    <system-button class="btn-continue" (click)="continueClicked()" [loading]="loading">
+        {{ 'main.continue' | translate }}
+    </system-button>
+</ng-template>
+
+<div class="auth-page-container">
+    <toolbar [leftItems]="[ToolbarItem.back]" (itemSelected)="navigationService.back()"></toolbar>
+
+    @if (socialUser) {
+        <div class="form-container" [class.additional-bottom-padding]="!isDesktop()">
+            <div class="text-container">
+                <div class="title">{{ 'signUp.title' | translate }}</div>
+            </div>
+
+            <img class="avatar" [src]="socialUser.photoUrl" alt="" />
+
+            <div class="name">{{ socialUser.firstName }} {{ socialUser.lastName }}</div>
+
+            <form>
+                <div class="form-field-group">
+                    <mat-form-field [class.ng-invalid]="hasCountryError">
+                        <mat-label>
+                            {{ 'main.country.placeholder' | translate }}
+                        </mat-label>
+                        <mat-select [formControl]="countryControl">
+                            @for (country of countries; track country.id) {
+                                <mat-option value="{{ country.countryCode }}">{{ country.name }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    @if (hasCountryError) {
+                        <div class="error">
+                            {{ 'signUp.country.error' | translate }}
+                        </div>
+                    }
+                </div>
+
+                @if (!socialUser.email) {
+                    <div class="form-field-group">
+                        <mat-form-field class="email-field" [class.ng-invalid]="hasEmailError || error === 'emailAlreadyUsed'">
+                            <mat-label>
+                                {{ 'main.email.placeholder' | translate }}
+                            </mat-label>
+                            <input matInput type="email" class="form-control" [formControl]="emailControl" name="email" />
+                            @if (emailControl.valid) {
+                                <img class="action-right" src="assets/images/checkmark-green.svg" />
+                            }
+                        </mat-form-field>
+                        @if (hasEmailError) {
+                            <div class="error">
+                                {{ 'signUp.email.error' | translate }}
+                            </div>
+                        }
+                        @if (error === 'emailAlreadyUsed') {
+                            <div class="error">
+                                {{ 'signUp.error.emailAlreadyUsed' | translate }}
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (error === 'generic') {
+                    <div class="error">
+                        {{ 'signUp.error' | translate }}
+                    </div>
+                }
+
+                <terms-and-privacy></terms-and-privacy>
+
+                @if (isDesktop()) {
+                    <ng-container *ngTemplateOutlet="continueButton"></ng-container>
+                }
+            </form>
+
+            @if (!isDesktop()) {
+                <div class="bottom-container shown">
+                    <ng-container *ngTemplateOutlet="continueButton"></ng-container>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,11 @@
+<div class="photos-container" [class.desktop]="isDesktop()">
+    @for (photo of photos; track photo.id) {
+        <div class="photo-item" (click)="onPhotoClicked(photo)">
+            @if (isDesktop()) {
+                <div class="img" [style.backgroundImage]="'url(' + photo.images[photo.images.length - 1].source + ')'"></div>
+            } @else {
+                <div class="img" [style.backgroundImage]="'url(' + photo.picture + ')'"></div>
+            }
+        </div>
+    }
+</div>

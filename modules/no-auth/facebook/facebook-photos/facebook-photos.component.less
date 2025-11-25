@@ -1,0 +1,126 @@
+@import (reference) "includes";
+
+.facebook-container {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+
+    .mobile({
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    });
+
+    .desktop({
+        background-color: #fff;
+        overflow: hidden;
+        width: @max-desktop-overlay-width;
+        min-height: 475px;
+        max-height: 640px;
+        border-radius: 24px;
+    });
+
+    .albums-container {
+        flex: 1;
+        overflow: auto;
+
+        .desktop({
+            padding: 0 100px;
+        });
+    }
+}
+
+.facebook-toolbar {
+    display: flex;
+    .flex-gap(@spacing-m);
+    align-items: center;
+    border-bottom: solid 1px @neutral-400;
+
+    .mobile({
+        padding: 0;
+    });
+
+    .desktop({
+        padding: 10px;
+    });
+
+    .title {
+        .bold-heading();
+        width: auto;
+        text-align: center;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        .mobile({
+            font-size: 1.8rem;
+        });
+
+        .desktop({
+            font-size: 2.4rem;
+        });
+    }
+
+    .side-item {
+        flex-basis: 52px;
+        flex-grow: 1;
+        height: 100%;
+        .body-text();
+        display: flex;
+        align-items: center;
+
+        &.align-right {
+            justify-content: flex-end;
+        }
+    }
+
+    .btn-close {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            .img-content("overlay-close-darker");
+            width: 16px;
+            height: 16px;
+            margin: 0;
+        }
+    }
+
+    .btn-back {
+        display: flex;
+        align-items: center;
+        margin-left: @spacing-xl;
+        font-size: 1.6rem;
+
+        img {
+            height: 16px;
+            margin-right: @spacing-xs;
+        }
+    }
+}
+
+.album-list-container {
+    flex: 1;
+    overflow-y: auto;
+
+    ul {
+        list-style-type: none;
+        padding: @spacing-m 0;
+        margin: 0;
+
+        li {
+            padding: @spacing-s @spacing-xl;
+            border-bottom: solid 1px @neutral-100;
+        }
+    }
+}
+
+facebook-album {
+    flex: 1;
+    overflow-y: auto;
+}

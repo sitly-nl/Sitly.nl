@@ -1,0 +1,37 @@
+@import (reference) "includes";
+
+.album-container {
+    cursor: pointer;
+    display: flex;
+    .flex-gap(@spacing-l, "row");
+    align-items: center;
+
+    .arrow {
+        height: 32px;
+        width: 32px;
+        .img-content("single-select-arrow");
+    }
+}
+
+.album-details {
+    position: relative;
+    flex: 1;
+
+    .album-name {
+        .regular-heading();
+        font-size: 1.6rem;
+    }
+
+    .album-stats {
+        .body-text();
+        color: @neutral-700;
+        font-size: 1.4rem;
+    }
+}
+
+.album-cover {
+    width: 80px;
+    height: 80px;
+    border-radius: @radius-m;
+    object-fit: cover;
+}

@@ -1,0 +1,38 @@
+@import "~modules/auth/components/auth.common";
+
+fieldset {
+    width: 100%;
+
+    &:not(:first-child) {
+        margin-top: 24px;
+    }
+
+    legend {
+        margin-bottom: 12px;
+        .regular-heading();
+    }
+}
+
+.names-group {
+    display: flex;
+
+    .mobile({
+        flex-direction: column;
+    });
+
+    .desktop({
+        flex-direction: row;
+
+        .form-field-group {
+            margin-bottom: 0;
+        }
+
+        .form-field-group:not(:first-child) {
+            margin-left: 12px;
+        }
+    });
+}
+
+terms-and-privacy {
+    margin-bottom: 32px;
+}

@@ -1,0 +1,13 @@
+<div class="component-container">
+    <div class="btn-container">
+        @if (googleLoaded()) {
+            <google-button (token)="loginWithSocialUser($event)"></google-button>
+        }
+        <div>
+            <button facebook-btn type="button" class="btn-facebook" (token)="loginWithSocialUser($event)">
+                <img src="assets/images/social/icon-facebook.svg" />
+                <div class="text">{{ 'signIn.cta.facebook' | translate }}</div>
+            </button>
+        </div>
+    </div>
+</div>

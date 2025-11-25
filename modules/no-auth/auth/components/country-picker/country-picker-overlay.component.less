@@ -1,0 +1,41 @@
+@import "includes";
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    .flex-gap(@spacing-s, "column");
+
+    > button {
+        width: 100%;
+        border: solid 1px @neutral-900;
+        font-size: 1.6rem;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: @spacing-m @spacing-xl;
+        .flex-gap(@spacing-l);
+        border-radius: 16px;
+
+        &::after {
+            content: "";
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            display: block;
+            .background("arrow-right");
+            background-size: 100% 100%;
+        }
+    }
+
+    .mobile({
+        margin-top: @spacing-2xl;
+        width: 100%;
+        padding: 0 40px;
+    });
+
+    .desktop({
+        margin-top: 32px;
+        width: 295px;
+    });
+}

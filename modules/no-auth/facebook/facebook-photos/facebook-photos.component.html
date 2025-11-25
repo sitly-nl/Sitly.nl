@@ -1,0 +1,59 @@
+<div class="facebook-container">
+    <div class="facebook-toolbar">
+        <div class="side-item">
+            @if (selectedAlbum) {
+                <button class="btn-back" (click)="back()">
+                    <img src="assets/images/arrow-left.svg" alt="back" />
+                    {{ 'main.back' | translate }}
+                </button>
+            }
+        </div>
+        <div class="title">
+            {{ selectedAlbum?.name ?? ('facebook.albums' | translate) }}
+        </div>
+        <div class="side-item align-right">
+            <button class="btn-close" (click)="close()">
+                <img />
+            </button>
+        </div>
+    </div>
+
+    <div class="albums-container">
+        @if (!selectedAlbum) {
+            <div
+                class="album-list-container"
+                infinite-scroll
+                [infiniteScrollDistance]="4"
+                [infiniteScrollThrottle]="100"
+                [immediateCheck]="true"
+                [scrollWindow]="false"
+                (scrolled)="loadMoreAlbums()"
+            >
+                <ul>
+                    @for (album of albums; track album.id) {
+                        <li>
+                            <facebook-album-item [album]="album" (click)="onAlbumSelected(album)"></facebook-album-item>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @if (selectedAlbum) {
+            <div class="selected-album-container">
+                <facebook-album
+                    #facebookAlbum
+                    [album]="selectedAlbum"
+                    (photoSelected)="onPhotoSelected($event)"
+                    infinite-scroll
+                    [infiniteScrollDistance]="4"
+                    [infiniteScrollThrottle]="100"
+                    [immediateCheck]="true"
+                    [scrollWindow]="false"
+                    (scrolled)="facebookAlbum.loadMorePhotos()"
+                >
+                </facebook-album>
+            </div>
+        }
+    </div>
+</div>

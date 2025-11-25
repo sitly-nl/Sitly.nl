@@ -1,0 +1,9 @@
+<overlay-template [data]="overlayData()">
+    <div class="buttons-container">
+        @for (country of countries; track country.id) {
+            <button (click)="countrySelected.emit(country); close()">
+                {{ country.name }}
+            </button>
+        }
+    </div>
+</overlay-template>

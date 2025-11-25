@@ -1,0 +1,9 @@
+<div #mapContainer class="map"></div>
+
+@if (selectedAddress) {
+    <toast-message [icon]="'address-location'" [message]="toastMessageContent"></toast-message>
+}
+
+@if (error) {
+    <div class="error">{{ error }}</div>
+}

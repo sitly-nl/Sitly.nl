@@ -1,0 +1,83 @@
+@import "includes";
+
+.component-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    position: relative;
+
+    .btn-container {
+        display: flex;
+        width: 100%;
+        position: relative;
+
+        .mobile({
+            flex-direction: column;
+            .flex-gap(@spacing-s, "column");
+
+            > * {
+                width: 100%;
+            }
+        });
+
+        .desktop({
+            .flex-gap(@spacing-s);
+
+            > * {
+                display: block;
+                flex: 1;
+            }
+        });
+
+        .btn-facebook {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: top;
+            border-radius: 16px;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #dadce0;
+            color: #3c4043;
+            cursor: pointer;
+            height: 32px;
+            outline: none;
+            padding: 0 12px;
+            position: relative;
+            text-align: center;
+            white-space: nowrap;
+            transition:
+                background-color 0.218s,
+                border-color 0.218s;
+            .flex-gap(@spacing-s);
+
+            .text {
+                font-family: "Google Sans", sans-serif;
+                font-weight: 500;
+                font-size: 1.4rem;
+            }
+
+            img {
+                width: 18px;
+                height: 18px;
+            }
+
+            &:hover {
+                border-color: #d2e3fc;
+                background-color: #f8faff;
+            }
+
+            &:active {
+                background-color: #ecf3fe;
+            }
+
+            .desktop({
+                letter-spacing: 0.25px;
+            });
+        }
+    }
+}

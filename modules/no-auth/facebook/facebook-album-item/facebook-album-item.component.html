@@ -1,0 +1,17 @@
+<div class="album-container">
+    <div>
+        <img class="album-cover" [src]="album.cover_photo.picture" />
+    </div>
+
+    <div class="album-details">
+        <div class="album-name">{{ album.name }}</div>
+        @if (album.count == 1) {
+            <div class="album-stats">{{ 'facebook.onePhoto' | translate }}</div>
+        }
+        @if (album.count > 1) {
+            <div class="album-stats">{{ 'facebook.manyPhotos' | translate: { number: album.count } }}</div>
+        }
+    </div>
+
+    <img class="arrow" />
+</div>
