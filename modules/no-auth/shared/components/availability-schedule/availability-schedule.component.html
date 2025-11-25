@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="header-row">
+        <button
+            class="item first-col"
+            (click)="toggleSelectAll()"
+            [trackLabel]="{ category: 'registration', type: 'button', description: 'availability-toggle-icon' }"
+        >
+            <img src="assets/images/availability/calendar.svg" alt="morning" />
+            <div>{{ 'availability-schedule.allDays' | translate }}</div>
+        </button>
+        @for (dayPart of AvailabilityUtils.dayParts; track dayPart.label) {
+            <button class="item checkbox-col" (click)="selectDayPart(dayPart.name)">
+                <img src="assets/images/availability/daytime-{{ dayPart.name }}.svg" alt="morning" />
+                <div>{{ dayPart.label | translate }}</div>
+            </button>
+        }
+    </div>
+    @for (day of AvailabilityUtils.weekDays; track day.name) {
+        <div class="row">
+            <button class="first-col btn-checkbox" [class.selected]="wholeDaySelected(day.name)" (click)="toggleDaySelection(day.name)">
+                {{ (showShortDayNames ? day.labelShortStandard : day.label) | translate }}
+            </button>
+            @for (dayPart of AvailabilityUtils.dayParts; track dayPart.id) {
+                <div>
+                    <button
+                        class="item checkbox-col checkbox"
+                        [class.selected]="availability[day.name][dayPart.name]"
+                        (click)="availability[day.name][dayPart.name] = !availability[day.name][dayPart.name]; onAvailabilityChanged()"
+                    >
+                        <img />
+                    </button>
+                </div>
+            }
+        </div>
+    }
+    @if (showSelectAll) {
+        <button
+            class="row item btn-select"
+            (click)="toggleSelectAll()"
+            [trackLabel]="{ category: 'registration', type: 'button', description: 'availability-toggle-cta' }"
+        >
+            {{ (isAvailabilityEmpty ? 'availability-schedule.cta.allDays' : 'availability-schedule.cta.allDays.unselect') | translate }}
+        </button>
+    }
+</div>

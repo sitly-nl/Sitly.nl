@@ -1,0 +1,14 @@
+<button type="button" [disabled]="loading || disabled" [class.loading]="loading" [class.small]="isSmall" [ngClass]="mainClassName">
+    <div class="content">
+        @if (iconLeft) {
+            <img class="content-icon" src="assets/images/{{ iconLeft }}.svg" />
+        }
+        <span class="content-text">
+            <ng-content></ng-content>
+        </span>
+        @if (iconRight) {
+            <img class="content-icon" src="assets/images/{{ iconRight }}.svg" />
+        }
+    </div>
+    <img class="spinner" />
+</button>

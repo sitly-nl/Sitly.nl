@@ -1,0 +1,39 @@
+@import (reference) "includes";
+
+.star-container {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+}
+
+.background-star {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    .background("rating-bar/star-filled-neutral");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+
+    &.unfilled {
+        .background("rating-bar/star-unfilled");
+    }
+
+    &.invisible {
+        visibility: hidden;
+    }
+}
+
+.foreground-star {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-size: cover;
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    z-index: @z-index-high-minimum;
+    .background("rating-bar/star-filled", "svg", false);
+}

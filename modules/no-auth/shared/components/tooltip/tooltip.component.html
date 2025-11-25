@@ -1,0 +1,22 @@
+<div
+    class="tooltip-container"
+    [class.pointer-down]="pointerPosition === 'top'"
+    [class.pointer-up]="pointerPosition === 'bottom'"
+    [class.pointer-center]="pointerAlign === 'center'"
+    [class.pointer-start]="pointerAlign === 'start'"
+    [class.pointer-end]="pointerAlign === 'end'"
+    @enterAnimation
+    @leaveAnimation
+>
+    <div class="tooltip-content">
+        @if (title) {
+            <div class="title">{{ title | translate }}</div>
+        }
+        @if (message) {
+            <div class="message">{{ message | translate: messageArgs }}</div>
+        }
+        @if (button) {
+            <system-button [buttonType]="'secondary-small'" (click)="action.emit()">{{ button | translate }}</system-button>
+        }
+    </div>
+</div>

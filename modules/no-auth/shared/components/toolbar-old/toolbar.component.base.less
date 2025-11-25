@@ -1,0 +1,78 @@
+@import (reference) "includes";
+
+.toolbar {
+    padding: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 50px;
+    background: white;
+
+    .toolbar-side-item {
+        display: flex;
+        flex: 1;
+
+        &.right-side {
+            justify-content: flex-end;
+        }
+    }
+}
+
+.border-normal {
+    border-bottom: solid 1px #ddd;
+}
+
+.border-dark {
+    border-bottom: solid 1px #ccc;
+}
+
+.toolbar-center {
+    .toolbar-title {
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .toolbar-logo {
+        .background("logo");
+        width: 48px;
+        height: 30px;
+    }
+}
+
+.toolbar-button {
+    display: flex;
+    margin: 0 3px;
+    text-decoration: none;
+    align-items: center;
+    cursor: pointer;
+
+    > span {
+        font-size: 1.4rem;
+        color: @neutral-900;
+        margin-left: 7px;
+    }
+
+    img {
+        width: 100%;
+    }
+}
+
+.bordered-button {
+    border-radius: 17px;
+    box-shadow: 0 0 4.5px 0 rgb(0 0 0 / 15%);
+
+    span {
+        margin: 7px 14px;
+        color: @neutral-900;
+    }
+}
+
+.mobile({
+    @import "./toolbar.component.less";
+});
+
+.desktop({
+    @import "./toolbar.component.desktop.less";
+});

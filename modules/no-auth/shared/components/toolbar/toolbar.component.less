@@ -1,0 +1,58 @@
+@import (reference) "includes";
+
+.toolbar {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border-bottom: solid 1px @neutral-300;
+
+    .mobile({
+        padding: 0 @spacing-xl;
+    });
+
+    .desktop({
+        padding: 0 @spacing-4xl;
+    });
+}
+
+.toolbar-side-item {
+    display: flex;
+    flex: 1;
+    padding: @spacing-l 0;
+
+    &.right-side {
+        justify-content: flex-end;
+    }
+}
+
+.toolbar-center {
+    .title {
+        .regular-heading();
+        font-size: 1.6rem;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.toolbar-button {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+
+    > :not(:first-child) {
+        margin-left: 4px;
+    }
+
+    img {
+        &.small {
+            height: 16px;
+        }
+
+        &.regular {
+            height: 24px;
+        }
+    }
+}

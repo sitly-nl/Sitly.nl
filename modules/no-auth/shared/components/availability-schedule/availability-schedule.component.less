@@ -1,0 +1,74 @@
+@import (reference) "includes";
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-row {
+    display: flex;
+
+    .item {
+        flex-direction: column;
+        padding: 10px 0 4px;
+        font-size: 1rem;
+
+        img {
+            height: 28px;
+        }
+    }
+}
+
+.row {
+    display: flex;
+    flex-basis: 48px;
+    margin-top: 8px;
+}
+
+.item {
+    min-height: 100%;
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.first-col {
+    flex: 1;
+}
+
+.checkbox-col {
+    width: 60px;
+    margin-left: 8px;
+
+    .desktop({
+        width: 93px;
+    });
+}
+
+.checkbox {
+    img {
+        width: 24px;
+        height: 24px;
+        border: 1px solid @neutral-900;
+        border-radius: 6px;
+    }
+
+    &.selected {
+        img {
+            border: none;
+            .img-content("checkbox-on");
+        }
+    }
+}
+
+.btn-select {
+    font-size: 1.6rem;
+    border: 1px solid @neutral-900;
+    transition: background @animation-duration;
+
+    .hover({
+        background-color: @neutral-300;
+    });
+}

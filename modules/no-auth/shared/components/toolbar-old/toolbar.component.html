@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="toolbar" [class.border-normal]="borderStyle === 'normal'" [class.border-dark]="borderStyle === 'dark'">
+        <div class="toolbar-side-item">
+            @for (action of leftActions; track action) {
+                <a
+                    class="toolbar-button"
+                    (click)="onActionButtonClick(action)"
+                    [trackLabel]="{ category: 'toolbar', type: 'button', description: action + '-' + trackingLabel }"
+                >
+                    @if (actionIcon(action)) {
+                        <img image2x="{{ actionIcon(action) }}" />
+                    }
+                    @if (actionTitle(action)) {
+                        <span>{{ actionTitle(action) | translate }}</span>
+                    }
+                </a>
+            }
+        </div>
+
+        <div class="toolbar-center">
+            <ng-content></ng-content>
+            @if (title) {
+                <div class="toolbar-title">{{ title | translate }}</div>
+            }
+            @if (showLogo) {
+                <button class="btn toolbar-logo" (click)="onLogoClick()"></button>
+            }
+        </div>
+
+        <div class="toolbar-side-item right-side">
+            @for (action of rightActions; track action) {
+                <a
+                    [class]="actionClass(action)"
+                    (click)="onActionButtonClick(action)"
+                    [trackLabel]="{ category: 'toolbar', type: 'button', description: action + '-' + trackingLabel }"
+                >
+                    @if (actionIcon(action)) {
+                        <img image2x="{{ actionIcon(action) }}" />
+                    }
+                    @if (actionTitle(action)) {
+                        <span>{{ actionTitle(action) | translate }}</span>
+                    }
+                </a>
+            }
+        </div>
+    </div>
+</div>

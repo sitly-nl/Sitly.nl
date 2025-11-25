@@ -1,0 +1,17 @@
+<div @verticalCollapse @triggerChildAnimation>
+    <div
+        class="toast-container"
+        [@fadeInOut]="isDesktop() ? { value: 'shown' } : {}"
+        [@slideUpDown]="isDesktop() ? {} : { value: 'shown' }"
+    >
+        <img class="toast-icon" src="assets/images/{{ icon }}.svg" />
+        <div class="message">
+            @for (msg of messages; track msg) {
+                <div>
+                    {{ msg | translate }}
+                </div>
+            }
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

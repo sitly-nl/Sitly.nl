@@ -1,0 +1,75 @@
+@import "includes";
+
+.tooltip-content {
+    background-color: white;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    .flex-gap(8px, "column");
+
+    .title {
+        font-weight: bold;
+    }
+
+    .message {
+        font-size: 1.2rem;
+    }
+
+    system-button {
+        width: fit-content;
+        max-width: 100%;
+    }
+}
+
+.tooltip-container {
+    position: relative;
+    width: 248px;
+    filter: drop-shadow(0 4px 8px rgba(30 50 63 / 15%));
+    display: flex;
+    flex-direction: column;
+
+    &::after {
+        content: "";
+        width: 24px;
+        height: 12px;
+    }
+
+    &.pointer-down {
+        &::after {
+            .background("tooltip-pointer-down");
+            top: 100%;
+            clip-path: url("/assets/images/tooltip-pointer-down.svg");
+        }
+    }
+
+    &.pointer-up {
+        flex-direction: column-reverse;
+
+        &::after {
+            .background("tooltip-pointer-up");
+            bottom: 100%;
+            clip-path: url("/assets/images/tooltip-pointer-up.svg");
+        }
+    }
+
+    &.pointer-start {
+        &::after {
+            margin-left: 16px;
+            align-self: flex-start;
+        }
+    }
+
+    &.pointer-end {
+        &::after {
+            margin-right: 16px;
+            align-self: flex-end;
+        }
+    }
+
+    &.pointer-center {
+        &::after {
+            align-self: center;
+        }
+    }
+}

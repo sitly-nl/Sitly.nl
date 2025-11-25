@@ -1,0 +1,3 @@
+<div class="toggle-container" [class.selected]="checked">
+    <input type="checkbox" [(ngModel)]="checked" (ngModelChange)="checkedChange.emit(checked)" />
+</div>

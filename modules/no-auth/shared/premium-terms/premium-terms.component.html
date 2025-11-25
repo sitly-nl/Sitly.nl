@@ -1,0 +1,37 @@
+<div class="terms-container">
+    <div class="text-line"><img src="assets/images/premium/secured.svg" />{{ 'premium.secureCheckout' | translate }}</div>
+
+    @if (!recurringPayment) {
+        @if (renewDate) {
+            <div class="text-line">
+                {{ 'premium.paymentMethods.renewsOn' | translate: { date: (renewDate | dfnsFormat: 'd MMMM') } }}&nbsp;
+            </div>
+        }
+        @if (!renewDate) {
+            <div class="text-line">{{ 'premiumWinback.cancelAnyTime' | translate }}&nbsp;</div>
+        }
+        @if (!termsDisplayed()) {
+            <div
+                class="text-line read-more"
+                (click)="termsDisplayed.set(true)"
+                [trackLabel]="{ category: 'premium', type: 'button', description: 'payment-methods-read-more' }"
+            >
+                {{ 'premium.paymentMethods.readMore' | translate }}
+            </div>
+        }
+    }
+
+    @if (termsDisplayed()) {
+        <div class="payment-terms">
+            <div>-</div>
+            <div>{{ 'premium.paymentTerms' | translate }}</div>
+            <div
+                class="read-less"
+                (click)="termsDisplayed.set(false)"
+                [trackLabel]="{ category: 'premium', type: 'button', description: 'payment-methods-read-less' }"
+            >
+                {{ 'premium.paymentMethods.readLess' | translate }}
+            </div>
+        </div>
+    }
+</div>

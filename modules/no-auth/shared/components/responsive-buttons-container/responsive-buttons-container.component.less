@@ -1,0 +1,39 @@
+@import "~styles/mixins.less";
+
+:host {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+
+    system-button {
+        max-width: 100%;
+        white-space: nowrap;
+    }
+
+    .mobile({
+        flex-direction: column;
+        gap: @spacing-m;
+
+        system-button {
+            width: 100%;
+        }
+    });
+
+    .desktop({
+        width: 100%;
+        flex-direction: row-reverse;
+        flex-wrap: wrap-reverse;
+        gap: @spacing-l;
+        justify-content: center;
+
+        system-button {
+            flex-basis: 192px;
+            flex-shrink: 0;
+            flex-grow: 1;
+
+            &.single-button {
+                flex-grow: 0;
+            }
+        } 
+    });
+}

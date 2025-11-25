@@ -1,0 +1,89 @@
+@import (reference) "includes";
+
+.label-container {
+    display: flex;
+    align-items: center;
+
+    .text {
+        border-radius: 4px;
+    }
+
+    .border-right {
+        margin-left: -5px;
+    }
+
+    &.purple {
+        .text {
+            background-color: @primary-200;
+        }
+
+        .border-right {
+            .img-content("cool-label-purple");
+        }
+    }
+
+    &.blue {
+        .text {
+            background-color: #d9eeff;
+        }
+
+        .border-right {
+            .img-content("cool-label-blue");
+        }
+    }
+
+    .mobile({
+        .text {
+            padding: 0 9px 0 4px;
+        }
+
+        &.small {
+            .text {
+                font-size: 1.2rem;
+            }
+
+            .border-right {
+                height: 18px;
+            }
+        }
+
+        &.large {
+            .text {
+                font-size: 1.8rem;
+                font-weight: bold;
+            }
+
+            .border-right {
+                height: 27px;
+            }
+        }
+    });
+
+    .desktop({
+        .text {
+            padding: 0 12px 0 8px;
+        }
+
+        &.small {
+            .text {
+                height: 20px;
+            }
+
+            .border-right {
+                height: 20px;
+            }
+        }
+
+        &.large {
+            .text {
+                font-size: 2.4rem;
+                height: 26px;
+                line-height: 1;
+            }
+
+            .border-right {
+                height: 26px;
+            }
+        }
+    });
+}

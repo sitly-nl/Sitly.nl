@@ -1,0 +1,19 @@
+@import (reference) "includes";
+
+.toast-container {
+    display: flex;
+    padding: 12px;
+    background-color: @white-opacity-80;
+    border-radius: @radius-m;
+    align-items: center;
+    .flex-gap(@spacing-m);
+
+    .toast-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .message {
+        flex: 1;
+    }
+}

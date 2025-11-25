@@ -1,0 +1,11 @@
+@for (btn of buttons(); track btn.title) {
+    <system-button
+        [buttonType]="btn.type"
+        [class.single-button]="buttons().length === 1"
+        (click)="btn.action?.()"
+        [iconRight]="btn.iconRight"
+        [trackLabel]="btn.trackLabel"
+    >
+        {{ btn.title | translate }}
+    </system-button>
+}

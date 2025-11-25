@@ -1,0 +1,10 @@
+<div class="rating-container">
+    @for (n of [].constructor(starsNumber); track i; let i = $index) {
+        <rating-star
+            [hasBorder]="starsHaveBorder"
+            [size]="starSize"
+            [fulness]="Math.max(0, 100 * Math.min(1, ratingValue - i))"
+        ></rating-star>
+    }
+    <span #text class="rating-label">{{ textValue }}</span>
+</div>

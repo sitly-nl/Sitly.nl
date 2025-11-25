@@ -1,0 +1,22 @@
+@import (reference) "includes";
+@import "animations";
+
+.loader-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: @z-index-modal;
+    background-color: @opacity-dark-95;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div {
+        width: 24px;
+        height: 24px;
+        .background("loader-white");
+        .spin-animation();
+    }
+}

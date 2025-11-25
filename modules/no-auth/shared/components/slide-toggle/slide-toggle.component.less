@@ -1,0 +1,65 @@
+@import (reference) "includes";
+
+@animation-duration: 100ms;
+
+.toggle-container {
+    display: block;
+    width: 52px;
+    height: 32px;
+    position: relative;
+
+    &::before {
+        position: absolute;
+        box-sizing: border-box;
+        content: "";
+        width: 100%;
+        height: 100%;
+        display: block;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        border: solid 1px @neutral-900;
+        border-radius: 16px;
+        transition: all @animation-duration;
+    }
+
+    &::after {
+        display: inline-block;
+        content: "";
+        width: 24px;
+        height: 24px;
+        border-radius: @radius-s;
+        background-color: @neutral-900;
+        position: absolute;
+        top: @spacing-xs;
+        left: @spacing-xs;
+        transition: all @animation-duration;
+    }
+
+    &.selected {
+        &::before {
+            background-color: @neutral-900;
+            transition: all @animation-duration;
+        }
+
+        &::after {
+            background-color: #fff;
+            .background("checkmark-neutral");
+            left: @spacing-2xl;
+            background-size: 12px 12px;
+            background-position: center;
+            transition: all @animation-duration;
+        }
+    }
+
+    input[type="checkbox"] {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        z-index: @z-index-high-regular;
+    }
+}

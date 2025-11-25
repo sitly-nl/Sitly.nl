@@ -1,0 +1,16 @@
+<button [class.selected]="selected" [trackLabel]="trackLabel">
+    @if (iconLeft) {
+        <img class="content-icon" src="assets/images/{{ iconLeft }}.svg" />
+    }
+    @if (boldHeading) {
+        <div class="bold-heading">{{ boldHeading }}</div>
+    }
+    <div class="text-container">
+        <div class="title" [class.normal]="titleStyle === 'normal'">{{ title | translate }}</div>
+        @if (subtitle) {
+            <div class="subtitle">{{ subtitle }}</div>
+        }
+        <ng-content select="[subtitle]"></ng-content>
+    </div>
+    <div class="right-item" [class.edit]="rightIconType === 'edit'" [class.selector]="rightIconType === 'selector'"></div>
+</button>

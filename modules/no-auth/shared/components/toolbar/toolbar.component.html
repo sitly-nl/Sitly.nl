@@ -1,0 +1,37 @@
+<ng-template #buttonsTemplate let-items="items">
+    @for (item of items; track $index) {
+        <button class="toolbar-button" (click)="itemSelected.emit(item.type)">
+            @if (item.icon) {
+                <img
+                    src="assets/images/{{ item.icon }}.svg"
+                    [class.small]="item.iconSize === 'small'"
+                    [class.regular]="item.iconSize === 'regular'"
+                />
+            }
+            @if (item.title) {
+                <span>{{ item.title | translate }}</span>
+            }
+        </button>
+    }
+</ng-template>
+
+<div class="toolbar">
+    <div class="toolbar-side-item">
+        <ng-container *ngTemplateOutlet="buttonsTemplate; context: { items: leftItemsInternal }"></ng-container>
+    </div>
+
+    <div class="toolbar-center">
+        @if (centralItem.type === 'title') {
+            <div class="title">{{ centralItem.title | translate }}</div>
+        }
+        @if (centralItem.type === 'logo') {
+            <button>
+                <img src="assets/images/logo.svg" alt="logo" />
+            </button>
+        }
+    </div>
+
+    <div class="toolbar-side-item right-side">
+        <ng-container *ngTemplateOutlet="buttonsTemplate; context: { items: rightItemsInternal }"></ng-container>
+    </div>
+</div>
