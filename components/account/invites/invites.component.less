@@ -1,0 +1,153 @@
+@import (reference) "includes";
+@import "users-list";
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.invites-note-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .invites-note {
+        display: flex;
+        .flex-gap(10px);
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 12px;
+
+        img {
+            align-self: center;
+        }
+
+        .message {
+            flex: 1;
+            text-align: start;
+        }
+
+        .btn-close {
+            width: 20px;
+            height: 20px;
+            .background("cross-neutral-900");
+        }
+    }
+
+    .mobile({
+        padding: 16px 16px 8px;
+    });
+
+    .desktop({
+        padding: 16px 40px 0;
+
+        .invites-note {
+            width: 576px;
+        }
+    });
+}
+
+.default-state-container,
+.invites-list-container,
+.loader-container {
+    text-align: center;
+    position: relative;
+    flex: 1;
+}
+
+.default-state-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    .mobile({
+        margin-bottom: 56px;
+    });
+
+    .desktop({
+        margin-bottom: 80px;
+    });
+
+    .button-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .message {
+            position: absolute;
+            bottom: 100%;
+            margin-bottom: 24px;
+        }
+
+        .mobile({
+            width: 100%;
+            padding: 0 16px;
+
+            system-button {
+                width: 100%;
+            }
+
+            .message {
+                margin-bottom: 20px;
+            }
+        });
+
+        .desktop({
+            padding: 0 40px;
+
+            system-button {
+                min-width: 280px;
+            }
+
+            .message {
+                margin-bottom: 24px;
+            }
+        });
+    }
+
+    .invites-note-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 16px;
+    }
+}
+
+.invites-list-container {
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .mobile({
+        padding-bottom: 72px;
+    });
+
+    ul {
+        width: 100%;
+        padding-top: 16px;
+
+        .mobile({
+            padding-top: 8px;
+
+            li[user-card], li[user-card-blurred] {
+                margin-top: 10px;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        });
+
+        .desktop({
+            max-width: 780px;
+        });
+    }
+}

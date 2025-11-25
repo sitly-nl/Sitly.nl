@@ -1,0 +1,21 @@
+<overlay-template [data]="overlayData()">
+    <div class="input-container">
+        <mat-form-field>
+            <textarea
+                #textInput
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="10"
+                placeholder="{{ 'feedback.formInputPlaceholder' | translate }}"
+                [ngModel]="feedbackText"
+            ></textarea>
+        </mat-form-field>
+        <div class="error">
+            @if (hasInputError) {
+                <span>{{ 'feedback.youNeedMoreCharacters' | translate: { number: charactersLeft } }}</span>
+            }
+        </div>
+    </div>
+</overlay-template>

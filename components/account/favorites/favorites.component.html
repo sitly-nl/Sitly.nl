@@ -1,0 +1,42 @@
+<div class="container">
+    @if (!isDesktop()) {
+        <toolbar-old></toolbar-old>
+    }
+
+    @if (!loading()) {
+        <div class="content-container" [class.empty]="!hasFavorites()">
+            @if (hasFavorites()) {
+                <ul [class.users-list]="isDesktop()">
+                    @for (user of favorites(); track user.id) {
+                        <li user-card [size]="isDesktop() ? 'normal' : 'compact'" [user]="user" [isFavorite]="user.isFavorite"></li>
+                    }
+                    @if (oddFavoritesAmount()) {
+                        <li></li>
+                    }
+                </ul>
+            }
+
+            @if (!hasFavorites()) {
+                <div class="no-favorites-message">
+                    <div class="description">
+                        <img src="app/images/favorites-empty.svg" />
+                        {{ 'favorites.noFavorites' | translate }}
+                    </div>
+
+                    <system-button class="btn-search" [routerLink]="['/', 'search', 'photo']">
+                        @if (authUser.isParent) {
+                            {{ 'messages.searchForBabysitters' | translate }}
+                        }
+                        @if (!authUser.isParent) {
+                            {{ 'messages.searchForJob' | translate }}
+                        }
+                    </system-button>
+                </div>
+            }
+        </div>
+    } @else {
+        <div>
+            <div class="list-loader"></div>
+        </div>
+    }
+</div>

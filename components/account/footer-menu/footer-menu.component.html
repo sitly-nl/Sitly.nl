@@ -1,0 +1,42 @@
+<div class="menu-items" #componentContainer>
+    <a [routerLinkActive]="['active']" [routerLink]="['/favorites']" (click)="trackCtaEvent('saved-selection', EventAction.savedMenu)">
+        <div class="icon favorites"></div>
+        <span>{{ 'footermenu.favorites' | translate }}</span>
+    </a>
+
+    <a [class.active]="isSearchTabActive()" [routerLink]="['/search', 'photo']">
+        <div class="icon search"></div>
+        <span>{{ 'footermenu.search' | translate }}</span>
+    </a>
+
+    @if (invitesEnabled()) {
+        <a #invitesBtn [routerLinkActive]="['active']" [routerLink]="['/invites']">
+            <div class="icon invites">
+                @if (unreadInvitesCount() > 0) {
+                    <div class="counter-icon">{{ unreadInvitesCount() < 100 ? unreadInvitesCount() : '99+' }}</div>
+                }
+            </div>
+            <span>{{ (authUser.isParent ? 'footermenu.invites.parent' : 'footermenu.invites.foster') | translate }}</span>
+        </a>
+    }
+
+    <a [routerLinkActive]="['active']" [routerLink]="['/messages']" (click)="trackCtaEvent('select_messages', EventAction.messagesMenu)">
+        <div class="icon messages">
+            @if (unreadMessagesCount() > 0) {
+                <div class="counter-icon">
+                    {{ unreadMessagesCount() < 100 ? unreadMessagesCount() : '99+' }}
+                </div>
+            }
+        </div>
+        <span>{{ 'footermenu.messages' | translate }}</span>
+    </a>
+
+    <a
+        [class.active]="isProfileTabActive()"
+        [routerLink]="['/settings']"
+        (click)="trackCtaEvent('select_myprofile', EventAction.myProfileMenu)"
+    >
+        <div class="icon profile"></div>
+        <span>{{ 'footermenu.profile' | translate }}</span>
+    </a>
+</div>

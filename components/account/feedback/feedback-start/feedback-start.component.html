@@ -1,0 +1,13 @@
+<overlay-template [data]="overlayData()">
+    <div class="buttons-container">
+        <system-button [buttonType]="'secondary'" (click)="action.emit(FeedbackType.responseRate)">
+            {{ 'feedbackReasonsOverlay.cta.lowResponseRate' | translate }}
+        </system-button>
+        <system-button [buttonType]="'secondary'" (click)="action.emit(FeedbackType.premiumPricey)">
+            {{ 'feedbackReasonsOverlay.cta.premiumPricey' | translate }}
+        </system-button>
+        <system-button [buttonType]="'secondary'" (click)="action.emit(FeedbackType.other)">
+            {{ 'feedback.somethingElse' | translate }}
+        </system-button>
+    </div>
+</overlay-template>

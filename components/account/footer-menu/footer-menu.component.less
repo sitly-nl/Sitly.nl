@@ -1,0 +1,93 @@
+@import (reference) "includes";
+
+.menu-items {
+    display: flex;
+    width: 100%;
+    position: relative;
+
+    a {
+        .body-text();
+        font-size: 1.2rem;
+        flex: 1;
+        height: @mobile-footer-height;
+        background: #fff;
+        text-align: center;
+        color: @neutral-700;
+        text-decoration: none;
+        align-items: center;
+        justify-content: center;
+        padding-top: 8px;
+        border-top: solid 1px #ddd;
+        z-index: @z-index-high-minimum;
+
+        .counter-icon {
+            position: absolute;
+            width: auto;
+            min-width: 12px;
+            height: 12px;
+            padding: 0 4px;
+            left: 18px;
+            top: 0;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 8px;
+            color: #fff;
+            background: @primary-500;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+
+            &.profile {
+                .background("footer/profile");
+            }
+
+            &.search {
+                .background("footer/search");
+            }
+
+            &.messages {
+                .background("footer/message");
+            }
+
+            &.favorites {
+                .background("footer/favorite");
+            }
+
+            &.invites {
+                .background("footer/invites");
+            }
+        }
+
+        &.active {
+            color: @primary-500;
+
+            .icon {
+                &.profile {
+                    .background("footer/profile-active");
+                }
+
+                &.search {
+                    .background("footer/search-active");
+                }
+
+                &.messages {
+                    .background("footer/message-active");
+                }
+
+                &.favorites {
+                    .background("footer/favorite-active");
+                }
+
+                &.invites {
+                    .background("footer/invites-active");
+                }
+            }
+        }
+    }
+}

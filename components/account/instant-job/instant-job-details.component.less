@@ -1,0 +1,161 @@
+@import (reference) "includes";
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .mobile({
+        background-color: #fff;
+    });
+}
+
+.top-bar {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+
+    .btn-back {
+        width: 48px;
+        height: 48px;
+        .background("_old/back-button", "png");
+    }
+}
+
+.text {
+    background-color: @neutral-100;
+    padding: 50px 30px 30px;
+    text-align: center;
+
+    .title {
+        font-size: 1.7rem;
+        font-weight: 600;
+    }
+
+    .desktop({
+        background: transparent;
+        padding: 50px 60px;
+    
+        .title {
+            font-size: 1.8rem;
+            margin-bottom: 18px;
+        }
+    
+        .subtitle {
+            color: #666;
+            line-height: 1.71;
+        }
+    });
+}
+
+.button-container {
+    padding: 30px;
+
+    button {
+        margin-bottom: 10px;
+        font-weight: normal;
+        font-size: 1.4rem;
+        outline: none;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &.btn-view-profile {
+            color: @neutral-900;
+            min-height: 50px;
+        }
+
+        @media only screen and (max-width: 375px) {
+            font-size: 1.6rem;
+        }
+    }
+
+    .desktop({
+        position: relative;
+        width: max-content;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 40px;
+        padding: 0;
+    
+        button {
+            width: auto;
+            align-self: stretch;
+            padding: 10px 25px;
+        }
+    });
+}
+
+.timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .timer-grid {
+        display: grid;
+        grid-template-columns: 20px 5px 20px 5px 20px;
+
+        .timer-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: @primary-500;
+        }
+
+        .timer-counter {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: @primary-500;
+        }
+    }
+
+    .timer-message {
+        margin: 0 60px;
+        color: #999;
+    }
+
+    .desktop({
+        max-width: 250px;
+    
+        .timer-grid {
+            grid-template-columns: 20px 10px 20px 10px 20px;
+    
+            .timer-counter {
+                font-size: 1.8rem;
+            }
+        }
+    
+        .timer-message {
+            font-weight: 300;
+            margin: 0;
+        }
+    });
+}
+
+.disabled-notice {
+    margin: auto 20px 20px;
+    text-align: center;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .image-avatar {
+        width: 100%;
+        border-radius: 50%;
+    }
+}

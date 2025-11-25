@@ -1,0 +1,21 @@
+@import "includes";
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+
+    .mobile({
+        padding: @spacing-m 40px 0;
+        .flex-gap(@spacing-m, "column");
+    });
+
+    .desktop({
+        width: 295px;
+        padding: @spacing-l 0;
+        .flex-gap(@spacing-l, "column");
+
+        system-button {
+            width: 100%
+        };
+    });
+}

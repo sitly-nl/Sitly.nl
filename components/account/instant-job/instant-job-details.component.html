@@ -1,0 +1,84 @@
+@if (parent) {
+    <div class="container">
+        @if (!isDesktop()) {
+            <div class="top-bar">
+                <button class="btn-back" (click)="onBackClicked()"></button>
+            </div>
+        }
+
+        <div class="text">
+            <div class="title">
+                {{ 'instant-job.parentNeedsBabysitter' | translate: { firstName: parent.firstName | ucfirst } }}
+            </div>
+            <div class="subtitle">
+                {{
+                    'instant-job.parentJustSignedUp'
+                        | translate
+                            : {
+                                  firstName: parent.firstName | ucfirst,
+                                  distance: parent.distance,
+                                  childrenAmount: childrenAmountKey | translate: { count: parent.children.length },
+                              }
+                }}
+                @if (isDayOld) {
+                    <span>. </span>
+                } @else {
+                    <span>&nbsp;{{ 'instant-job.parentIsNotShown' | translate }}</span>
+                }
+                @if (parent.searchPreferences.regularCare && !emptyCalendar) {
+                    <span>
+                        {{ 'instant-job.beFirstToSendMessage' | translate: { careType: careTypeStr | lowercase, days: availabilityDays } }}
+                    </span>
+                } @else {
+                    <span>
+                        {{ 'instant-job.beFirstToSendMessageNoDays' | translate: { careType: careTypeStr | lowercase } }}
+                    </span>
+                }
+            </div>
+        </div>
+
+        @if (parent.availableForChat) {
+            <div class="button-container">
+                <button class="btn-view-profile" [routerLink]="['/users', parent.id]">
+                    {{ 'instant-job.viewParentProfile' | translate: { firstName: parent.firstName | ucfirst } }}
+                </button>
+                <button class="btn btn-default" (click)="openChat()">
+                    {{ 'instant-job.messageParent' | translate: { firstName: parent.firstName | ucfirst } }}
+                </button>
+            </div>
+        }
+
+        @if (parent && !isDayOld && parent.availableForChat) {
+            <div class="timer">
+                <div class="timer-grid">
+                    <div class="timer-label">{{ 'instant-job.hours' | translate }}</div>
+                    <div class="timer-label">&nbsp;</div>
+                    <div class="timer-label">{{ 'instant-job.minutes' | translate }}</div>
+                    <div class="timer-label">&nbsp;</div>
+                    <div class="timer-label">{{ 'instant-job.seconds' | translate }}</div>
+
+                    <div class="timer-counter">{{ timeUntilDayOld | timeLeft: { unit: 'hour' } | number: '2.0-0' }}</div>
+                    <div class="timer-counter">:</div>
+                    <div class="timer-counter">{{ timeUntilDayOld | timeLeft: { unit: 'min' } | number: '2.0-0' }}</div>
+                    <div class="timer-counter">:</div>
+                    <div class="timer-counter">{{ timeUntilDayOld | timeLeft: { unit: 'sec' } | number: '2.0-0' }}</div>
+                </div>
+                <div class="timer-message">
+                    {{ 'instant-job.timerMessage' | translate: { firstName: parent.firstName | ucfirst } }}
+                </div>
+            </div>
+        }
+
+        @if (!parent.availableForChat) {
+            <div class="disabled-notice">
+                {{ 'chat.disabledNotice' | translate }}
+            </div>
+        }
+    </div>
+}
+
+@if (!isDesktop() && parent) {
+    <div class="avatar">
+        <img #img [attr.height]="img.scrollWidth" class="image-avatar" avatar [user]="parent" [size]="100" />
+    </div>
+}

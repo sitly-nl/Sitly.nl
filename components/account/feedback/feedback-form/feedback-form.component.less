@@ -1,0 +1,25 @@
+@import "includes";
+
+.input-container {
+    margin-top: @spacing-2xl;
+
+    .mat-mdc-form-field {
+        width: 100%;
+        min-height: 90px;
+    }
+
+    .mobile({
+        width: 100%;
+        padding: 0 40px;
+    });
+
+    .desktop({
+        width: 480px;
+    });
+
+    .error {
+        margin-top: @spacing-s;
+        padding: 0 @spacing-l;
+        text-align: left;
+    }
+}

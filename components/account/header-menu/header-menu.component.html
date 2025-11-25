@@ -1,0 +1,70 @@
+<div class="container">
+    <header>
+        <a [routerLink]="['/']" class="home-link">
+            <img src="assets/images/logo.svg" class="logo" />
+        </a>
+
+        @if (userService.authUser) {
+            <div class="menu-items" id="menu-items">
+                <a [class.active]="isSearchTabActive()" [routerLink]="['/search', 'photo-and-map']">
+                    <span>{{ 'footermenu.search' | translate }}</span>
+                </a>
+
+                <a [class.active]="isFavoritesTabActive()" [routerLink]="['/favorites']">
+                    <span>{{ 'footermenu.favorites' | translate }}</span>
+                </a>
+
+                @if (invitesEnabled()) {
+                    <a #invitesBtn [class.active]="isInvitesTabActive()" [routerLink]="['/invites']">
+                        <span>{{ (authUser.isParent ? 'footermenu.invites.parent' : 'footermenu.invites.foster') | translate }}</span>
+                        @if (unreadInvitesCount() > 0) {
+                            <div class="counter-icon">
+                                {{ unreadInvitesCount() < 100 ? unreadInvitesCount() : '99+' }}
+                            </div>
+                        }
+                    </a>
+                }
+
+                <a [class.active]="isMessagesTabActive()" [routerLink]="['/messages']">
+                    <span>{{ 'footermenu.messages' | translate }}</span>
+                    @if (unreadMessagesCount() > 0) {
+                        <div class="counter-icon">
+                            {{ unreadMessagesCount() < 100 ? unreadMessagesCount() : '99+' }}
+                        </div>
+                    }
+                </a>
+
+                <button (click)="additionalMenuVisible.set(!additionalMenuVisible())">
+                    <img avatar [user]="userService.authUser" class="avatar" [class.active]="additionalMenuVisible()" [size]="60" />
+                </button>
+            </div>
+        }
+
+        @if (additionalMenuVisible()) {
+            <ul class="additional-menu">
+                <li>
+                    <a [routerLink]="['/settings']">{{ 'menu.editProfile' | translate }}</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/account']">{{ 'settings.accountSettings' | translate }}</a>
+                </li>
+                @if (!authUser.isPremium) {
+                    <li>
+                        <button
+                            class="premium-button"
+                            (click)="navigationService.showPremium(); additionalMenuVisible.set(false)"
+                            [trackLabel]="{ category: 'premium', type: 'cta', description: 'in-header-menu' }"
+                        >
+                            <span class="premium-title">{{ 'getPremium' | translate }}</span
+                            ><br />
+                            <span class="premium-description">{{
+                                'getPremium.description' + (!authUser.isParent ? '.foster' : '') | translate
+                            }}</span>
+                        </button>
+                        <img class="premium-icon" image2x="menu-sitly-premium" />
+                    </li>
+                }
+            </ul>
+        }
+    </header>
+</div>

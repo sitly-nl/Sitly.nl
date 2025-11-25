@@ -1,0 +1,26 @@
+<overlay-template [data]="overlayData()">
+    <div class="slider-container">
+        <div #scrollSnapContainer class="slides-container">
+            @for (slide of slides; track slide.title; let i = $index) {
+                <div class="step-slide">
+                    <div class="step-slide-content">
+                        <img src="assets/images/{{ slide.imgName }}.svg" />
+                        <div class="slide-text">
+                            <div class="title">
+                                {{ slide.title | translate }}
+                            </div>
+                            <div class="subtitle">
+                                {{ slide.subtitle | translate }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="navigation-container">
+            @for (slide of slides; track slide.title; let i = $index) {
+                <div class="slide-indicator" [class.active]="i === currentSlide()"></div>
+            }
+        </div>
+    </div>
+</overlay-template>

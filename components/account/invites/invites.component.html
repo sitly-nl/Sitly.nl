@@ -1,0 +1,85 @@
+<ng-template #noteTemplate let-message="message">
+    <div class="invites-note-container">
+        <div class="invites-note">
+            <img src="assets/images/help-circle.svg" />
+            <div class="message">{{ (authUser.isParent ? 'invites.note.parent' : 'invites.note.foster') | translate }}</div>
+            <button class="btn-close" (click)="hideNote()"></button>
+        </div>
+    </div>
+</ng-template>
+
+<div class="content-container">
+    @if (!isDesktop()) {
+        <toolbar [centralItem]="{ type: 'title', title: authUser.isParent ? 'invites.title.parent' : 'invites.title.foster' }"></toolbar>
+    }
+
+    @if (!loading() && invites().length === 0) {
+        <div class="default-state-container">
+            @if (invitesNoteShown()) {
+                <ng-container *ngTemplateOutlet="noteTemplate"></ng-container>
+            }
+
+            @if (invites().length === 0) {
+                <div class="button-container">
+                    <div class="message">
+                        {{ (authUser.isParent ? 'invites.noInvitesYet.parent' : 'invites.noInvitesYet.foster') | translate }}
+                    </div>
+                    <system-button
+                        buttonType="primary"
+                        [routerLink]="['/search', 'photo']"
+                        [trackLabel]="{
+                            category: 'invites',
+                            type: 'button',
+                            description: authUser.isParent ? 'search-sitters' : 'search-jobs',
+                        }"
+                    >
+                        {{ (authUser.isParent ? 'invites.cta.searchSitters' : 'invites.cta.searchOpenJobs') | translate }}
+                    </system-button>
+                </div>
+            }
+        </div>
+    }
+
+    @if (!loading() && invites().length > 0) {
+        <div
+            class="invites-list-container"
+            #invitesContainer
+            infinite-scroll
+            [infiniteScrollDistance]="4"
+            [infiniteScrollThrottle]="100"
+            [immediateCheck]="true"
+            [scrollWindow]="false"
+            (scrolled)="onScroll()"
+        >
+            @if (invitesNoteShown()) {
+                <ng-container *ngTemplateOutlet="noteTemplate"></ng-container>
+            }
+
+            <ul [class.users-list]="isDesktop()">
+                @for (invite of invites(); track invite.id; let i = $index) {
+                    @if (showBTestVersion) {
+                        <li user-card-blurred [user]="invite.contactUser" (viewClicked)="onUserViewClick($event)"></li>
+                    } @else {
+                        <li
+                            user-card
+                            [size]="isDesktop() ? 'normal' : 'compact'"
+                            [user]="invite.contactUser"
+                            [isFavorite]="invite.contactUser.isFavorite"
+                            [showUnViewedIndicator]="receivedInvites && !invite.viewed"
+                            (onProfileOpen)="markAsViewed(invite, i)"
+                        ></li>
+                    }
+                }
+                @if (this.invites().length % 2 !== 0) {
+                    <li></li>
+                }
+            </ul>
+        </div>
+    }
+
+    @if (loading()) {
+        <div class="loader-container">
+            <div class="list-loader"></div>
+        </div>
+    }
+</div>
