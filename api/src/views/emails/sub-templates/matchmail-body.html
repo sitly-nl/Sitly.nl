@@ -1,0 +1,299 @@
+<table role="presentation" bgcolor="#e8f1f9" width="100%" cellpadding="0" cellspacing="0" style="padding-bottom: 20px;">
+<tr>
+<td align="center">
+	<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="center" style="padding:0 20px 20px 20px;">
+			<h1 style="font-family:Lilita One,Arial Black,Arial,Helvetica,sans-serif;font-size:36px;color:#22313e;mso-line-height-rule:exactly;line-height:40px;font-weight:800;padding:0;margin:30px 0 0 0;text-align:center;display:block;text-transform:uppercase;" class="black">
+				{{title}}
+			</h1>
+			<table role="presentation" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="center" style="padding:10px 0 0 0;">
+					<table role="presentation" cellpadding="0" cellspacing="0">
+					<tr>
+						<td valign="top" style="text-align:center;vertical-align:top;font-size:0;">
+							<div style="display:inline-block;vertical-align:top;">
+								<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<table role="presentation" cellpadding="0" cellspacing="0">
+										<tr>
+											<td bgcolor="#f5d1ec" align="center" style="padding:0 6px;border-top-left-radius:4px;border-bottom-left-radius:4px;">
+												<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;padding:0;margin:0;text-align:center;display:block;">
+													{{subTitle0}}
+												</p>
+											</td>
+											<td>
+												<img src="https://cdn.sitly.com/images/emails/matchmail/table-ornament.png" width="8" height="24" alt="" border="0" style="display:block;">
+											</td>
+										</tr>
+										</table>
+									</td>
+								</tr>
+								</table>
+							</div>
+						<!--[if (gte mso 9)|(IE)]>
+						</td>
+						<td valign="top" style="text-align:center;vertical-align:top;font-size:0;">
+						<![endif]-->
+							{{#if subTitle1 }}
+							<div style="display:inline-block;vertical-align:top;">
+								<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<table role="presentation" cellpadding="0" cellspacing="0">
+										<tr>
+											<td align="center" style="padding:0 6px;">
+												<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;padding:0;margin:0;text-align:center;display:block;">
+													{{subTitle1}}
+												</p>
+											</td>
+										</tr>
+										</table>
+									</td>
+								</tr>
+								</table>
+							</div>
+							{{/if}}
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
+	
+	<!-- matches -->
+	{{#each matches}}
+	<table role="presentation" cellpadding="0" cellspacing="0">
+	<tr>
+	<td align="right" style="width:560px;padding:20px 0 0 0;">
+		<table role="presentation" cellpadding="0" cellspacing="0">
+		<tr>
+			<td bgcolor="#219b80" style="padding:0 6px;border-top-left-radius:4px;border-top-right-radius:4px;">
+				<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:12px;color:#ffffff;mso-line-height-rule:exactly;line-height:18px;padding:0;margin:0;text-align:center;display:block;">
+					{{topMatchesLabel}}
+				</p>
+			</td>
+			<td style="width:16px;">
+				&nbsp;
+			</td>
+		</tr>
+		</table>
+
+		<table role="presentation" bgcolor="#ffffff" width="100%" cellpadding="0" cellspacing="0" style="border-radius:16px;" class="darkBody noRadius">
+		<tr>
+			<td valign="top" class="noRadius"
+				style="width:200px; max-width:200px; background-position: center; background-size:cover; background-image: url('{{avatar}}'); border-top-left-radius:16px; border-bottom-left-radius:16px;"
+			>
+				<a href="{{profileUrl}}" style="display:block; width:200px; max-width:200px; min-height:200px;" target="_blank"></a>
+			</td>
+
+			<td align="center" valign="top" style="width:360px;">
+				<table role="presentation" cellpadding="0" cellspacing="0">
+				<tr>
+				<td style="width:340px;">
+					<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+					<td style="padding:0 10px 16px 10px;">
+						<!-- line 0 - name -->
+						<h2 style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:18px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;padding:0;margin:10px 0 0 0;text-align:left;display:block;" class="dark">
+							{{line0}}
+						</h2>
+
+						<table role="presentation" cellpadding="0" cellspacing="0">
+						<!-- line 1 -->
+						<tr>
+							<td valign="top" style="padding:6px 0 0 0;">
+								<table role="presentation" cellpadding="0" cellspacing="0">
+								<tr>
+									<td style="padding:4px 6px 0 0;">
+										<img src="https://cdn.sitly.com/images/emails/matchmail/icon-location2.png" width="12" height="12" alt="" border="0" style="display:block;" class="darkInvert">
+									</td>
+								</tr>
+								</table>
+							</td>
+							<td style="padding:6px 0 0 0;">
+								<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:14px;color:#22313e;mso-line-height-rule:exactly;line-height:20px;padding:0;margin:0;text-align:left;display:block;" class="dark">
+									{{line1}}
+								</p>
+							</td>
+						</tr>
+						<!-- line 2 -->
+						{{#if line2}}
+						<tr>
+							<td valign="top" style="padding:6px 0 0 0;">
+								<table role="presentation" cellpadding="0" cellspacing="0">
+								<tr>
+									<td style="padding:4px 6px 0 0;">
+										<img src="https://cdn.sitly.com/images/emails/matchmail/icon-check-gray.png" width="12" height="12" alt="" border="0" style="display:block;" class="darkInvert">
+									</td>
+								</tr>
+								</table>
+							</td>
+							<td style="padding:6px 0 0 0;">
+								<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:14px;color:#22313e;mso-line-height-rule:exactly;line-height:20px;padding:0;margin:0;text-align:left;display:block;" class="dark">
+									{{line2}}
+								</p>
+							</td>
+						</tr>
+						{{/if}}
+						<!-- line 3 -->
+						{{#if line3}}
+						<tr>
+							<td valign="top" style="padding:6px 0 0 0;">
+								<table role="presentation" cellpadding="0" cellspacing="0">
+								<tr>
+									<td style="padding:4px 6px 0 0;">
+										<img src="https://cdn.sitly.com/images/emails/matchmail/icon-calendar.png" width="12" height="12" alt="" border="0" style="display:block;" class="darkInvert">
+									</td>
+								</tr>
+								</table>
+							</td>
+							<td style="padding:6px 0 0 0;">
+								<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:14px;color:#22313e;mso-line-height-rule:exactly;line-height:20px;padding:0;margin:0;text-align:left;display:block;" class="dark">
+									{{line3}}
+								</p>
+							</td>
+						</tr>
+						{{/if}}
+						</table>
+
+						<!-- availability -->
+						{{#if availabilityDays}}
+						<table role="presentation" cellpadding="0" cellspacing="0">
+						<tr>
+							{{#each availabilityDays}}
+							{{#if @first}}
+							<td style="padding:10px 2px 0 0;">
+							{{else}}
+							<td style="padding:10px 2px 0 2px;">
+							{{/if}}
+								{{#if selected}}
+								<table role="presentation" bgcolor="#4c6377" width="28" cellpadding="0" cellspacing="0" style="border-radius:4px;">
+								{{else}}
+								<table role="presentation" bgcolor="#e8f1f9" width="28" cellpadding="0" cellspacing="0" style="border-radius:4px;">
+								{{/if}}
+								<tr>
+									<td align="center" style="padding:2px 2px 4px 2px;">
+										{{#if selected}}
+										<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:14px;color:#ffffff;mso-line-height-rule:exactly;line-height:16px;padding:0;margin:0;text-align:center;display:block;">
+										{{else}}
+										<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:14px;color:#869fb2;mso-line-height-rule:exactly;line-height:16px;padding:0;margin:0;text-align:center;display:block;">
+										{{/if}}
+											{{title}}
+										</p>
+										<table role="presentation" cellpadding="0" cellspacing="0">
+										<tr>
+											<td align="center">
+												{{#if selected}}
+												<img src="https://cdn.sitly.com/images/emails/matchmail/icon-check-white.png"
+													width="12" height="12" alt="" border="0" style="display:block;">
+												{{else}}
+												<img src="https://cdn.sitly.com/images/emails/matchmail/icon-cross-gray.png"
+													width="12" height="12" alt="" border="0" style="display:block;">
+												{{/if}}
+											</td>
+										</tr>
+										</table>
+									</td>
+								</tr>
+								</table>
+							</td>
+							{{/each}}
+						</tr>
+						</table>
+						{{/if}}
+
+						<!-- view profile -->
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td align="center" style="padding:20px 0 0 0;">
+								<table role="presentation" bgcolor="#b9439b" width="100%" cellpadding="0" cellspacing="0" style="border-radius:12px;">
+								<tr>
+									<td align="center" style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:14px;color:#ffffff;mso-line-height-rule:exactly;line-height:20px;font-weight:700;mso-padding-alt:8px 30px;">
+										<a role="button" href="{{profileUrl}}" style="color:#ffffff;text-decoration:none;display:block;padding:8px 30px;" target="_blank">
+											{{viewDetailsLabel}}
+										</a>
+									</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+						</table>
+					</td>
+					</tr>
+					</table>
+				</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+	{{/each}}
+</td>
+</tr>
+</table>
+
+<!-- bottom -->
+{{#if blueAccent }}
+<table role="presentation" bgcolor="#b0d7f6" width="100%" cellpadding="0" cellspacing="0">
+{{/if}}
+{{#if yellowAccent }}
+<table role="presentation" bgcolor="#ffe63e" width="100%" cellpadding="0" cellspacing="0">
+{{/if}}
+<tr>
+	<td>
+		{{#if extraMatches}}
+		<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td align="center" style="padding:50px 20px 50px 20px;">
+				<h2 style="font-family:Lilita One,Arial Black,Arial,Helvetica,sans-serif;font-size:24px;color:#22313e;mso-line-height-rule:exactly;line-height:36px;padding:0;margin:0;text-align:center;display:block;text-transform:uppercase;" class="black">
+					{{bottomTitle}}
+				</h2>
+				<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;padding:0;margin:0;text-align:center;display:block;">
+					{{bottomSubTitle}}
+				</p>
+
+				<table role="presentation" cellpadding="0" cellspacing="0">
+				<tr>
+					{{#each extraMatches}}
+					<td style="padding:20px 4px 0 4px;">
+						<a
+							href="{{profileUrl}}" background="{{avatar}}"
+							style="display: block; text-decoration:none; width:106px; height:135px; border-radius:16px; border: 4px solid #fff; background-position: center; background-size:cover; background-image: url('{{avatar}}')"
+							target="_blank"
+						></a>
+					</td>
+					{{/each}}
+				</tr>
+				</table>
+
+				<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="center" style="padding:20px 0 0 0;">
+						<table role="presentation" cellpadding="0" cellspacing="0" style="border:2px solid #22313e;border-radius:16px;">
+						<tr>
+							<td align="center" style="width:336px;font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;font-weight:700;mso-padding-alt:10px 20px;">
+								<a role="button" href="{{viewAllUrl}}" style="color:#22313e;text-decoration:none;display:block;padding:10px 20px;" target="_blank">
+									{{viewAllLabel}}
+								</a>
+							</td>
+						</tr>
+						</table>
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+		{{/if}}
+	</td>
+</tr>
+</table>

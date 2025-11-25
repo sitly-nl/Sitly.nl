@@ -1,0 +1,52 @@
+<table role="presentation" bgcolor="#b0d7f6" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+	<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+	<td align="center" style="padding:50px 20px 50px 20px;">
+		<h2 style="font-family:Lilita One,Arial Black,Arial,Helvetica,sans-serif;font-size:24px;color:#22313e;mso-line-height-rule:exactly;line-height:36px;padding:0;margin:0;text-align:center;display:block;text-transform:uppercase;" class="black">
+			{{title}}
+		</h2>
+		<p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;padding:0;margin:0;text-align:center;display:block;">
+			{{subTitle}}
+		</p>
+
+		<table role="presentation" cellpadding="0" cellspacing="0">
+		<tr>
+			{{#each invitesSenders}}
+			<td style="padding:20px 4px 0 4px;">
+				<a
+					href="{{viewAllUrl}}" background="{{avatar}}"
+					style="display: block; text-decoration:none; width:106px; height:135px; border-radius:16px; border: 4px solid #fff; background-position: center; background-size:cover; background-image: url('{{avatar}}')"
+					target="_blank"
+				></a>
+				<ul style="list-style-type: disc; width: 94px; height: 70px; padding: 8px 0 0 12px; margin: 0; font-family: Open Sans, Arial, Helvetica, sans-serif; font-size: 12px; color: #22313e; line-height: 18px; text-align: left;">
+					<li>{{line0}}</li>
+					<li>{{line1}}</li>
+				</ul>
+			</td>
+			{{/each}}
+		</tr>
+		</table>
+
+		<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td align="center" style="padding:10px 0 0 0;">
+				<table role="presentation" bgcolor="#b9439b" cellpadding="0" cellspacing="0" style="border-radius:16px;">
+				<tr>
+					<td align="center" style="width:336px;font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;font-weight:700;mso-padding-alt:10px 20px;">
+						<a role="button" href="{{viewAllUrl}}" style="color:#ffffff;text-decoration:none;display:block;padding:10px 20px;" target="_blank">
+							{{viewAllLabel}}
+						</a>
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>

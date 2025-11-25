@@ -1,0 +1,136 @@
+<table role="presentation" bgcolor="#ffffff" width="100%" cellpadding="0" cellspacing="0" class="darkBody">
+    <tr>
+        <td align="center" style="width:600px;">
+            <table role="presentation" bgcolor="#e8f1f9" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="center" style="padding:0 20px;">
+                                <h1 style="font-family:Lilita One,Arial Black,Arial,Helvetica,sans-serif;font-size:36px;color:#22313e;mso-line-height-rule:exactly;line-height:40px;font-weight:800;padding:0;margin:30px 0 0 0;text-align:center;display:block;text-transform:uppercase;" class="black">
+                                    {{mainHeading}}
+                                </h1>
+                            </td>
+                        </tr>
+                        </table>
+                        <table role="presentation" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td align="center" style="width:600px;height:340px;" class="autoHeight">
+                                    <table role="presentation" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td height="340" align="center" style="width:600px;height:340px;" class="autoHeight">
+                                            <table role="presentation" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="min-width:20px;width:20px;">
+                                                    &nbsp;
+                                                </td>
+                                                <td align="center" style="padding:30px 0 0 0;">
+                                                    <div style="width:310px; overflow:hidden; border: 8px solid white; border-radius: 20px; display: inline-block;">
+                                                        <img src="{{avatarUrl}}" width="540" height="459" alt="" border="0" style="max-width:360px;width:100%!important;height:auto!important;display:block;">
+                                                    </div>
+                                                </td>
+                                                <td style="min-width:20px;width:20px;">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    <!--[if gte mso 9]>
+                                        </v:textbox>
+                                    </v:rect>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            {{#if blueAccent}}
+            <table role="presentation" bgcolor="#b0d7f6" width="100%" cellpadding="0" cellspacing="0">
+            {{/if}}
+            {{#if yellowAccent}}
+            <table role="presentation" bgcolor="#ffe63e" width="100%" cellpadding="0" cellspacing="0">
+            {{/if}}
+                    <tr>
+                        <td>
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td align="center" style="padding:0 20px 50px 20px;">
+                                    <table role="presentation" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td style="width:360px;">
+                                            <h2 style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:24px;color:#22313e;mso-line-height-rule:exactly;line-height:36px;padding:0;margin:40px 0 0 0;text-align:left;display:block;">
+                                                {{senderFirstName}}
+                                            </h2>
+                                            <table role="presentation" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td valign="top" style="padding:4px 0 0 0;">
+                                                    <table role="presentation" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td style="padding:0 4px 0 0;">
+                                                            <img src="https://cdn.sitly.com/images/emails/chat-notifications/icon-location@3x.png" width="20" height="20" alt="" border="0" style="display:block;">
+                                                        </td>
+                                                    </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="padding:4px 0 0 0;">
+                                                    <p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;padding:0;margin:0;text-align:left;display:block;">
+                                                        {{distanceLine}}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            </table>
+                                            <p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;padding:0;margin:16px 0 0 0;text-align:left;display:block;">
+                                                “{{messageContent}}”
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td align="center" style="padding:40px 0 0 0;">
+                                            <table role="presentation" bgcolor="#b9439b" cellpadding="0" cellspacing="0" style="border-radius:16px;">
+                                            <tr>
+                                                {{#if isAutoRejection}}
+                                                    <td align="center" style="width:360px;font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#ffffff;mso-line-height-rule:exactly;line-height:24px;font-weight:700;mso-padding-alt:12px 30px;">
+                                                        <a role="button" href="{{searchPageUrl}}" style="color:#ffffff;text-decoration:none;display:block;padding:12px 30px;" target="_blank">{{seeOtherUsers}}</a>
+                                                    </td>
+                                                {{else}}
+                                                    <td align="center" style="width:360px;font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#ffffff;mso-line-height-rule:exactly;line-height:24px;font-weight:700;mso-padding-alt:12px 30px;">
+                                                        <a role="button" href="{{replyUrl}}" style="color:#ffffff;text-decoration:none;display:block;padding:12px 30px;" target="_blank">{{replyForFree}}</a>
+                                                    </td>
+                                                {{/if}}
+                                            </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    {{#if isInitial}}
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td align="center" style="padding:12px 0 0 0;">
+                                                <table role="presentation" cellpadding="0" cellspacing="0" style="border:2px solid #22313e;border-radius:16px;">
+                                                <tr>
+                                                    <td align="center" style="width:356px;font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#22313e;mso-line-height-rule:exactly;line-height:24px;font-weight:700;mso-padding-alt:10px 20px;">
+                                                        <a role="button" href="{{viewProfileUrl}}e" style="color:#22313e;text-decoration:none;display:block;padding:10px 20px;" target="_blank">{{viewProfile}}</a>
+                                                    </td>
+                                                </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </table>
+                                        <p style="font-family:Open Sans,Arial,Helvetica,sans-serif;font-size:16px;color:#4c6377;mso-line-height-rule:exactly;line-height:24px;padding:0;margin:20px 0 0 0;text-align:center;display:block;">
+                                            <a href="{{oneClickRejectionUrl}}" style="color:#4c6377;text-decoration:underline;" target="_blank">{{oneClickRejection}}</a>
+                                        </p>
+                                    {{/if}}
+                                </td>
+                            </tr>
+                            </table>
+                        </td>
+                    </tr>
+            </table>
+        </td>
+    </tr>
+</table>
