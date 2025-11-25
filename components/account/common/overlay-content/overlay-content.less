@@ -1,0 +1,126 @@
+@import "~styles/mixins.less";
+
+.content-container {
+    background-color: #fff;
+    text-align: center;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 44px 40px 40px;
+    .body-text();
+
+    .message {
+        margin-top: @spacing-m;
+    }
+
+    .html-message {
+        text-align: left;
+    }
+
+    .header-img {
+        object-fit: contain;
+        align-self: center;
+        margin-bottom: @spacing-2xl;
+    }
+
+    .title {
+        .regular-heading();
+        color: @neutral-900;
+        font-size: 1.8rem;
+    }
+
+    .subtitle,
+    .message,
+    .html-message {
+        color: @neutral-700;
+    }
+
+    .mobile({
+        &:not(.full-screen) {
+            max-height: 80vh;
+        }
+
+        &.full-screen {
+            height: 100%;
+        }
+    });
+
+    .desktop({
+        padding: 48px 110px 40px;
+
+        .title {
+            font-size: 2.4rem;
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+        }
+
+        .message {
+            margin-top: @spacing-l;
+            font-size: 1.6rem;
+        }
+
+        &:not(.full-screen) {
+            max-height: 700px;
+        }
+
+        &.full-screen {
+            max-height: @dialog-panel-max-height;
+        }
+    });
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: @spacing-2xl;
+
+    .mobile({
+        .flex-gap(@spacing-m, "column");
+
+        system-button {
+            width: 100%;
+        }
+    });
+
+    .desktop({
+        width: fit-content;
+        justify-content: center;
+        align-items: center;
+        margin: 32px auto 0;
+
+        &:not(.column) {
+            flex-direction: row-reverse;
+            .flex-gap(@spacing-l, "row-reverse");
+
+            system-button {
+                flex: 1;
+                min-width: 192px;
+                white-space: nowrap;
+            }
+        }
+
+        &.column {
+            width: 295px;
+            flex-direction: column;
+            .flex-gap(@spacing-l, "column");
+
+            > :not(.btn-underlined-new) {
+                width: 100%;
+            }
+        }
+    });
+}
+
+.btn-overlay-close {
+    position: absolute;
+    top: @spacing-s;
+    right: @spacing-s;
+    width: 40px;
+    height: 40px;
+    .background("overlay-close");
+    background-size: 16px 16px;
+    background-position: center center;
+}

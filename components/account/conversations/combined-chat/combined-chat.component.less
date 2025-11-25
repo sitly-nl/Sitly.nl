@@ -1,0 +1,23 @@
+.combined-chat {
+    display: flex;
+    height: 100%;
+}
+
+messages {
+    max-width: 450px;
+    flex-basis: 85%;
+
+    &.fill-screen {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    &.collapsed {
+        flex-basis: 0;
+        max-width: 0;
+    }
+}
+
+.right {
+    flex-grow: 1;
+}

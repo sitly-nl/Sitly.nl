@@ -1,0 +1,57 @@
+<div class="content-container" [class.bg-neutral]="data().bgColor === 'neutral'" [class.full-screen]="data().fullScreen">
+    <button
+        class="btn-overlay-close"
+        (click)="data().doOnClose?.()"
+        [trackLabel]="{ category: data().trackCategory, type: 'overlay', description: 'close-' + data().trackName }"
+    ></button>
+
+    @if (data().img || data().title) {
+        <div class="top-bar">
+            @if (data().img) {
+                <img class="header-img" src="assets/images/{{ data().img?.name }}.svg" />
+            }
+            @if (data().title) {
+                <div
+                    class="title"
+                    [class.text-align-left]="data().titleAlignLeft"
+                    innerHTML="{{ data().title ?? '' | translate: data().titleArgs }}"
+                ></div>
+            }
+        </div>
+    }
+
+    <div class="content" [class.text-align-left]="data().textAlignLeft">
+        @if (data().message) {
+            <div class="message" innerText="{{ data().message ?? '' | translate: data().messageArgs }}"></div>
+        }
+
+        @if (data().htmlMessage) {
+            <div class="html-message" innerHTML="{{ data().htmlMessage ?? '' | translate }}" (click)="onHtmlClick($event)"></div>
+        }
+
+        <ng-content></ng-content>
+    </div>
+
+    @if (hasButtons()) {
+        <div class="bottom-bar">
+            <div responsive-buttons-container [data]="buttons()"></div>
+            @if (data().linkBtn) {
+                <button
+                    class="btn-underlined-new neutral-700"
+                    (click)="data().linkBtn?.action?.()"
+                    [trackLabel]="{ category: data().trackCategory, type: 'button', description: 'link-' + data().trackName }"
+                >
+                    {{ data().linkBtn?.title ?? '' | translate }}
+                </button>
+            }
+        </div>
+    }
+
+    @if (data().stickyBtn) {
+        <div class="sticky-button-container">
+            <system-button [buttonType]="'primary'" (click)="data().stickyBtn?.action?.()">
+                {{ data().stickyBtn?.title ?? '' | translate }}
+            </system-button>
+        </div>
+    }
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="date-container">
+        <div class="select-value" [class.no-border]="!border" [class.transparent]="transparent">
+            @if (model.selectedDay !== 0) {
+                {{ model.selectedDay }}
+            }
+            @if (model.selectedDay === 0) {
+                {{ 'main.dateShort' | translate }}
+            }
+        </div>
+        <select #daySelect class="form-control" (change)="updateDay(daySelect.value)">
+            @if (showPlaceholder) {
+                <option value="0">{{ 'main.dateShort' | translate }}</option>
+            }
+            @for (day of availableDays; track day) {
+                <option [selected]="day == model.selectedDay" value="{{ day }}">{{ day }}</option>
+            }
+        </select>
+    </div>
+
+    <div class="separator" [class.no-padding]="!border" [style.color]="separatorColor">-</div>
+
+    <div class="date-container">
+        <div class="select-value" [class.no-border]="!border" [class.transparent]="transparent">
+            @if (model.selectedMonth !== 0) {
+                {{ model.selectedMonth }}
+            }
+            @if (model.selectedMonth === 0) {
+                {{ 'main.monthShort' | translate }}
+            }
+        </div>
+        <select #monthSelect class="form-control" (change)="updateMonth(monthSelect.value)">
+            @if (showPlaceholder) {
+                <option value="0">{{ 'main.monthShort' | translate }}</option>
+            }
+            @for (month of availableMonths; track month) {
+                <option [selected]="month == model.selectedMonth" value="{{ month }}">{{ month }}</option>
+            }
+        </select>
+    </div>
+
+    <div class="separator" [class.no-padding]="!border" [style.color]="separatorColor">-</div>
+
+    <div class="date-container">
+        <div class="select-value" [class.no-border]="!border" [class.transparent]="transparent">
+            @if (model.selectedYear !== 0) {
+                {{ model.selectedYear }}
+            }
+            @if (model.selectedYear === 0) {
+                {{ 'main.yearShort' | translate }}
+            }
+        </div>
+        <select #yearSelect class="form-control" (change)="updateYear(yearSelect.value)">
+            @if (showPlaceholder) {
+                <option value="0">{{ 'main.yearShort' | translate }}</option>
+            }
+            @for (year of availableYears; track year) {
+                <option [selected]="year == model.selectedYear" value="{{ year }}">{{ year }}</option>
+            }
+        </select>
+    </div>
+</div>

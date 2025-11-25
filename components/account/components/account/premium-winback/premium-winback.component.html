@@ -1,0 +1,16 @@
+<overlay-template [data]="overlayData()">
+    @if (discount && subscription) {
+        <div class="details">
+            <div class="original-price">{{ subscription.pricePerUnit }}</div>
+            <div class="discounted-price">
+                <strong>{{ ((subscription.pricePerUnit * (100 - discount)) / 100).toFixed(2) }}</strong> / {{ 'premium.month' | translate }}
+            </div>
+            <div class="details-list">
+                <div class="details-list-item">{{ 'premiumWinback.discountedPriceForLife' | translate }}</div>
+                <div class="details-list-item">{{ 'premiumWinback.cancelAnyTime' | translate }}</div>
+                <div class="details-list-item">{{ 'premiumWinback.hideYourProfile' | translate }}</div>
+            </div>
+            <img class="logo" src="assets/images/logo-white.svg" alt="logo" />
+        </div>
+    }
+</overlay-template>

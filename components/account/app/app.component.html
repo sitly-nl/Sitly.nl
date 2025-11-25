@@ -1,0 +1,23 @@
+<div class="app-content-container">
+    @if (showHeader()) {
+        <header-menu></header-menu>
+    }
+
+    <div class="app-container" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+
+    @if (showFooter()) {
+        <footer-menu></footer-menu>
+    }
+
+    <div class="modal-overlay" [class.modal-invisible]="!hasModalRoute()" [@routeAnimations]="prepareRoute(modalOutlet)">
+        <router-outlet name="modal" #modalOutlet="outlet"></router-outlet>
+    </div>
+</div>
+
+<prompt-host class="prompt-host-container" #promptHost></prompt-host>
+
+@if (authUser && isAndroidApp) {
+    <restore-premium></restore-premium>
+}

@@ -1,0 +1,14 @@
+<generic-message
+    [group]="group"
+    [chatPartner]="chatPartner"
+    [previousGroupFormattedDate]="previousGroupFormattedDate"
+    [messageHeader]="isAutoRejection ? ('chat.messageFromSitly.title' | translate) : senderFirstName"
+>
+    <div avatarContent class="message-avatar">
+        @if (isAutoRejection) {
+            <img src="assets/images/logo-rounded.svg" />
+        } @else {
+            <img avatar [user]="group.action === MessageAction.received ? chatPartner : user" [size]="100" />
+        }
+    </div>
+</generic-message>

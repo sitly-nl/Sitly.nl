@@ -1,0 +1,37 @@
+<div class="content-container">
+    <button class="btn-overlay-close" (click)="close()"></button>
+
+    <div class="title">{{ 'photo.howDoYouWantUpload' | translate }}</div>
+    <div class="btns-container">
+        <system-button
+            facebook-btn
+            (token)="onFacebookToken()"
+            [buttonType]="'secondary'"
+            iconLeft="social/icon-facebook"
+            [trackLabel]="{ category: trackCategory(), type: 'button', description: 'photo-select-facebook' }"
+        >
+            {{ 'settings.facebook' | translate }}
+        </system-button>
+        <system-button
+            [buttonType]="'secondary'"
+            iconLeft="social/icon-instagram"
+            (click)="onInstagramSelected()"
+            [trackLabel]="{ category: trackCategory(), type: 'button', description: 'photo-select-instagram' }"
+        >
+            {{ 'photo.instagram' | translate }}
+        </system-button>
+        <system-button
+            [buttonType]="'secondary'"
+            (click)="onOpenGalleryClicked()"
+            [trackLabel]="{ category: trackCategory(), type: 'button', description: 'photo-select-gallery' }"
+        >
+            {{ 'photo.uploadPhoto' | translate }}
+            <input
+                type="file"
+                accept="image/*"
+                (change)="onPhotoSelected($event)"
+                [trackLabel]="{ category: trackCategory(), type: 'input-file', description: 'photo-upload-input' }"
+            />
+        </system-button>
+    </div>
+</div>

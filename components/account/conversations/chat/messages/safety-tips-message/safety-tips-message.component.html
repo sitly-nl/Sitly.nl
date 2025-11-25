@@ -1,0 +1,30 @@
+<generic-message
+    messageHeader="{{ 'chat.message.safety.header' | translate }}"
+    [group]="group"
+    [chatPartner]="chatPartner"
+    [previousGroupFormattedDate]="previousGroupFormattedDate"
+>
+    <div avatarContent class="message-avatar">
+        <img src="assets/images/logo-rounded.svg" />
+    </div>
+
+    <div>
+        <button class="safety-more-button" (click)="showSafetyTips.emit()">
+            {{ 'chat.message.safety.button.details' | translate }}
+        </button>
+    </div>
+
+    <div class="message-bottom">
+        @if (askDisableSafetyMessages && !user.disabledSafetyMessages) {
+            <button class="safety-button-not-show" (click)="disableSafetyMessages.emit()">
+                {{ 'chat.message.safety.button.notShow.main' | translate }}
+            </button>
+        }
+
+        @if (user.disabledSafetyMessages) {
+            <span class="safety-disabled-message">
+                {{ 'chat.message.safety.button.notShow.disabled' | translate }}
+            </span>
+        }
+    </div>
+</generic-message>

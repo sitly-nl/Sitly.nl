@@ -1,0 +1,33 @@
+<div class="content-container">
+    <button class="btn-overlay-close" (click)="close()"></button>
+
+    <div class="photo">
+        <img [src]="avatarSrc ? 'data:image/jpeg;base64, ' + avatarSrc : avatarUrl" />
+    </div>
+
+    <div class="title">{{ errorTitle | translate }}</div>
+    <div class="message">{{ errorText | translate | ucfirst }}. {{ 'photo-feedback.hereAreSomeTips' | translate }}</div>
+
+    <div class="examples-title">
+        {{ 'photo-feedback.examplesGoodPictures' | translate }}
+    </div>
+    <div class="examples-container">
+        @for (url of avatarExamplesUrls; track url) {
+            <div class="example">
+                <img [src]="url" />
+            </div>
+        }
+    </div>
+
+    <div class="buttons-container column">
+        <system-button (click)="selectNewPhoto()">
+            {{ 'photo-feedback.uploadNewPhoto' | translate }}
+        </system-button>
+
+        @if (!hasCriticalError && avatarSrc) {
+            <button class="btn-underlined-new" (click)="forceUploadPhoto()">
+                {{ 'photo-feedback.uploadThisPhoto' | translate }}
+            </button>
+        }
+    </div>
+</div>

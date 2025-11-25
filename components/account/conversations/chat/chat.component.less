@@ -1,0 +1,355 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+
+.chat-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    background-color: @neutral-100;
+}
+
+.header-container {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .header-content-wrapper {
+        display: flex;
+        align-items: center;
+        background: white;
+        z-index: 1;
+        height: 100%;
+        width: 100%;
+
+        .mobile({
+            padding: 0 18px;
+        });
+    }
+
+    .header-user {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+
+        img {
+            border-radius: 50%;
+        }
+
+        .user-info {
+            margin-left: 9px;
+            color: @neutral-900;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        rating-bar {
+            margin-left: 5px;
+        }
+
+        .last-seen {
+            font-style: italic;
+        }
+    }
+
+    .space {
+        flex: 1;
+    }
+
+    .button-dropdown-container {
+        margin-left: auto;
+        position: relative;
+        width: 40px;
+        height: 40px;
+
+        .button-dropdown {
+            font-size: 2rem;
+            color: @neutral-900;
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: normal;
+        }
+    }
+}
+
+.conversation-wrapper {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    align-items: center;
+}
+
+.chat-message {
+    display: block;
+
+    &:not(:last-child) {
+        border-bottom: solid 1px #c9d4de;
+    }
+}
+
+.auto-reject-container {
+    width: 100%;
+    margin: 20px 0;
+    padding-top: 10px;
+
+    .auto-reject {
+        text-align: center;
+        color: @neutral-900;
+
+        .auto-reject-button {
+            margin-top: 12px;
+            min-width: 245px;
+        }
+    }
+
+    .report-explanation {
+        margin-top: 18px;
+    }
+
+    .report-confirmation {
+        text-align: center;
+    }
+}
+
+.ask-for-recommendation {
+    text-align: center;
+    color: @neutral-900;
+
+    .footer {
+        margin-top: 8px;
+        font-size: 1.2rem;
+    }
+}
+
+// ----- Send message -----
+.bottom-container {
+    width: 100%;
+}
+
+.message-input-container {
+    display: flex;
+    align-items: flex-end;
+    background-color: #fff;
+
+    textarea {
+        flex: 1;
+        font-weight: normal;
+        border: none;
+        min-height: 40px;
+
+        &::placeholder {
+            color: @neutral-900;
+        }
+    }
+
+    .btn-send-message {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        padding: 9px 0;
+        margin-left: 10px;
+        .background("send-message");
+        background-position: center center;
+        background-size: 24px 22px;
+        background-repeat: no-repeat;
+        background-color: @primary-500;
+
+        &:disabled {
+            cursor: not-allowed;
+            background-color: @primary-200;
+        }
+    }
+}
+
+.fair-use-policy-prompt {
+    padding: 16px 35px;
+    background: @neutral-100;
+    text-align: center;
+
+    .btn-expand {
+        cursor: pointer;
+        color: @neutral-900;
+    }
+
+    .explanation {
+        margin: 12px 0;
+    }
+}
+
+.min-word-count-container {
+    text-align: center;
+    margin: 16px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: @neutral-700;
+
+    .title {
+        font-weight: 700;
+    }
+
+    .description {
+        margin-bottom: 16px;
+    }
+
+    .counter {
+        margin-top: 16px;
+        color: @primary-500;
+        margin-bottom: 8px;
+
+        &.valid {
+            color: @success-500;
+        }
+    }
+
+    .btn-standard-intro {
+        display: block;
+        width: fit-content;
+        margin: 16px 0;
+    }
+}
+
+.mobile({
+    .header-container {
+        height: 64px;
+
+        .back {
+            height: 100%;
+            min-width: 43px;
+            margin-right: 30px;
+            display: flex;
+            align-items: center;
+
+            span {
+                width: 18px;
+                height: 18px;
+                line-height: 18px;
+                margin-left: 7px;
+                background-color: @neutral-900;
+                color: #fff;
+                font-weight: bold;
+                border-radius: 50%;
+            }
+        }
+
+        .header-user {
+            img {
+                height: 35px;
+                width: 35px;
+            }
+        }
+    }
+
+    .conversation-wrapper {
+        padding: 0 14px 0 20px;
+    }
+
+    .ask-for-recommendation {
+        padding: 22px;
+
+        .btn-ask-recommendation {
+            padding: 9px 25px;
+        }
+    }
+
+    .disabled-container {
+        padding: 20px;
+    }
+
+    .auto-reject-container {
+        margin-bottom: 27px;
+    }
+
+    .message-input-container {
+        padding: 12px;
+    }
+
+    .fair-use-policy-prompt {
+        .explanation {
+            font-size: 1.2rem;
+        }
+    }
+});
+
+.desktop({
+    .header-container {
+        height: 80px;
+        background-color: white;
+        padding: 0 25px;
+        border-bottom: solid 1px #c9d4de;
+
+        .header-user {
+            img {
+                height: 60px;
+                width: 60px;
+            }
+
+            .user-name {
+                font-size: 1.8rem;
+            }
+        }
+    }
+
+    .conversation-wrapper {
+        &::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+        }
+    }
+
+    .conversation {
+        max-width: 650px;
+        padding: 0 25px;
+        margin: 0 auto;
+    }
+
+    .ask-for-recommendation {
+        padding: 28px;
+
+        .btn-ask-recommendation {
+            padding: 9px 48px;
+        }
+    }
+
+    .bottom-container {
+        padding: 36px 25px;
+        max-width: 650px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .auto-reject-container {
+        margin-bottom: 38px;
+    }
+
+    .message-input-container {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .fair-use-policy-prompt {
+        max-width: 600px;
+        padding: 30px;
+        border-radius: 8px;
+
+        .explanation {
+            margin: 12px 0 0;
+        }
+
+        &.warning {
+            margin-bottom: 15px;
+        }
+    }
+});

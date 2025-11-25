@@ -1,0 +1,89 @@
+@if (userService.authUser?.completed) {
+    <button #menuTrigger [matMenuTriggerFor]="devMenu" class="btn-show-prompt menu-trigger">Dev menu</button>
+    <mat-menu #devMenu="matMenu" xPosition="after">
+        <div class="menu-content">
+            <b>Prompts:</b>
+            <div>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.availabilityReminder)">
+                    Availability
+                </button>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.negativeReview)">
+                    Negative Feedback
+                </button>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.positiveReviewEkomi)">
+                    Feedback
+                </button>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.positiveReviewTrustpilot)">
+                    Review Trustpilot
+                </button>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.positiveReviewGoogle)">
+                    Review Google
+                </button>
+                @if (!authUser.isParent) {
+                    <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.avatarReminder)">
+                        Avatar
+                    </button>
+                    <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.firstRecommendation)">
+                        Recommendation
+                    </button>
+                }
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.avatarOverlay)">
+                    Photo Screening
+                </button>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.recurringPaymentFailed)">
+                    Recurring Payment Failed
+                </button>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.postPrompt(PromptType.fillNewProperties)">
+                    Fill new properties
+                </button>
+            </div>
+            <b>Overlays:</b>
+            <div>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.openWelcomeOverlay()">Initial New</button>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.showVisibleAgainOverlay()">Visible Again</button>
+                @if (authUser.isParent) {
+                    <button mat-menu-item dev-menu-item (selected)="commonOverlayService.showNonResponseVictimOverlay()">
+                        Non-response victim
+                    </button>
+                    <button mat-menu-item dev-menu-item (selected)="commonOverlayService.showEditReferenceOverlay()">Edit reference</button>
+                }
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.showTermsOverlay()">Terms &amp; Conditions</button>
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.showPrivacyOverlay()">Privacy Policy</button>
+                @if (!authUser.isParent) {
+                    <button mat-menu-item dev-menu-item (selected)="commonOverlayService.showInvitesNextStepsOverlay()">
+                        Invites Next steps
+                    </button>
+                }
+                <button mat-menu-item dev-menu-item (selected)="commonOverlayService.showInvitesFairUsePolicyOverlay()">
+                    Invites Fair Use Policy
+                </button>
+                <button mat-menu-item dev-menu-item (selected)="typeformService.openSurvey('invites')">Typeform Survey</button>
+            </div>
+            <b>Other:</b>
+            <div>
+                @if (storageService.invitesTooltipShown) {
+                    <button mat-menu-item dev-menu-item (selected)="storageService.invitesTooltipShown = false">
+                        Reset Invites Tooltip
+                    </button>
+                }
+                @if (storageService.invitesStepsShown) {
+                    <button mat-menu-item dev-menu-item (selected)="storageService.invitesStepsShown = false">
+                        Reset Invites Next Steps Overlay
+                    </button>
+                }
+                <button mat-menu-item dev-menu-item (selected)="pushNotificationService.start()">Request notifications permission</button>
+                <button mat-menu-item dev-menu-item (selected)="requestDeviceMotionPermission()">
+                    Request shake permission (for iPhone)
+                </button>
+                <button
+                    mat-menu-item
+                    dev-menu-item
+                    (selected)="storageService.platform = storageService.platform === 'android-app' ? 'web-app' : 'android-app'"
+                >
+                    Switch to {{ storageService.platform === 'android-app' ? 'web' : 'android' }}-app
+                </button>
+                <button mat-menu-item dev-menu-item (selected)="copyUserId()">Copy User ID</button>
+            </div>
+        </div>
+    </mat-menu>
+}

@@ -1,0 +1,97 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+@import "~app/styles/settings.less";
+
+.availability-container {
+    position: relative;
+}
+
+table.availability {
+    width: 100%;
+    border-spacing: 5px;
+    border-collapse: separate;
+    text-align: center;
+
+    thead th {
+        color: @neutral-900;
+        font-weight: normal;
+        .font-size(1.1);
+
+        @media only screen and (min-width: 360px) {
+            .font-size(1.2);
+        }
+    }
+
+    tbody td {
+        background: #fff;
+        .font-size(1.2);
+        border-radius: 2px;
+        height: 26px;
+        padding: 0 6px;
+        width: 25%;
+
+        &.checked {
+            border: solid 1px @neutral-900;
+        }
+
+        &.whole-day-checked {
+            color: @neutral-900;
+            font-weight: bold;
+            border: solid 1px @neutral-900;
+        }
+    }
+}
+
+th {
+    padding-bottom: 5px;
+}
+
+.checkbox-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+    .checkmark {
+        width: 18px;
+        height: 18px;
+        .background("checkbox-off");
+
+        &.checked {
+            .background("checkbox-on");
+        }
+    }
+
+    .checkbox {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+}
+
+form-checkbox {
+    padding-top: 10px;
+}
+
+.padded-opaque {
+    .availability-container {
+        background-color: @neutral-100;
+        padding: 15px;
+    }
+
+    .additional-availability-container {
+        padding: 15px;
+    }
+}
+
+.mobile({
+    @import "./availability-calendar.component.less";
+});
+
+.desktop({
+    @import "./availability-calendar.component.desktop.less";
+});

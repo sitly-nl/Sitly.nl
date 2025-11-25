@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="slider-container">
+        <div class="thumbs-container">
+            <div #thumb class="thumb"></div>
+        </div>
+        <div class="range range-background"></div>
+        <div class="ticks-container">
+            @for (option of options; track option.label; let i = $index) {
+                <div class="tick" [style.left]="(100 / max) * i + '%'"></div>
+            }
+        </div>
+        <div #filledRange class="range range-filled"></div>
+
+        <input
+            type="range"
+            step="1"
+            name="value"
+            [(ngModel)]="selectedIndex"
+            min="{{ min }}"
+            max="{{ max }}"
+            (input)="onInput()"
+            (change)="onChange()"
+        />
+    </div>
+    @if (showLabels) {
+        <div class="labels-container">
+            @for (option of options; track option.label) {
+                <div class="item" [class.selected]="value === option.value">
+                    {{ option.label | translate }}
+                </div>
+            }
+        </div>
+    }
+</div>

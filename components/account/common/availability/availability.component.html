@@ -1,0 +1,147 @@
+<div class="user-availability-container">
+    @if (!hideAvailabilityCalendar) {
+        <div class="user-availability" [class.text-size-small]="textSize === AvailabilityTextSize.small">
+            <table class="user-availability-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        @for (day of AvailabilityUtils.weekDays; track day.name) {
+                            <th>{{ day.labelShort | translate }}</th>
+                        }
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @for (dayPart of AvailabilityUtils.dayParts; track dayPart.id) {
+                        <tr>
+                            <td>{{ dayPart.label | translate }}</td>
+                            @for (day of AvailabilityUtils.weekDays; track day.name) {
+                                <td>
+                                    <div [class.active]="availability[day.name][dayPart.name]"></div>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @if (user.availabilityUpdated) {
+                <div class="availability-updated">
+                    {{
+                        'profile.availabilityUpdated'
+                            | translate: { time: user.availabilityUpdated | std | dfnsFormatDistanceToNow: { addSuffix: true } }
+                    }}
+                </div>
+            }
+        </div>
+    }
+
+    @if (showAdditionalAvailability) {
+        <div class="additional-availability">
+            <div class="profile-property-header">{{ (user.isParent ? 'profile.needsSomeone' : 'profile.availableFor') | translate }}:</div>
+            <div class="profile-property-value">
+                @if (!user.isChildminder) {
+                    @if (user.hasRegularCare !== null) {
+                        <div
+                            class="profile-property-value-item"
+                            [class.checked]="user.hasRegularCare"
+                            [class.unchecked]="!user.hasRegularCare"
+                        >
+                            @if (user.isParent) {
+                                {{ 'profile.onRegularSchedule' | translate | ucfirst }}
+                            }
+                            @if (user.isBabysitter) {
+                                {{ 'profile.regularBabysitting' | translate | ucfirst }}
+                            }
+                            @if (user.isChildminder) {
+                                {{ 'profile.regularChildminding' | translate | ucfirst }}
+                            }
+                        </div>
+                    }
+                    @if (user.hasRegularCare === null) {
+                        <div class="profile-property-value-item">
+                            {{ 'profile.regularCare.onRequest' | translate | ucfirst }}
+                        </div>
+                    }
+
+                    @if (user.isAvailableOccasionally !== null) {
+                        <div
+                            class="profile-property-value-item"
+                            [class.checked]="user.isAvailableOccasionally"
+                            [class.unchecked]="!user.isAvailableOccasionally"
+                        >
+                            @if (user.isParent) {
+                                {{ 'profile.occasionally' | translate | ucfirst }}
+                            }
+                            @if (user.isBabysitter) {
+                                {{ 'profile.occasionalBabysitting' | translate | ucfirst }}
+                            }
+                            @if (user.isChildminder) {
+                                {{ 'profile.occasionalChildminding' | translate | ucfirst }}
+                            }
+                        </div>
+                    }
+                    @if (user.isAvailableOccasionally === null) {
+                        <div class="profile-property-value-item">
+                            {{ 'profile.occasionally.onRequest' | translate | ucfirst }}
+                        </div>
+                    }
+                }
+
+                @if (user.isAvailableAfterSchool !== null) {
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.isAvailableAfterSchool"
+                        [class.unchecked]="!user.isAvailableAfterSchool"
+                    >
+                        {{ 'profile.forAfterSchoolCare' | translate | ucfirst }}
+                    </div>
+                }
+                @if (user.isAvailableAfterSchool === null) {
+                    <div class="profile-property-value-item">
+                        {{ 'profile.afterSchool.onRequest' | translate | ucfirst }}
+                    </div>
+                }
+            </div>
+            @if (user.isChildminder && hasFosterLocation) {
+                <div class="profile-property-header">{{ 'profile.providesCare' | translate }}:</div>
+                <div class="profile-property-value">
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.fosterLocation.receive"
+                        [class.unchecked]="!user.fosterProperties.fosterLocation.receive"
+                    >
+                        {{ 'profile.atTheirLocation' | translate }}
+                    </div>
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.fosterProperties.fosterLocation.visit"
+                        [class.unchecked]="!user.fosterProperties.fosterLocation.visit"
+                    >
+                        {{ 'profile.atYourHome' | translate | ucfirst }}
+                    </div>
+                </div>
+            }
+            @if (user.isParent && user.searchPreferences.childminders && hasFosterLocation) {
+                <div class="profile-property-header">{{ 'profile.preferredLocation' | translate }}</div>
+                <div class="profile-property-value">
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.searchPreferences.fosterLocation.visit"
+                        [class.unchecked]="!user.searchPreferences.fosterLocation.visit"
+                    >
+                        {{ 'profile.parent.atYourHome' | translate | ucfirst }}
+                    </div>
+
+                    <div
+                        class="profile-property-value-item"
+                        [class.checked]="user.searchPreferences.fosterLocation.receive"
+                        [class.unchecked]="!user.searchPreferences.fosterLocation.receive"
+                    >
+                        {{ 'profile.parent.atTheirLocation' | translate | ucfirst }}
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

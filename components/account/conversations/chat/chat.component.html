@@ -1,0 +1,223 @@
+@if (model.messages && model.chatPartner) {
+    <div class="chat-screen">
+        <div #headerContainer class="header-container">
+            <div class="header-content-wrapper">
+                @if (!isDesktop()) {
+                    <button class="back" (click)="back(true)">
+                        <img image2x="back-mobile" alt="back" />
+                        @if (userUpdatesService.messagesCount() > 0) {
+                            <span>{{ userUpdatesService.messagesCount() > 9 ? '•' : userUpdatesService.messagesCount() }}</span>
+                        }
+                    </button>
+                }
+
+                <a class="header-user" [routerLink]="['/users', model.chatPartner.id, { source: 'messages' }]">
+                    <img avatar [user]="model.chatPartner" [size]="60" />
+                    <div class="user-info">
+                        <div>
+                            <span class="user-name">{{ model.chatPartner.firstName | ucfirst }}</span>
+                            @if (model.messages.length > 0 && model.messages[0].isAutorejection) {
+                                <span class="user-name"> ({{ 'messages.declined' | translate }})</span>
+                            }
+                            @if (model.chatPartner.averageRecommendationScore > 0) {
+                                <rating-bar
+                                    textColor="#333"
+                                    [starsHaveBorder]="true"
+                                    [starSize]="isDesktop() ? 12 : 10"
+                                    [textSize]="isDesktop() ? 14 : 12"
+                                    [rating]="model.chatPartner.averageRecommendationScore"
+                                    [text]="model.chatPartner.recommendations.length | number"
+                                ></rating-bar>
+                            }
+                        </div>
+                        <span class="last-seen">
+                            @if (model.chatPartnerOnline) {
+                                {{ 'profile.online' | translate | ucfirst }}
+                            } @else {
+                                {{ 'chat.lastSeen.format' | translate: { time: model.chatPartner | agoFormatted | async | lowercase } }}
+                            }
+                        </span>
+                    </div>
+                </a>
+
+                <div class="space"></div>
+
+                <div #btnOptionsContainer class="button-dropdown-container">
+                    <button #btnOptions [matMenuTriggerFor]="chatMenu" class="button-dropdown">•••</button>
+                </div>
+                <mat-menu #chatMenu="matMenu">
+                    <button mat-menu-item (click)="openChatPartnerProfile()">
+                        {{ 'profile.viewUser' | translate: { user: model.chatPartner.firstName | ucfirst } }}
+                    </button>
+                    @if (!model.user.isParent) {
+                        <button mat-menu-item (click)="toAskForRecommendation()">
+                            {{ 'settings.askForRecommendation' | translate }}
+                        </button>
+                    }
+                    <button mat-menu-item (click)="showReportUserAlert()">
+                        {{ 'profile.reportUser' | translate: { user: model.chatPartner.firstName | ucfirst } }}
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+
+        <div chat-scroll-container class="conversation-wrapper" (click)="hideKeyboard()" (scrolledToTop)="onScrollToTop()">
+            @if (model.canChat) {
+                <ul class="conversation">
+                    @for (group of model.parsedConversation; track group.messages[0].id; let i = $index) {
+                        @if (group.messageComponentType === MessageComponentType.safetyTips) {
+                            <safety-tips-message
+                                class="chat-message"
+                                [group]="group"
+                                [previousGroupFormattedDate]="i > 0 ? model.parsedConversation[i - 1].formattedDate : undefined"
+                                [user]="model.user"
+                                [chatPartner]="model.chatPartner"
+                                [askDisableSafetyMessages]="model.askDisableSafetyMessages"
+                                (disableSafetyMessages)="disableSafetyMessages()"
+                                (showSafetyTips)="showSafetyTips()"
+                            ></safety-tips-message>
+                        } @else {
+                            <regular-message
+                                class="chat-message"
+                                [group]="group"
+                                [previousGroupFormattedDate]="i > 0 ? model.parsedConversation[i - 1].formattedDate : undefined"
+                                [user]="model.user"
+                                [chatPartner]="model.chatPartner"
+                            ></regular-message>
+                        }
+                    }
+
+                    @if (model.canAskForRecommendations) {
+                        <li class="ask-for-recommendation">
+                            <p class="header">
+                                {{ 'chat.didYouBabysitFor' | translate: { firstName: model.chatPartner.firstName | ucfirst } }}
+                            </p>
+                            <button class="btn-bordered btn-ask-recommendation" (click)="toAskForRecommendation()">
+                                {{ 'profile.askParentForOneClickRecommendation' | translate }}
+                            </button>
+                            <div class="footer">
+                                {{ 'chat.wePutYourProfileAtTop' | translate }}
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <form class="bottom-container" method="post" (submit)="send($event)">
+            @if (model.showAutoReject()) {
+                <div class="auto-reject-container">
+                    @if (!(model.reportSent && model.showReportInChat)) {
+                        <div class="auto-reject">
+                            <div>{{ 'chat.autorejection.title' | translate }}</div>
+                            <button class="btn-bordered auto-reject-button" (click)="showAutoRejectionOverlay()">
+                                {{ 'chat.autorejection.cta' | translate }}
+                            </button>
+
+                            @if (model.showReportInChat) {
+                                <div class="report-explanation">
+                                    {{ 'chat.bottomSection.report' | translate }}
+                                </div>
+                            }
+                            @if (model.showReportInChat) {
+                                <button class="btn-borderless" (click)="showReportUserAlert()">
+                                    {{ 'profile.reportUser' | translate: { user: model.chatPartner.firstName | ucfirst } }}
+                                </button>
+                            }
+                        </div>
+                    }
+
+                    @if (model.reportSent && model.showReportInChat) {
+                        <div class="report-confirmation">
+                            {{ 'profile.reportReceived' | translate }}
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (model.showFairUsePolicyPrompt) {
+                <div class="fair-use-policy-prompt warning">
+                    @if (model.rateLimitExceeded) {
+                        <div>{{ 'chat.youReachedLimit' | translate }}</div>
+                    }
+                    @if (model.rateLimitWarning) {
+                        <div>{{ 'chat.fairUseWarning.' + model.rateLimitWarning | translate }}</div>
+                    }
+                    <div class="btn-expand" (click)="model.fairUsePolicyPromptExpanded = !model.fairUsePolicyPromptExpanded">
+                        <span>{{ model.fairUsePolicyPromptExpanded ? '-' : '+' }}</span>
+                        {{ 'chat.whyIsThis' | translate }}
+                    </div>
+                    @if (model.fairUsePolicyPromptExpanded) {
+                        <div class="explanation">
+                            {{ 'chat.youReachedLimitExplanation' | translate }}
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (!model.sendingMessage && model.chatPartner && model.messages.length === 0) {
+                <div class="min-word-count-container">
+                    <div class="title">
+                        {{ (authUser.isParent ? 'chat.emptyScreenMessage.parent' : 'chat.emptyScreenMessage.sitter') | translate }}
+                    </div>
+                    @if (model.canInvite) {
+                        <system-button class="btn-standard-intro" (click)="setInvitationMessage()">
+                            {{ 'chat.emptyScreen.cta.parent' | translate }}
+                        </system-button>
+                    }
+
+                    @if (model.showMinWordCounter) {
+                        <div class="counter" [class.valid]="model.isMessageValid">
+                            {{
+                                (model.wordsLeftNumber === 1
+                                    ? 'chat.minWordCount.youNeedOneMoreWord'
+                                    : 'chat.minWordCount.youNeedMoreWords'
+                                ) | translate: { count: model.wordsLeftNumber }
+                            }}
+                        </div>
+                    }
+                    @if (!model.isMessageValid && model.hadMinWordsError) {
+                        <div class="description">
+                            {{
+                                (model.user.isParent ? 'chat.minWordCountDescription.parent' : 'chat.minWordCountDescription.sitter')
+                                    | translate: { firstName: model.chatPartner.firstName }
+                            }}
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (model.showChatInput) {
+                <div class="message-input-container">
+                    <textarea
+                        #messageField
+                        id="messageField"
+                        class="form-control"
+                        name="message"
+                        rows="1"
+                        (ngModelChange)="resizeTextarea()"
+                        (focus)="onFocus()"
+                        (blur)="onBlur()"
+                        (click)="onFocus()"
+                        [disabled]="!model.canChat"
+                        [attr.placeholder]="'chat.typeMessageHere' | translate"
+                        [(ngModel)]="model.messageText"
+                    >
+                    </textarea>
+
+                    <button
+                        [disabled]="!model.canChat || model.messageText.length === 0 || (model.hadMinWordsError && !model.isMessageValid)"
+                        type="submit"
+                        class="btn-send-message"
+                    ></button>
+                </div>
+            }
+
+            @if (model.chatPartnerDisabled) {
+                <div class="disabled-container">
+                    {{ 'chat.disabledNotice' | translate }}
+                </div>
+            }
+        </form>
+    </div>
+}

@@ -1,0 +1,73 @@
+@import (reference) "includes";
+
+.app-content-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.app-container {
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+
+    .mobile({
+        height: 100%;
+        overflow: hidden;
+    });
+
+    .desktop({
+        overflow: auto;
+        flex: 1;
+    });
+}
+
+.modal-overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: @z-index-modal;
+    opacity: 1;
+    visibility: visible;
+    transition:
+        visibility @animation-duration,
+        opacity @animation-duration ease-out;
+    background-color: @opacity-dark-95;
+
+    &.modal-invisible {
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            visibility @animation-duration,
+            opacity @animation-duration ease-out;
+    }
+}
+
+.prompt-host-container {
+    position: absolute;
+    bottom: 0;
+    z-index: @z-index-bar;
+    width: 100%;
+    display: block;
+}
+
+.mobile({
+    footer-menu {
+        order: 20;
+        z-index: @z-index-bar;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+});
+
+.desktop({
+    header-menu {
+        height: @desktop-header-menu-height;
+    }
+});

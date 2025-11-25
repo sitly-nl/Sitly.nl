@@ -1,0 +1,130 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+
+@progressHeight: 8px;
+@thumbDimension: 24px;
+
+.slider-container {
+    position: relative;
+    height: @thumbDimension;
+}
+
+.ticks-container {
+    position: absolute;
+    left: 0.5 * @thumbDimension;
+    right: 0.5 * @thumbDimension;
+    top: 10px;
+    height: 8px;
+    justify-items: center;
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr 1fr 50px;
+
+    .tick {
+        height: 4px;
+        width: 1px;
+        background-color: @neutral-900;
+        position: absolute;
+        left: 0;
+
+        &:first-child,
+        &:last-child {
+            visibility: hidden;
+        }
+    }
+}
+
+.range {
+    position: absolute;
+    top: (@thumbDimension - @progressHeight) * 0.5;
+    height: @progressHeight;
+    border-radius: @progressHeight*0.5;
+
+    &.range-background {
+        width: 100%;
+        background-color: #fff;
+    }
+
+    &.range-filled {
+        background-color: @neutral-900;
+        left: 0;
+    }
+}
+
+.thumbs-container {
+    position: absolute;
+    left: @thumbDimension*0.5;
+    right: @thumbDimension*0.5;
+    height: @thumbDimension;
+
+    .thumb {
+        position: absolute;
+        display: flex;
+        z-index: @z-index-high-minimum;
+        top: 0;
+        height: @thumbDimension;
+        width: @thumbDimension;
+        margin-left: -@thumbDimension*0.5;
+        align-items: center;
+        justify-content: center;
+        background-color: @neutral-900;
+        border-radius: 50%;
+        border: solid 2px @neutral-100;
+        cursor: pointer;
+        .font-size(1.2);
+        color: @neutral-900;
+        font-weight: 600;
+    }
+}
+
+.labels-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+
+    .item {
+        text-align: center;
+        .font-size(1.6);
+        line-height: 1.5;
+        color: @neutral-700;
+
+        &.selected {
+            font-weight: 600;
+            color: @neutral-900;
+        }
+
+        &:first-child {
+            text-align: left;
+        }
+
+        &:last-child {
+            text-align: right;
+        }
+    }
+}
+
+// inputs
+input[type="range"] {
+    position: absolute;
+    z-index: @z-index-high-regular;
+    top: 0;
+    height: @thumbDimension;
+    width: 100%;
+    cursor: pointer;
+
+    pointer-events: none;
+    appearance: none;
+    opacity: 0;
+
+    &::-moz-range-thumb {
+        pointer-events: all;
+        width: @thumbDimension;
+        height: @thumbDimension;
+    }
+
+    &::-webkit-slider-thumb {
+        pointer-events: all;
+        width: @thumbDimension;
+        height: @thumbDimension;
+        appearance: none;
+    }
+}

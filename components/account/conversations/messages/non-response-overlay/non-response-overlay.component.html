@@ -1,0 +1,25 @@
+<ng-template #paragraphTemplate let-title="title" let-content="content" let-large="large" let-bullets="bullets">
+    <div class="paragraph" [class.large]="large">
+        <div class="title">
+            {{ title | translate }}
+        </div>
+        @if (content) {
+            <div class="text" innerHTML="{{ content | translate }}"></div>
+        }
+        @if (bullets) {
+            <ul class="text">
+                @for (bullet of bullets; track bullet) {
+                    <li>{{ bullet | translate }}</li>
+                }
+            </ul>
+        }
+    </div>
+</ng-template>
+
+<overlay-template [data]="overlayData()">
+    <div class="overlay-content">
+        @for (paragraph of paragraphs; track paragraph.title) {
+            <ng-container *ngTemplateOutlet="paragraphTemplate; context: paragraph"> </ng-container>
+        }
+    </div>
+</overlay-template>

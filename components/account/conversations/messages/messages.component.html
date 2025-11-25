@@ -1,0 +1,146 @@
+<div class="messages-container">
+    @if (hasConversations() || !isDesktop()) {
+        <div class="conversations-header">
+            <div class="header-title">
+                {{ 'footermenu.messages' | translate }}
+                @if (unreadMessagesCount() > 0) {
+                    <span> ({{ unreadMessagesCount() }})</span>
+                }
+            </div>
+            @if (hasConversations()) {
+                <button class="edit-button" (click)="toggleEditingMode()">
+                    {{ (editingMode ? 'main.done' : 'main.edit') | translate }}
+                </button>
+            }
+        </div>
+    }
+    @if (hasConversations()) {
+        <ul class="conversations" [class.editing-mode]="editingMode">
+            @if (showResponseRateBar && responseRate) {
+                <li class="response-rate-bar" [class.finished]="responseRate.unansweredCount === 0">
+                    {{ 'conversation.responseRate.title' | translate }}
+                    <span class="bold"> {{ 100 - math.ceil((100 * responseRate.unansweredCount) / responseRate.receivedCount) }}% </span>
+                    @if (responseRate.unansweredCount === 0) {
+                        <img image2x="response-rate-100" />
+                    }
+                </li>
+            }
+
+            @if (showNonResponseVictimButton) {
+                <li class="non-response-item" (click)="showNonResponseVictimOverlay()">
+                    <button class="btn-non-response">{{ 'messages.whyNotReceivingAnyReplies' | translate }}</button>
+                </li>
+            }
+
+            @for (conversation of conversations(); track conversation.id) {
+                <li
+                    #conversationItem
+                    class="conversation"
+                    [class.selected]="conversation.id == route.snapshot.params.userId || conversation.id == route.snapshot.params.parentId"
+                    [class.removing]="conversation.removing"
+                    [class.instant-job]="conversation.lastMessage?.type === MessageType.instantJob"
+                    [style.height]="conversation.removingStart ? conversationItem.offsetHeight : conversation.removing ? 0 : 'auto'"
+                    (click)="onConversationClicked(conversation)"
+                >
+                    <div class="remove-conversation-button-container">
+                        <button (click)="showRemoveConversationOverlay($event, conversation)"></button>
+                    </div>
+
+                    <div class="conversation-left">
+                        <img class="image-avatar" avatar [user]="conversation.chatPartner" [size]="100" />
+                        @if (conversation.lastMessage?.type === MessageType.instantJob && instantJobTimers[conversation.id]) {
+                            <img class="instant-job-radar" src="app/images/radar-blue.gif" />
+                        }
+                    </div>
+
+                    <div class="conversation-center">
+                        <h2>
+                            {{ conversation.chatPartner?.firstName }}
+                            @if (conversation.lastMessage?.isAutorejection) {
+                                <span> ({{ 'messages.declined' | translate }})</span>
+                            }
+                        </h2>
+                        <p [class.has-unread]="conversation.unreadMessagesCount > 0">
+                            @if (conversation.lastMessage?.action === MessageAction.sent && conversation.lastMessage?.isAutorejection) {
+                                <span> {{ 'main.you' | translate }}: </span>
+                            }
+                            {{ conversation.lastMessage?.content }}
+                        </p>
+                        @if (conversation.unanswered && responseRate) {
+                            <div class="not-responded">
+                                {{
+                                    'conversation.responseRate.increase.format'
+                                        | translate: { percents: math.floor(100 / responseRate.receivedCount) }
+                                }}
+                            </div>
+                        }
+                    </div>
+
+                    @if (conversation.lastMessage?.type !== MessageType.instantJob || !instantJobTimers[conversation.id]) {
+                        <div class="conversation-right">
+                            @if (conversation.lastMessage?.created) {
+                                <div class="conversation-date" [class.unread]="conversation.unreadMessagesCount > 0">
+                                    @if (conversation.lastMessage) {
+                                        <span>{{ conversation.lastMessage.created | std | conversationDate | async }}</span>
+                                    }
+                                </div>
+                            }
+                            @if (conversation.unreadMessagesCount > 0) {
+                                <div class="messages-count">
+                                    {{ conversation.unreadMessagesCount > 9 ? '•' : conversation.unreadMessagesCount }}
+                                </div>
+                            }
+                        </div>
+                    }
+                    @if (conversation.lastMessage?.type === MessageType.instantJob && instantJobTimers[conversation.id]) {
+                        <div class="conversation-right instant-job-timer">
+                            <div class="timer-content">
+                                <div class="timer-label">{{ 'messages.timeLeft' | translate }}:</div>
+                                <div class="timer-counter">
+                                    {{ instantJobTimers[conversation.id] | timeLeft: { unit: 'hour' } | number: '2.0-0' }}
+                                    <span> : </span>
+                                    {{ instantJobTimers[conversation.id] | timeLeft: { unit: 'min' } | number: '2.0-0' }}
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </li>
+            }
+        </ul>
+    }
+
+    @if (conversationsLoaded() && !hasConversations()) {
+        <div class="no-conversations-container" [class.premium]="authUser.isPremium">
+            <div class="no-conversations-message">
+                <img src="app/images/messages.svg" />
+                {{ 'messages.noMessages' | translate }}
+            </div>
+            @if (authUser.isPremium) {
+                <div class="search-container">
+                    <button class="btn-solid-purple btn-search" [routerLink]="['/']">
+                        @if (authUser.isParent) {
+                            {{ 'messages.searchForBabysitters' | translate }}
+                        }
+                        @if (!authUser.isParent) {
+                            {{ 'messages.searchForJob' | translate }}
+                        }
+                    </button>
+                </div>
+            }
+            @if (!authUser.isPremium) {
+                @defer {
+                    <div class="swiper-container">
+                        <premium-swiper></premium-swiper>
+                        <button class="btn-solid-purple btn-premium" (click)="showSubscriptionsOverlay()">
+                            {{ 'messages.becomePremiumMember' | translate }}
+                        </button>
+                    </div>
+                }
+            }
+        </div>
+    }
+
+    @if (!conversationsLoaded()) {
+        <div class="list-loader"></div>
+    }
+</div>

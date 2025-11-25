@@ -1,0 +1,69 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.date-container {
+    position: relative;
+
+    select {
+        opacity: 0;
+        height: 37px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 4px;
+        font-weight: normal;
+        font-style: normal;
+        text-align-last: center;
+        border: solid 1px @neutral-900;
+
+        option {
+            opacity: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+    }
+
+    .select-value {
+        color: @neutral-900;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: solid 1px @neutral-900;
+
+        &.no-border {
+            border: none;
+        }
+
+        &.transparent {
+            background: transparent;
+        }
+    }
+}
+
+.separator {
+    padding: 0 10px;
+    color: @neutral-900;
+
+    &.no-padding {
+        padding: 0;
+    }
+}
+
+.mobile({
+    @import "./datepicker.component.less";
+});
+
+.desktop({
+    @import "./datepicker.component.desktop.less";
+});

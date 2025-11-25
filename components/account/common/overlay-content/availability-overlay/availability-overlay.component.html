@@ -1,0 +1,31 @@
+<overlay-template [data]="overlayData()">
+    @if (authUser) {
+        <div class="schedule-container">
+            <availability-schedule
+                [showSelectAll]="false"
+                [availability]="authUser.availability"
+                (availabilityChange)="onScheduleChange($event)"
+            ></availability-schedule>
+        </div>
+    }
+
+    <div class="divider"></div>
+
+    @if (authUser) {
+        <div class="care-type-container">
+            <div class="header">
+                {{ (authUser.isParent ? 'availabilityOverlay.needChildcareHelp' : 'availabilityOverlay.imAvailable') | translate }}
+            </div>
+            <div class="multi-select">
+                @for (item of careTypeOptions; track item.type) {
+                    <button class="btn-checkbox" [class.selected]="item.selected" (click)="onCareTypeClick(item)">
+                        {{ item.title | translate }}
+                    </button>
+                }
+            </div>
+            <div class="description">
+                {{ (authUser.isParent ? 'availabilityOverlay.description.parent' : 'availabilityOverlay.description.sitter') | translate }}
+            </div>
+        </div>
+    }
+</overlay-template>

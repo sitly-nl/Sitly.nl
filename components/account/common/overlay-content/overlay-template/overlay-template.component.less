@@ -1,0 +1,139 @@
+@import "~styles/mixins.less";
+
+.content-container {
+    position: relative;
+    background-color: #fff;
+    text-align: center;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 44px 0 40px;
+
+    &.bg-neutral {
+        background-color: @neutral-100;
+    }
+
+    .top-bar {
+        .header-img {
+            object-fit: contain;
+            align-self: center;
+            margin-bottom: @spacing-2xl;
+        }
+
+        .title {
+            .regular-heading();
+            color: @neutral-900;
+        }
+    }
+
+    .content {
+        flex: 1;
+        overflow: auto;
+
+        .message,
+        .html-message {
+            margin: 0 40px;
+            color: @neutral-700;
+        }
+    }
+
+    .mobile({
+        .top-bar {
+            padding: 0 40px @spacing-m;
+
+            .title {
+                font-size: 1.8rem;
+            }
+        }
+
+        .content {
+            .message,
+            .html-message {
+                margin: 0 40px;
+            }
+        }
+    });
+
+    .desktop({
+        .top-bar {
+            padding: 0 110px @spacing-l;
+
+            .title {
+                font-size: 2.4rem;
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .message {
+                font-size: 1.6rem;
+            }
+
+            .message,
+            .html-message {
+                margin: 0 110px;
+            }
+        }
+
+        &:not(.full-screen) {
+            max-height: 700px;
+        }
+
+        &.full-screen {
+            max-height: @dialog-panel-max-height;
+        }
+    });
+
+    .text-align-left {
+        text-align: left;
+    }
+}
+
+.btn-underlined-new {
+    .mobile({
+        margin-top: @spacing-2xl;
+    });
+
+    .desktop({
+        margin-top: 32px;
+    });
+}
+
+.btn-overlay-close {
+    position: absolute;
+    top: @spacing-s;
+    right: @spacing-s;
+    width: 40px;
+    height: 40px;
+    .background("overlay-close");
+    background-size: 16px 16px;
+    background-position: center center;
+}
+
+.sticky-button-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: @spacing-xl;
+    background-color: @white-opacity-80;
+
+    .desktop({
+        padding-left: 50px;
+        padding-right: 50px;
+    });
+}
+
+div[responsive-buttons-container] {
+    .mobile({
+        margin: @spacing-2xl 40px 0;
+    });
+
+    .desktop({
+        margin: 32px auto 0;
+        padding: 0 110px;
+    });
+}

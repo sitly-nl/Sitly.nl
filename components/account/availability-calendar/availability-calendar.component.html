@@ -1,0 +1,130 @@
+<div [class.padded-opaque]="paddedOpaque">
+    @if (showCalendar) {
+        <div class="availability-container">
+            <table class="availability">
+                <thead>
+                    <tr>
+                        <th>{{ 'main.allday' | translate }}</th>
+                        @for (dayPart of AvailabilityUtils.dayParts; track dayPart.id) {
+                            <th>{{ dayPart.label | translate }}</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (day of AvailabilityUtils.weekDays; track day.name) {
+                        <tr>
+                            <td
+                                [class.whole-day-checked]="wholeDayChecked(day.name)"
+                                [class.checked]="wholeDayChecked(day.name)"
+                                (click)="inverseDayCheck(day.name)"
+                                [attr.data-track-label]="
+                                    TrackLabelDirective.createTrackLabel({
+                                        category: 'search',
+                                        type: 'filter',
+                                        description: 'availability-' + day + '-' + placement,
+                                        value: !wholeDayChecked(day.name),
+                                    })
+                                "
+                            >
+                                {{ day.label | translate }}
+                            </td>
+                            @for (dayPart of AvailabilityUtils.dayParts; track dayPart.id) {
+                                <td [class.checked]="availability[day.name][dayPart.name]">
+                                    <div class="checkbox-container">
+                                        <div class="checkmark" [class.checked]="availability[day.name][dayPart.name]"></div>
+                                        <input
+                                            class="checkbox"
+                                            type="checkbox"
+                                            name="availability[{{ day.name }}][{{ dayPart.name }}]"
+                                            (change)="onAvailabilityChange()"
+                                            [(ngModel)]="availability[day.name][dayPart.name]"
+                                            [attr.data-track-label]="
+                                                TrackLabelDirective.createTrackLabel({
+                                                    category: 'search',
+                                                    type: 'filter',
+                                                    description: 'availability-' + day.name + '-' + dayPart.name + '-' + placement,
+                                                    value: !availability[day.name][dayPart.name],
+                                                })
+                                            "
+                                        />
+                                    </div>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @if (authUser) {
+        <div class="additional-availability-container" [class.padded]="additionalAvailabilityPadded">
+            @if (showRegularAndOccasionalCare) {
+                <form-checkbox>
+                    <label [class.active]="searchParams ? searchParams.hasRegularCare : authUser.hasRegularCare">
+                        {{ regularCareTitle | translate | ucfirst }}
+                        <input
+                            type="checkbox"
+                            [attr.name]="authUser.isParent ? 'lookingForRegularCare' : 'isAvailableRegularly'"
+                            (change)="additionalAvailabilityChanged.emit($event)"
+                            [ngModel]="searchParams ? searchParams.hasRegularCare : authUser.hasRegularCare"
+                            (ngModelChange)="searchParams ? (searchParams.hasRegularCare = $event) : (authUser.hasRegularCare = $event)"
+                            [attr.data-track-label]="
+                                TrackLabelDirective.createTrackLabel({
+                                    category: 'search',
+                                    type: 'filter',
+                                    description: 'availability-care-regular-' + placement,
+                                    value: !(searchParams ? searchParams.hasRegularCare : authUser.hasRegularCare),
+                                })
+                            "
+                        />
+                    </label>
+                </form-checkbox>
+
+                <form-checkbox>
+                    <label [class.active]="searchParams ? searchParams.hasOccasionalCare : authUser.isAvailableOccasionally">
+                        {{ occasionalCareTitle | translate | ucfirst }}
+                        <input
+                            type="checkbox"
+                            [attr.name]="authUser.isParent ? 'lookingForOccasionalCare' : 'isAvailableOccasionally'"
+                            (change)="additionalAvailabilityChanged.emit($event)"
+                            [ngModel]="searchParams ? searchParams.hasOccasionalCare : authUser.isAvailableOccasionally"
+                            (ngModelChange)="
+                                searchParams ? (searchParams.hasOccasionalCare = $event) : (authUser.isAvailableOccasionally = $event)
+                            "
+                            [attr.data-track-label]="
+                                TrackLabelDirective.createTrackLabel({
+                                    category: 'search',
+                                    type: 'filter',
+                                    description: 'availability-care-occasional-' + placement,
+                                    value: !(searchParams ? searchParams.hasOccasionalCare : authUser.isAvailableOccasionally),
+                                })
+                            "
+                        />
+                    </label>
+                </form-checkbox>
+            }
+
+            <form-checkbox>
+                <label [class.active]="searchParams ? searchParams.hasAfterSchool : authUser.isAvailableAfterSchool">
+                    {{ afterSchoolCareTitle | translate | ucfirst }}
+                    <input
+                        type="checkbox"
+                        [attr.name]="authUser.isParent ? 'lookingForAfterSchool' : 'isAvailableAfterSchool'"
+                        (change)="additionalAvailabilityChanged.emit($event)"
+                        [ngModel]="searchParams ? searchParams.hasAfterSchool : authUser.isAvailableAfterSchool"
+                        (ngModelChange)="searchParams ? (searchParams.hasAfterSchool = $event) : (authUser.isAvailableAfterSchool = $event)"
+                        [attr.data-track-label]="
+                            TrackLabelDirective.createTrackLabel({
+                                category: 'search',
+                                type: 'filter',
+                                description: 'availability-after-school-' + placement,
+                                value: !(searchParams ? searchParams.hasAfterSchool : authUser.isAvailableAfterSchool),
+                            })
+                        "
+                    />
+                </label>
+            </form-checkbox>
+        </div>
+    }
+</div>

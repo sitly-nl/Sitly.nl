@@ -1,0 +1,227 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+@import "~app/styles/settings.less";
+
+.reset-button() {
+    background: transparent;
+    border: none;
+    padding: 0;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.account-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-container {
+    padding-bottom: 44px;
+}
+
+.button-link {
+    .reset-button();
+    text-align: left;
+    text-decoration: underline;
+
+    &:not(:last-child) {
+        margin-bottom: 10px;
+    }
+}
+
+input[type="password"] {
+    border: solid 1px @neutral-900;
+    border-radius: 16px;
+}
+
+.password-btns-container {
+    margin-top: 10px;
+    display: flex;
+
+    system-button {
+        width: 50%;
+    }
+
+    system-button:not(:first-child) {
+        margin-left: 10px;
+    }
+}
+
+.hidden-users-label {
+    padding-right: 15px;
+    .background("arrow-right");
+    background-position: center right;
+    background-size: 16px;
+}
+
+.free-premium-title {
+    margin-bottom: 5px;
+    color: @neutral-500;
+}
+
+.free-premium-subtitle {
+    color: @neutral-900;
+}
+
+.email-fieldset {
+    flex-wrap: wrap;
+
+    .mobile({
+        input {
+            background-color: white;
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid @neutral-900;
+        }
+    });
+}
+
+.email-validation {
+    margin-top: 10px;
+    display: block;
+    .font-size(1);
+    font-style: italic;
+    color: @primary-500;
+
+    @media only screen and (min-width: 360px) {
+        .font-size(1.2);
+    }
+}
+
+.user-information {
+    .information-type {
+        color: @sitly-dark-gray;
+        margin-bottom: 5px;
+    }
+
+    .information-description {
+        margin-bottom: 11px;
+        color: @neutral-900;
+    }
+
+    .information-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        padding: 6px 9px;
+        text-align: left;
+
+        img {
+            height: 14px;
+        }
+    }
+
+    .desktop({
+        .information-description {
+            margin-bottom: 5px;
+        }
+
+        .information-button {
+            padding: 6px 12px;
+
+            img {
+                height: 15px;
+                margin: 0;
+            }
+        }
+    });
+}
+
+.desktop({
+    input[type="button"] {
+        .reset-button();
+        .font-size(1.6);
+    }
+
+    select {
+        .default-input-style();
+        display: inline-block;
+        height: 40px;
+    }
+
+    form-checkbox {
+        display: inline-block;
+
+        label {
+            width: 380px;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .fieldset-group {
+        .header {
+            padding: 28px 0;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+
+        fieldset {
+            padding: 0 0 20px;
+            border-bottom: none;
+
+            > label {
+                padding: 0;
+            }
+
+            &.align-center {
+                align-items: center;
+            }
+        }
+
+        border-bottom: 1px solid white;
+    }
+
+    fieldset:not(.email-fieldset) {
+        display: flex;
+
+        label {
+            flex-shrink: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    fieldset .change-password-container {
+        display: flex;
+
+        > div {
+            display: flex;
+        }
+
+        input {
+            border-radius: 16px;
+        }
+
+        system-button {
+            margin-left: 10px;
+        }
+    }
+
+    .premium-container {
+        margin: 17px 0;
+    }
+
+    .free-premium-title {
+        margin-top: 11px;
+        margin-bottom: 5px;
+        color: @sitly-dark-gray;
+    }
+
+    .free-premium-subtitle {
+        color: @neutral-900;
+    }
+
+    .email-validation {
+        margin-top: 10px;
+        margin-left: 115px;
+        display: block;
+        .font-size(1.2);
+        font-style: italic;
+        color: @primary-500;
+    }
+});

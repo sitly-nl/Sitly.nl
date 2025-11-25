@@ -1,0 +1,33 @@
+<div class="component-container">
+    <img #cropperWindow />
+    <div class="controls-container">
+        <div class="top-text-container">
+            <div class="title">{{ 'cropper.move-and-scale' | translate }}</div>
+            @if (isDesktop()) {
+                <div class="subtitle">{{ 'cropper.explanation' | translate }}</div>
+            }
+        </div>
+
+        <div #spacer class="spacer"></div>
+
+        <div class="bottom-group">
+            <button #rotate class="btn-rotate" (click)="rotatePhoto()">
+                <img />
+                {{ 'photo-cropper.rotate' | translate }}
+            </button>
+
+            <div class="save-container">
+                <system-button
+                    #save
+                    (click)="submitImage()"
+                    [trackLabel]="{ category: trackCategory, type: 'button', description: 'photo-save' }"
+                    >{{ 'main.save' | translate }}</system-button
+                >
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-close" (click)="close.emit()">
+        <img />
+    </button>
+</div>

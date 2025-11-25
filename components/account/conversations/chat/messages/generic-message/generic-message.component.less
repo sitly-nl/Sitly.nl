@@ -1,0 +1,104 @@
+@import (reference) "includes";
+
+.message-date {
+    text-align: center;
+
+    > span {
+        color: @neutral-500;
+    }
+}
+
+.message-group {
+    display: flex;
+
+    .message-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 11px;
+        flex-shrink: 0;
+        overflow: hidden;
+    }
+
+    .message-container {
+        .message-header {
+            color: @neutral-900;
+            font-weight: bold;
+        }
+
+        .send-time {
+            color: @neutral-500;
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+    }
+
+    .message-link {
+        display: flex;
+        align-items: flex-start;
+        word-break: break-all;
+    }
+}
+
+.mobile({
+    .message-date {
+        margin-top: 23px;
+
+        > span {
+            font-size: 1.2rem;
+        }
+    }
+
+    .message-group {
+        padding: 25px 0 31px;
+
+        &.first {
+            padding-top: 20px;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+        }
+
+        .message-container {
+            .send-time {
+                margin-left: 4px;
+            }
+
+            .message-header {
+                margin-bottom: 4px;
+            }
+        }
+    }
+});
+
+.desktop({
+    .message-date {
+        padding-top: 24px;
+    }
+
+    .message-group {
+        padding: 42px 0;
+
+        &.first {
+            padding-top: 25px;
+        }
+
+        .message-avatar {
+            width: 60px;
+            height: 60px;
+        }
+
+        .message-container {
+            .send-time {
+                margin-left: 8px;
+            }
+
+            .message-header {
+                margin-bottom: 7px;
+            }
+        }
+    }
+});

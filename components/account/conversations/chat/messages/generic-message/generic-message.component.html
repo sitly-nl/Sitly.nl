@@ -1,0 +1,35 @@
+@if (previousGroupFormattedDate !== group.formattedDate) {
+    <div class="message-date">
+        <span>{{
+            group.formattedDate === 'today' || group.formattedDate === 'yesterday' ? (group.formattedDate | translate) : group.formattedDate
+        }}</span>
+    </div>
+}
+
+<div class="message-group" [class.first]="previousGroupFormattedDate !== group.formattedDate">
+    <div class="message-avatar">
+        <ng-content select="[avatarContent]"></ng-content>
+    </div>
+
+    <div class="message-container">
+        <div class="message-header">
+            <span class="message-header">{{ messageHeader }}</span>
+            <span class="send-time">{{ group.date | dfnsFormat: 'HH:mm' }}</span>
+        </div>
+
+        @for (message of group.messages; track message.id) {
+            <div>
+                <div [innerHTML]="message.text ?? '' | nl2br | phoneLink"></div>
+
+                @if (message.link) {
+                    <a class="message-link" [href]="message.link">
+                        <img image2x="external-link" />
+                        {{ message.link }}
+                    </a>
+                }
+            </div>
+        }
+
+        <ng-content></ng-content>
+    </div>
+</div>

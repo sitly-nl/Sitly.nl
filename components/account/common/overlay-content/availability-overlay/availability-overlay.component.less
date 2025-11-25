@@ -1,0 +1,60 @@
+@import (reference) "includes";
+
+.schedule-container {
+    .mobile({
+        padding: @spacing-m @spacing-xl @spacing-2xl;
+    });
+
+    .desktop({
+        padding: @spacing-l 48px 32px;
+        width: 100%;
+    });
+}
+
+.divider {
+    display: block;
+    width: 100%;
+    background-color: white;
+
+    .mobile({
+        height: 1px;
+    });
+
+    .desktop({
+        flex-basis: 1px;
+        flex-shrink: 0;
+    });
+}
+
+.care-type-container {
+    text-align: left;
+
+    .header {
+        .regular-heading();
+        font-size: 1.8rem;
+    }
+
+    .multi-select {
+        padding: @spacing-m 0;
+    }
+
+    .description {
+        color: @neutral-700;
+
+        .mobile({
+            margin-top: @spacing-m;
+        });
+
+        .desktop({
+            margin-top: @spacing-2xl;
+        });
+    }
+
+    .mobile({
+        padding: @spacing-2xl @spacing-xl 88px;
+    });
+
+    .desktop({
+        padding: 32px 48px 88px;
+    });
+}

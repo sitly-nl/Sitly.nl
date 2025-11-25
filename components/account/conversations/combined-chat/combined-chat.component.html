@@ -1,0 +1,16 @@
+<div class="combined-chat">
+    <messages
+        #messages
+        [class.fill-screen]="sideBarFillScreen()"
+        [class.collapsed]="sideBarCollapsed()"
+        (loaded)="onConversationsLoaded($event)"
+    ></messages>
+
+    @if (showChat()) {
+        <chat #chat class="right" (needsUpdateConversations)="messages.populate()"> </chat>
+    }
+
+    @if (showInstantJobs()) {
+        <instant-job-details class="right"> </instant-job-details>
+    }
+</div>

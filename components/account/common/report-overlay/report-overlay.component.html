@@ -1,0 +1,10 @@
+<overlay-template [data]="overlayData()">
+    <div class="overlay-content">
+        <textarea #reason [class.invalid]="showError" (keyup)="showError = false"></textarea>
+        @if (showError) {
+            <div class="error">
+                {{ 'reportOverlay.error' | translate: { firstName: user?.firstName } }}
+            </div>
+        }
+    </div>
+</overlay-template>

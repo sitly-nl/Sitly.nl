@@ -1,0 +1,469 @@
+@import (reference) "~app/styles/includes-old.less";
+@import (reference) "includes";
+
+.btn-solid-purple {
+    padding: 12px;
+    color: #fff;
+    border-radius: 16px;
+    font-weight: bold;
+    letter-spacing: 0.27px;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    background-color: @primary-500;
+}
+
+.messages-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: white;
+}
+
+.conversations {
+    overflow: auto;
+    flex: 1;
+}
+
+.conversations-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: @neutral-900;
+    border-bottom: solid 1px #cdd8e1;
+
+    .header-title {
+        font-weight: bold;
+    }
+
+    .edit-button {
+        .font-size(1.4);
+    }
+}
+
+.non-response-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: solid 1px #cdd8e1;
+
+    .btn-non-response {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 15px 0;
+        width: auto;
+        font-weight: 600;
+        background-color: @neutral-900;
+        border-radius: 16px;
+        color: #fff;
+    }
+}
+
+.response-rate-bar {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fba100;
+    color: @neutral-900;
+    white-space: pre;
+
+    .bold {
+        font-weight: bold;
+    }
+
+    img {
+        margin: 0 0 5px 5px;
+    }
+
+    &.finished {
+        background-color: @success-400;
+    }
+}
+
+.conversation {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    text-align: left;
+
+    &:first-child {
+        border-top: 0;
+    }
+
+    &.unread {
+        .conversation-center {
+            h2 {
+                font-weight: bold;
+            }
+
+            p {
+                font-weight: bold;
+            }
+        }
+    }
+
+    &.removing {
+        transition: all 0.4s;
+        opacity: 0;
+        height: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .image-avatar {
+        border-radius: 50%;
+    }
+}
+
+.remove-conversation-button-container {
+    transition: all 0.1s ease-out;
+    width: 0;
+    overflow: hidden;
+
+    button {
+        width: 24px;
+        height: 24px;
+        background-color: #fff;
+        border-radius: 50%;
+        .background("bin-neutral");
+        background-size: 50% 50%;
+        background-position: center;
+
+        .mobile({
+            border: 1px solid @neutral-900;
+        });
+    }
+}
+
+.editing-mode {
+    .remove-conversation-button-container {
+        flex-shrink: 0;
+        width: 40px;
+    }
+}
+
+.conversation-left {
+    position: relative;
+
+    img {
+        margin: 0;
+    }
+}
+
+.conversation-center {
+    transition: all 0.1s ease-out;
+    flex: 3;
+    overflow: hidden;
+
+    h2 {
+        .font-size(1.7);
+        color: @neutral-900;
+        margin: 0 0 5px;
+        font-weight: 600;
+    }
+
+    p {
+        .font-size(1.4);
+        color: #666;
+        display: block;
+        display: -webkit-box;
+        /* autoprefixer: ignore next */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.57;
+        .line-clamp(1.57em, 2);
+    }
+
+    .not-responded {
+        font-weight: 600;
+    }
+}
+
+.conversation-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .conversation-date.unread {
+        color: @neutral-900;
+    }
+
+    .messages-count {
+        width: 20px;
+        height: 20px;
+        margin-top: 5px;
+        border-radius: 50%;
+        text-align: center;
+        background-color: @neutral-900;
+        color: #fff;
+        line-height: 20px;
+        font-weight: bold;
+    }
+}
+
+.no-conversations-container {
+    width: 100%;
+    height: 100%;
+    padding: 40px 0 70px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background-color: @neutral-100;
+
+    &.premium {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .no-conversations-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: @neutral-700;
+        .font-size(1.6);
+
+        img {
+            width: 20px;
+            height: 22px;
+            margin-right: 12px;
+        }
+    }
+
+    .swiper-container {
+        text-align: center;
+    }
+}
+
+.has-unread {
+    font-weight: bold;
+}
+
+.instant-job {
+    cursor: pointer;
+
+    .instant-job-timer {
+        color: @primary-500;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        .timer-content {
+            width: auto;
+            text-align: center;
+
+            .timer-label {
+                .font-size(1.2);
+                font-weight: normal;
+            }
+
+            .timer-counter {
+                font-style: normal;
+                .font-size(1.4);
+            }
+        }
+    }
+
+    .instant-job-text {
+        p {
+            font-weight: 600;
+            .font-size(1.3);
+        }
+    }
+}
+
+.instant-job-radar {
+    position: absolute;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.mobile({
+    .conversations {
+        padding-bottom: 50px;
+
+        li {
+            padding: 15px 16px;
+        }
+
+        &.conversation {
+            padding-right: 0;
+        }
+    }
+
+    .conversations-header {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .header-title {
+            .font-size(1.6);
+        }
+
+        .edit-button {
+            position: absolute;
+            right: 24px;
+        }
+    }
+
+    .conversation {
+        border-top: solid 1px #cdd8e1;
+
+        .image-avatar {
+            width: 74px;
+            height: 74px;
+        }
+    }
+
+    .conversation-center {
+        margin-left: 14px;
+
+        h2 {
+            .font-size(1.5);
+        }
+    }
+
+    .conversation-right {
+        .font-size(1.2);
+    }
+
+    .instant-job-radar {
+        left: 50px;
+    }
+
+    .search-container,
+    .swiper-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-container {
+        justify-content: center;
+    }
+
+    .btn-premium,
+    .btn-search {
+        flex-basis: 100%;
+        margin: 0 24px;
+    }
+
+    .no-conversations-container {
+        justify-content: space-between;
+        padding-top: 40px;
+
+        .no-conversations-message {
+            margin-bottom: 24px;
+        }
+    }
+});
+
+.desktop({
+    .conversations {
+        li {
+            padding: 15px 30px;
+
+            &.conversation {
+                padding-right: 0;
+            }
+        }
+    }
+
+    .conversations-header {
+        height: 80px;
+        padding: 15px 30px;
+
+        .header-title {
+            .font-size(1.6);
+        }
+    }
+
+    .conversation {
+        cursor: pointer;
+        border-top: solid 1px #e2e9ef;
+
+        .image-avatar {
+            width: 60px;
+            height: 60px;
+        }
+
+        &:last-child {
+            border-bottom: 1px solid #cecece;
+        }
+
+        &.selected {
+            background-color: @neutral-100;
+        }
+    }
+
+    .conversation-center {
+        margin-left: 12px;
+
+        h2 {
+            .font-size(1.6);
+        }
+
+        p {
+            color: @neutral-900;
+            line-height: 1.57;
+            .line-clamp(1.57em, 1);
+        }
+    }
+
+    .conversation-right {
+        .font-size(1.4);
+
+        .conversation-date {
+            .font-size(1.2);
+        }
+    }
+
+    .instant-job {
+        .instant-job-timer {
+            justify-content: center;
+        }
+    }
+
+    .instant-job-radar {
+        left: 40px;
+    }
+
+    .swiper-container {
+        width: 600px;
+        align-self: center;
+        border: 1px solid @neutral-300;
+        background-color: #fff;
+        border-radius: 24px;
+        padding: @spacing-xl 0 40px;
+    }
+
+    .no-conversations-container {
+        justify-content: flex-start;
+        padding-top: 80px;
+
+        .no-conversations-message {
+            margin-bottom: 80px;
+        }
+
+        &.premium {
+            padding-top: 0;
+
+            .no-conversations-message {
+                margin-bottom: 32px;
+            }
+        }
+    }
+
+    .btn-search,
+    .btn-premium {
+        min-width: 320px;
+    }
+});

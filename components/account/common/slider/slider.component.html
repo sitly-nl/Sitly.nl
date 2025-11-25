@@ -1,0 +1,31 @@
+<div class="slider-container">
+    <div class="thumbs-container">
+        <div #thumbMin class="thumb">
+            <span>{{ minValue }}</span>
+        </div>
+        <div #thumbMax class="thumb">
+            <span>{{ maxValueFormatted }}</span>
+        </div>
+    </div>
+    <div class="range range-background"></div>
+    <div #range class="range range-filled"></div>
+
+    <input
+        type="range"
+        step="1"
+        name="min"
+        value="{{ minValue }}"
+        min="{{ minRangeValue }}"
+        max="{{ maxRangeValue }}"
+        (input)="onInput($event)"
+    />
+    <input
+        type="range"
+        step="1"
+        name="max"
+        value="{{ maxValue }}"
+        min="{{ minRangeValue }}"
+        max="{{ maxRangeValue }}"
+        (input)="onInput($event)"
+    />
+</div>
