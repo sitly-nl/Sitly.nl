@@ -1,0 +1,544 @@
+<!-- Mobile -->
+@if (!isDesktop()) {
+    <div class="account-container">
+        <toolbar-old
+            [leftActions]="[ToolbarActionType.back]"
+            [rightActions]="[ToolbarActionType.logout]"
+            [borderStyle]="ToolbarBorderStyle.dark"
+            (backClick)="back(true)"
+            (actionButtonClick)="onActionButtonClick($event)"
+        >
+        </toolbar-old>
+
+        @if (authUser) {
+            <div class="content-container">
+                <form #accountForm="ngForm" (submit)="save($event)">
+                    @if (authUser.unsuitablePhotoReason) {
+                        <div class="fieldset">
+                            <label>{{ 'account.photo' | translate }}</label>
+                            <div class="user-information">
+                                <div class="information-type">{{ 'account.photoUnsuitable' | translate }}</div>
+                                <div class="information-description">
+                                    {{ authUser.unsuitablePhotoReason | translate }}
+                                </div>
+                                <button class="btn btn-default information-button" type="button" (click)="onPhotoRequested()">
+                                    {{ 'account.changePhoto' | translate }}
+                                    <img image2x="arrow" />
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="fieldset center-aligned email-fieldset">
+                        <label>{{ 'auth.email' | translate }}</label>
+                        <input #email type="email" name="email" value="{{ authUser.email }}" (blur)="changeEmail(email.value)" />
+                        @if (showEmailBouncedMessage) {
+                            <span class="email-validation">{{ 'settings.email.update' | translate }}</span>
+                        }
+                    </div>
+
+                    <div class="fieldset center-aligned">
+                        <label>{{ 'auth.password' | translate }}</label>
+
+                        @if (!changingPassword) {
+                            <input
+                                class="button-link"
+                                type="button"
+                                name="password"
+                                value="{{ 'account.changePassword' | translate }}"
+                                (click)="changingPassword = true"
+                            />
+                        }
+                        @if (changingPassword) {
+                            <div>
+                                <input #newPassword class="form-control" type="password" name="password" id="password" />
+                                <div class="password-btns-container">
+                                    <system-button buttonType="primary-small" (click)="changePassword(newPassword.value)">
+                                        {{ 'main.save' | translate }}
+                                    </system-button>
+                                    <system-button buttonType="secondary-small" (click)="changingPassword = false">
+                                        {{ 'main.cancel' | translate }}
+                                    </system-button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (showLanguageSelector) {
+                        <div class="fieldset vertical">
+                            <label for="email">{{ 'account.language' | translate }}</label>
+                            <select
+                                class="form-control"
+                                id="localeCode"
+                                name="localeCode"
+                                [(ngModel)]="authUser.localeCode"
+                                (change)="changeLanguage($event)"
+                            >
+                                @for (language of languages; track language.localeCode) {
+                                    <option value="{{ language.localeCode }}" [selected]="language.localeCode === userLocaleCode">
+                                        {{ language.localeName }}
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    }
+
+                    <div class="fieldset vertical">
+                        <div class="header">{{ 'account.emailPreferences' | translate }}</div>
+                        <div>
+                            <label for="automatch-frequency">{{ 'account.updatesOnNewMatches' | translate }}</label>
+                            <select
+                                id="automatch-frequency"
+                                (change)="save($event)"
+                                [(ngModel)]="authUser.receiveMatchMail"
+                                name="receiveMatchMail"
+                                class="form-control"
+                            >
+                                <option value="never">
+                                    {{ 'account.never' | translate }}
+                                </option>
+                                <option value="daily">
+                                    {{ 'account.daily' | translate }}
+                                </option>
+                                <option value="weekly">
+                                    {{ 'account.weekly' | translate }}
+                                </option>
+                            </select>
+                        </div>
+
+                        @if (showMatchMailRoles) {
+                            <div>
+                                <label for="matchmail-roles">{{ 'account.updatesContain' | translate }}</label>
+                                <div id="matchmail-roles">
+                                    <form-checkbox type="multi">
+                                        <label [class.active]="lookingForBabysitters.checked">
+                                            {{ 'main.babysitters' | translate }}
+                                            <input
+                                                #lookingForBabysitters
+                                                type="checkbox"
+                                                name="lookingForBabysitters"
+                                                [checked]="isLookingForBabysitters"
+                                                (change)="save($event)"
+                                            />
+                                        </label>
+                                        <label [class.active]="lookingForChildminders.checked">
+                                            {{ 'main.childminders' | translate }}
+                                            <input
+                                                #lookingForChildminders
+                                                type="checkbox"
+                                                name="lookingForChildminders"
+                                                [checked]="isLookingForChildminders"
+                                                (change)="save($event)"
+                                            />
+                                        </label>
+                                    </form-checkbox>
+                                </div>
+                            </div>
+                        }
+
+                        @if (showNotificationPreferences()) {
+                            <div>
+                                <label for="invites-frequency">{{ 'account.updatesOnNewInvites' | translate }}</label>
+                                <select
+                                    id="invites-frequency"
+                                    (change)="onInvitesEmailPreferencesChange($event)"
+                                    [value]="notificationPreferences()?.emailConnectionInvites"
+                                    name="receiveInvitesUpdates"
+                                    class="form-control"
+                                >
+                                    <option value="never">
+                                        {{ 'account.never' | translate }}
+                                    </option>
+                                    <option value="daily">
+                                        {{ 'account.daily' | translate }}
+                                    </option>
+                                    <option value="weekly">
+                                        {{ 'account.weekly' | translate }}
+                                    </option>
+                                </select>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="fieldset vertical">
+                        <div>
+                            <label>{{ 'account.privateOnly' | translate }}</label>
+                            <form-checkbox>
+                                <label [class.active]="hasPublicProfile.checked">
+                                    {{ 'account.hideOnPublic' | translate }}
+                                    <input
+                                        #hasPublicProfile
+                                        type="checkbox"
+                                        name="hasPublicProfile"
+                                        [checked]="!authUser.hasPublicProfile"
+                                        (change)="save($event)"
+                                    />
+                                </label>
+                            </form-checkbox>
+                        </div>
+
+                        <div>
+                            <label>{{ 'account.shareInformation' | translate }}</label>
+                            <form-checkbox>
+                                <label [class.active]="shareProfileWithPartners.checked">
+                                    {{ 'account.hideOnOtherSites' | translate }}
+                                    <input
+                                        #shareProfileWithPartners
+                                        type="checkbox"
+                                        name="shareProfileWithPartners"
+                                        (change)="save($event)"
+                                        [checked]="!authUser.shareProfileWithPartners"
+                                    />
+                                </label>
+                            </form-checkbox>
+                        </div>
+                    </div>
+
+                    @if (hiddenUserService.hiddenUsersCount() > 0) {
+                        <div class="fieldset center-aligned">
+                            <label>{{ 'main.hidden' | translate }}</label>
+                            <div class="hidden-users-label" (click)="openHiddenProfiles()">
+                                {{ 'account.showAllHidden' | translate }}
+                            </div>
+                        </div>
+                    }
+
+                    <div class="fieldset">
+                        <label>{{ 'account.disable' | translate }}</label>
+                        <div>
+                            <button type="button" id="disable-account" class="button-link" (click)="showDisableAccountDialog()">
+                                {{ 'account.disableAccount' | translate }}
+                            </button>
+                            <button type="button" id="delete-account" class="button-link" (click)="onDeleteAccountClick()">
+                                {{ 'account.deleteAccount' | translate }}
+                            </button>
+                        </div>
+                    </div>
+
+                    @if (authUser.isPremium || authUser.subscriptionCancelled) {
+                        <div class="fieldset">
+                            <label></label>
+                            <button class="button-link" (click)="showInvoicesOverlay()">
+                                {{ 'account.payments&invoices' | translate }}
+                            </button>
+                        </div>
+                    }
+                </form>
+
+                @if (!authUser.isPremium || authUser.canReactivatePremium || authUser.canCancelPremium || showFreePremiumSection) {
+                    <div class="fieldset" role="group">
+                        <label for="settings-user-membership">{{ 'membership' | translate }}</label>
+
+                        <manage-premium
+                            (showPremium)="showPremium()"
+                            (reactivatePremium)="showReactivatePremiumConfirmationDialog()"
+                            (resumePremium)="showResumePremiumConfirmationDialog()"
+                        ></manage-premium>
+
+                        @if (authUser.canCancelPremium) {
+                            <div>
+                                <button type="button" class="button-link" (click)="showStoppingPremium()">
+                                    {{ 'account.stopPremiumTitle' | translate }}
+                                </button>
+                            </div>
+                        }
+
+                        @if (showFreePremiumSection) {
+                            <div>
+                                <div class="free-premium-title">{{ 'premium.premiumAccount' | translate }}</div>
+                                <div class="free-premium-subtitle">{{ 'account.premiumMembership.freePremium' | translate }}</div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+
+<!-- Desktop -->
+@if (isDesktop() && authUser) {
+    <div class="content-container">
+        <div class="settings">
+            <div class="account-main">
+                <form #accountForm="ngForm" (submit)="save($event)">
+                    <h1 class="fieldset">{{ 'settings.accountSettings' | translate }}</h1>
+
+                    @if (authUser.unsuitablePhotoReason) {
+                        <fieldset>
+                            <label for="photo">{{ 'account.photo' | translate }}</label>
+                            <div class="user-information">
+                                <div class="information-type">{{ 'account.photoUnsuitable' | translate }}</div>
+                                <div class="information-description">
+                                    {{ authUser.unsuitablePhotoReason | translate }}
+                                </div>
+                                <button class="btn btn-default information-button" type="button" (click)="onPhotoRequested()">
+                                    {{ 'account.changePhoto' | translate }}
+                                    <img image2x="arrow" />
+                                </button>
+                            </div>
+                        </fieldset>
+                    }
+
+                    <fieldset class="email-fieldset padded-label">
+                        <label for="email">{{ 'auth.email' | translate }}</label>
+                        <input type="text" name="email" id="email" [(ngModel)]="authUser.email" (blur)="save($event)" />
+                        @if (showEmailBouncedMessage) {
+                            <span class="email-validation">{{ 'settings.email.update' | translate }}</span>
+                        } @else {
+                            <br />
+                            <br />
+                        }
+
+                        @if (!changingPassword) {
+                            <div>
+                                <label>{{ 'auth.password' | translate }}</label>
+                                <input
+                                    type="button"
+                                    class="btn-underlined"
+                                    name="password"
+                                    value="{{ 'account.changePassword' | translate }}"
+                                    (click)="changingPassword = true"
+                                />
+                            </div>
+                        }
+
+                        @if (changingPassword) {
+                            <div class="change-password-container">
+                                <label for="password">{{ 'account.myPassword' | translate }}</label>
+                                <div>
+                                    <input #newPassword class="form-control" type="password" name="password" id="password" />
+                                    <system-button type="button" buttonType="primary-small" (click)="changePassword(newPassword.value)">
+                                        {{ 'main.save' | translate }}
+                                    </system-button>
+                                </div>
+                            </div>
+                        }
+                    </fieldset>
+
+                    @if (showLanguageSelector) {
+                        <fieldset>
+                            <label for="localeCode">{{ 'account.language' | translate }}</label>
+                            <select
+                                id="localeCode"
+                                (change)="changeLanguage($event)"
+                                name="localeCode"
+                                class="form-control"
+                                [(ngModel)]="authUser.localeCode"
+                            >
+                                @for (language of languages; track language.localeCode) {
+                                    <option [selected]="language.localeCode === userLocaleCode" value="{{ language.localeCode }}">
+                                        {{ language.localeName }}
+                                    </option>
+                                }
+                            </select>
+                        </fieldset>
+                    }
+
+                    <div class="fieldset-group">
+                        <div class="header">{{ 'account.emailPreferences' | translate }}</div>
+
+                        <fieldset class="padded-label align-center">
+                            <label for="automatch-frequency">{{ 'account.updatesOnNewMatches' | translate }}</label>
+                            <select
+                                id="automatch-frequency"
+                                name="receiveMatchMail"
+                                class="form-control"
+                                (change)="save($event)"
+                                [(ngModel)]="authUser.receiveMatchMail"
+                            >
+                                <option value="never">
+                                    {{ 'account.never' | translate }}
+                                </option>
+                                <option value="daily">
+                                    {{ 'account.daily' | translate }}
+                                </option>
+                                <option value="weekly">
+                                    {{ 'account.weekly' | translate }}
+                                </option>
+                            </select>
+                        </fieldset>
+
+                        @if (showMatchMailRoles) {
+                            <fieldset class="padded-label">
+                                <label>{{ 'account.updatesContain' | translate }}</label>
+                                <div>
+                                    <form-checkbox>
+                                        <label [class.active]="lookingForBabysitters.checked">
+                                            {{ 'main.babysitters' | translate }}
+                                            <input
+                                                #lookingForBabysitters
+                                                type="checkbox"
+                                                name="lookingForBabysitters"
+                                                [checked]="isLookingForBabysitters"
+                                                (change)="save($event)"
+                                            />
+                                        </label>
+                                        <label [class.active]="lookingForChildminders.checked">
+                                            {{ 'main.childminders' | translate }}
+                                            <input
+                                                #lookingForChildminders
+                                                type="checkbox"
+                                                name="lookingForChildminders"
+                                                [checked]="isLookingForChildminders"
+                                                (change)="save($event)"
+                                            />
+                                        </label>
+                                    </form-checkbox>
+                                </div>
+                            </fieldset>
+                        }
+
+                        @if (showNotificationPreferences()) {
+                            <fieldset class="padded-label align-center">
+                                <label for="automatch-frequency">{{ 'account.updatesOnNewInvites' | translate }}</label>
+                                <select
+                                    id="invites-frequency"
+                                    name="receiveInvitesUpdates"
+                                    class="form-control"
+                                    (change)="onInvitesEmailPreferencesChange($event)"
+                                    [value]="notificationPreferences()?.emailConnectionInvites"
+                                >
+                                    <option value="never">
+                                        {{ 'account.never' | translate }}
+                                    </option>
+                                    <option value="daily">
+                                        {{ 'account.daily' | translate }}
+                                    </option>
+                                    <option value="weekly">
+                                        {{ 'account.weekly' | translate }}
+                                    </option>
+                                </select>
+                            </fieldset>
+                        }
+                    </div>
+
+                    <fieldset class="padded-label">
+                        <label>{{ 'account.visibility' | translate }}</label>
+                        <div>
+                            <form-checkbox>
+                                <label [class.active]="hasPublicProfile.checked">
+                                    {{ 'account.desktop.hideOnPublic' | translate }}
+                                    <input
+                                        #hasPublicProfile
+                                        type="checkbox"
+                                        name="hasPublicProfile"
+                                        (change)="save($event)"
+                                        [checked]="!authUser.hasPublicProfile"
+                                    />
+                                </label>
+                                <label [class.active]="shareProfileWithPartners.checked">
+                                    {{ 'account.desktop.hideOnOtherSites' | translate }}
+                                    <input
+                                        #shareProfileWithPartners
+                                        type="checkbox"
+                                        name="shareProfileWithPartners"
+                                        (change)="save($event)"
+                                        [checked]="!authUser.shareProfileWithPartners"
+                                    />
+                                </label>
+                            </form-checkbox>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="padded-label">
+                        <label>{{ 'account.desktop.logout' | translate }}</label>
+                        <input
+                            type="button"
+                            class="btn-underlined"
+                            value="{{ 'account.logOutOfMyAccount' | translate }}"
+                            (click)="logout($event)"
+                        />
+                    </fieldset>
+
+                    <fieldset class="padded-label">
+                        <label>{{ 'account.desktop.disable' | translate }}</label>
+                        <div>
+                            <input
+                                type="button"
+                                id="disable-account"
+                                class="btn-underlined"
+                                value="{{ 'account.disableAccount' | translate }}"
+                                (click)="showDisableAccountDialog()"
+                            />
+                            <br />
+                            <input
+                                type="button"
+                                id="delete-account"
+                                class="btn-underlined"
+                                value="{{ 'account.deleteAccount' | translate }}"
+                                (click)="onDeleteAccountClick()"
+                            />
+                        </div>
+                    </fieldset>
+
+                    @if (authUser.canCancelPremium) {
+                        <fieldset class="padded-label">
+                            <label>{{ 'membership' | translate }}</label>
+                            <input
+                                type="button"
+                                class="btn-underlined"
+                                value="{{ 'account.premiumMembership' | translate }}"
+                                (click)="showManagePremium()"
+                            />
+                        </fieldset>
+                    }
+
+                    @if (showFreePremiumSection) {
+                        <fieldset class="padded-label">
+                            <label>{{ 'membership' | translate }}</label>
+                            <div>
+                                <div class="free-premium-title">{{ 'premium.premiumAccount' | translate }}</div>
+                                <div class="free-premium-subtitle">{{ 'account.premiumMembership.freePremium' | translate }}</div>
+                            </div>
+                        </fieldset>
+                    }
+
+                    @if (authUser.isPremium || authUser.subscriptionCancelled) {
+                        <fieldset class="padded-label">
+                            <label>{{ 'account.payments' | translate }}</label>
+                            <input
+                                type="button"
+                                class="btn-underlined"
+                                value="{{ 'account.payments&invoices' | translate }}"
+                                (click)="showInvoicesOverlay()"
+                            />
+                        </fieldset>
+                    }
+                </form>
+            </div>
+
+            <div>
+                <div class="user-actions-container">
+                    <div class="user-actions-buttons">
+                        <button class="btn-info" [routerLink]="['/users/me']">
+                            {{ 'settings.viewPublicProfile' | translate }}
+                        </button>
+                        <a class="btn-info" [routerLink]="['/settings']">
+                            {{ 'main.editProfile' | translate }}
+                        </a>
+                        @if (!authUser.isParent) {
+                            <div class="recommendations-container">
+                                <div class="btn-info" (click)="toAskForRecommendations()">
+                                    <span>{{ 'profile.askParentForOneClickRecommendation' | translate }}</span>
+                                    <span class="btn-recommendations-info" (click)="toRecommendationsInfo($event)">?</span>
+                                </div>
+                                <div>{{ 'profile.parentsDontHaveToBeOnSitly' | translate }}</div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="premium-container">
+                        <manage-premium
+                            (showPremium)="showPremium()"
+                            (reactivatePremium)="showReactivatePremiumConfirmationDialog()"
+                            (resumePremium)="showResumePremiumConfirmationDialog()"
+                        ></manage-premium>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<span class="save-icon" [class.saved]="saved">{{ 'main.saved' | translate }}</span>

@@ -1,0 +1,32 @@
+<overlay-template [data]="overlayData()">
+    <div class="invoices-list message">
+        @for (payment of payments; track payment.id) {
+            <div class="invoice-item">
+                <span class="created">{{ payment.created | date: 'dd MMM y' }}</span>
+                <span class="price">{{ payment.amount | moneyFormat: { minFractionDigits: 2 } }}</span>
+                <button
+                    class="btn-download"
+                    [class.no-link]="payment.psp === 'apple' || payment.psp === 'google'"
+                    (click)="downloadInvoice(payment)"
+                >
+                    @if (payment === downloadingInvoice) {
+                        <img class="downloading" />
+                    } @else {
+                        <span>
+                            @if (payment.psp === 'apple') {
+                                {{ 'payment.checkItunes' | translate }}
+                            }
+                            @if (payment.psp === 'google') {
+                                {{ 'payment.checkPlayStore' | translate }}
+                            }
+                            @if (!payment.psp || payment.psp === 'adyen') {
+                                <img src="assets/images/download.svg" class="img-download" />
+                                {{ 'settings.invoice' | translate }}
+                            }
+                        </span>
+                    }
+                </button>
+            </div>
+        }
+    </div>
+</overlay-template>

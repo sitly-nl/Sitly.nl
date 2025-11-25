@@ -1,0 +1,63 @@
+@import (reference) "includes";
+@import "animations";
+
+.invoices-list {
+    overflow: auto;
+    width: 100%;
+
+    .mobile({
+        padding: 0 40px;
+
+        .invoice-item {
+            padding: 25px 0 15px;
+        }
+    });
+
+    .desktop({
+        padding: 0 80px;
+
+        .invoice-item {
+            padding: 17px 0;
+            font-size: 1.6rem;
+        }
+    });
+}
+
+.invoice-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid @neutral-100;
+    color: @neutral-900;
+
+    .created {
+        flex: 40%;
+        text-align: left;
+    }
+
+    .price {
+        flex: 15%;
+        text-align: center;
+    }
+
+    .btn-download {
+        flex: 45%;
+        text-align: right;
+
+        &.no-link {
+            color: @neutral-500;
+        }
+
+        .downloading {
+            width: 25px;
+            height: 25px;
+            .img-content("loader-neutral");
+            .spin-animation();
+        }
+
+        .img-download {
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+        }
+    }
+}
