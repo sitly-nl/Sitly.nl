@@ -1,0 +1,35 @@
+<div #container class="container">
+    <div class="top-bar">
+        <div class="logo-container">
+            <div class="placeholder">
+                @if (showBackBtn) {
+                    <button class="btn-back" (click)="back.emit()">
+                        <img src="assets/images/arrow-left.svg" alt="back" />
+                        {{ 'cta.back' | translate }}
+                    </button>
+                }
+            </div>
+
+            <img class="logo" />
+
+            <div class="placeholder right">
+                @if (showLanguagePicker && localeOptions()) {
+                    <select class="language-picker" [(ngModel)]="selectedLocale" (change)="onLocaleChange($event)">
+                        @for (option of localeOptions(); track option.localeCode) {
+                            <option value="{{ option.localeCode }}">
+                                {{ option.localeCode.substring(0, 2) | uppercase }}
+                            </option>
+                        }
+                    </select>
+                }
+            </div>
+        </div>
+        <div class="background-bottom"></div>
+    </div>
+
+    <div class="content-container">
+        <ng-content></ng-content>
+    </div>
+
+    <ng-content select="[footer]"></ng-content>
+</div>
